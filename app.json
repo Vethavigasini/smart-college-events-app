@@ -4,14 +4,8 @@
     "slug": "smart-college-events",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "scheme": "smartcollegeevents",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#4DA6FF"
-    },
     "plugins": [
       "expo-router",
       [
@@ -35,16 +29,12 @@
       "bundleIdentifier": "com.smartcollege.events"
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#4DA6FF"
-      },
-      "package": "com.smartcollege.events"
+      "package": "com.smartcollege.events",
+      "versionCode": 1
     },
     "web": {
       "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/favicon.png"
+      "output": "static"
     }
   }
 }
