@@ -1,3 +1,6 @@
+declare const browser: any;
+declare const $: any;
+
 export default class BasePage {
   /**
    * Helper to select an element by accessibility identifier (testID / accessibilityLabel)
@@ -48,5 +51,20 @@ export default class BasePage {
    */
   public async pause(ms: number) {
     await browser.pause(ms);
+  }
+
+  /**
+   * Helper to dismiss native Alert dialogs
+   */
+  public async dismissAlert() {
+    try {
+      const okButton = await browser.$('android=new UiSelector().resourceId("android:id/button1")');
+      if (await okButton.waitForDisplayed({ timeout: 5000 })) {
+        await okButton.click();
+        await browser.pause(1000);
+      }
+    } catch {
+      // Ignore if alert is not present or timeout
+    }
   }
 }
