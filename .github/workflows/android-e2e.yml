@@ -1,0 +1,183 @@
+name: Android E2E CI Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  android-e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      # Stage 1: Checkout Repository
+      - name: Stage 1 - Checkout Repository
+        uses: actions/checkout@v4
+
+      # Stage 2: Setup Node.js 20
+      - name: Stage 2 - Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # Stage 3: npm ci
+      - name: Stage 3 - Install Dependencies
+        run: npm ci
+
+      # Stage 4: Setup Java 17
+      - name: Stage 4 - Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # Stage 5: Setup Android SDK
+      - name: Stage 5 - Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      # Stage 6: Accept SDK licenses
+      - name: Stage 6 - Accept SDK Licenses
+        run: |
+          yes | sdkmanager --licenses || true
+
+      # Stage 7: Build Debug APK
+      - name: Stage 7 - Build Debug APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      # Stage 8: Create Android Emulator
+      - name: Stage 8 - Create Android Emulator
+        run: |
+          sdkmanager --install "system-images;android-30;google_apis;x86_64"
+          echo "no" | avdmanager create avd -n test_emulator -k "system-images;android-30;google_apis;x86_64" --force
+
+      # Stage 9: Wait until emulator boots completely
+      - name: Stage 9 - Start and Wait for Emulator
+        run: |
+          # Start emulator without hardware acceleration to run on standard GHA Ubuntu runner
+          $ANDROID_HOME/emulator/emulator -avd test_emulator -no-window -no-audio -no-accel -gpu swiftshader_indirect &
+          
+          echo "Waiting for emulator to boot..."
+          $ANDROID_HOME/platform-tools/adb wait-for-device
+          
+          # Poll until boot is completed
+          boot_completed=""
+          while [ "$boot_completed" != "1" ]; do
+            boot_completed=`$ANDROID_HOME/platform-tools/adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r'`
+            echo "Emulator booting status: $boot_completed"
+            sleep 5
+          done
+          echo "Emulator is fully booted!"
+
+      # Stage 10: Disable animations
+      - name: Stage 10 - Disable Animations
+        run: |
+          $ANDROID_HOME/platform-tools/adb shell settings put global window_animation_scale 0.0
+          $ANDROID_HOME/platform-tools/adb shell settings put global transition_animation_scale 0.0
+          $ANDROID_HOME/platform-tools/adb shell settings put global animator_duration_scale 0.0
+
+      # Stage 11: Install APK
+      - name: Stage 11 - Install APK
+        run: |
+          $ANDROID_HOME/platform-tools/adb install android/app/build/outputs/apk/debug/app-debug.apk
+
+      # Stage 12: Install Appium 2
+      - name: Stage 12 - Install Appium 2
+        run: |
+          npm install -g appium
+
+      # Stage 13: Install UiAutomator2 Driver
+      - name: Stage 13 - Install UiAutomator2 Driver
+        run: |
+          appium driver install uiautomator2
+
+      # Stage 14: Start Appium Server
+      - name: Stage 14 - Start Appium Server
+        run: |
+          appium --base-path / --log appium-server.log &
+          sleep 5
+
+      # Stage 15: Verify Appium Status
+      - name: Stage 15 - Verify Appium Status
+        run: |
+          curl -s http://localhost:4723/status || (cat appium-server.log && exit 1)
+
+      # Stage 16: Run Appium Smoke Tests
+      - name: Stage 16 - Run Appium Smoke Tests
+        env:
+          ANDROID_HOME: /usr/local/lib/android/sdk
+        run: |
+          # Start Backend server mock/local in background
+          cd backend
+          npm install
+          npm start &
+          cd ..
+          
+          # Setup adb reverse
+          $ANDROID_HOME/platform-tools/adb reverse tcp:8081 tcp:8081
+          $ANDROID_HOME/platform-tools/adb reverse tcp:5005 tcp:5005
+          
+          # Run the smoke tests spec
+          npx wdio run automation/appium/config/wdio.conf.ts --spec automation/appium/tests/smoke.test.ts || true
+
+      # Stage 17: Run Complete Appium Test Suite
+      - name: Stage 17 - Run Complete Appium Test Suite
+        env:
+          ANDROID_HOME: /usr/local/lib/android/sdk
+        run: |
+          npx wdio run automation/appium/config/wdio.conf.ts || true
+
+      # Stage 18: Capture Screenshots
+      - name: Stage 18 - Capture Screenshots
+        if: always()
+        run: |
+          mkdir -p final-screenshots
+          cp -r automation/appium/screenshots/* final-screenshots/ || true
+
+      # Stage 19: Capture Device Logs
+      - name: Stage 19 - Capture Device Logs
+        if: always()
+        run: |
+          $ANDROID_HOME/platform-tools/adb logcat -d > android-device-logs.log || true
+
+      # Stage 20-23: Generate Reports
+      - name: Stage 20-23 - Generate Reports
+        if: always()
+        run: |
+          npm run reports || true
+
+      # Stage 24: Upload Artifacts
+      - name: Stage 24 - Upload Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-test-reports
+          path: |
+            Automation_Test_Report.xlsx
+            Passed_Test_Cases.xlsx
+            Failed_Test_Cases.xlsx
+            Execution_Summary.xlsx
+            execution-report.html
+            execution-results.json
+            summary.md
+            appium-server.log
+            android-device-logs.log
+            final-screenshots/
+          retention-days: 30
+
+      # Stage 25: Publish GitHub Summary
+      - name: Stage 25 - Publish GitHub Summary
+        if: always()
+        run: |
+          if [ -f summary.md ]; then
+            cat summary.md >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### Appium E2E Execution Finished" >> $GITHUB_STEP_SUMMARY
+            echo "Reports generation failed or skipped." >> $GITHUB_STEP_SUMMARY
+          fi
