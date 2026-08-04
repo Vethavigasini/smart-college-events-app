@@ -9,9 +9,10 @@ interface SearchBarProps {
   onChangeText: (text: string) => void;
   placeholder?: string;
   onClear?: () => void;
+  testID?: string;
 }
 
-export default function SearchBar({ value, onChangeText, placeholder = 'Search events...', onClear }: SearchBarProps) {
+export default function SearchBar({ value, onChangeText, placeholder = 'Search events...', onClear, testID }: SearchBarProps) {
   const [focused, setFocused] = useState(false);
 
   return (
@@ -26,6 +27,8 @@ export default function SearchBar({ value, onChangeText, placeholder = 'Search e
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         returnKeyType="search"
+        testID={testID || "event_search"}
+        accessibilityLabel={testID || "event_search"}
       />
       {value.length > 0 && (
         <TouchableOpacity onPress={() => { onChangeText(''); onClear?.(); }} style={styles.clearBtn}>

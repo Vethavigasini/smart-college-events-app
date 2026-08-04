@@ -8,14 +8,17 @@ interface CategoryChipProps {
   emoji?: string;
   active?: boolean;
   onPress: () => void;
+  testID?: string;
 }
 
-export default function CategoryChip({ label, emoji, active = false, onPress }: CategoryChipProps) {
+export default function CategoryChip({ label, emoji, active = false, onPress, testID }: CategoryChipProps) {
   return (
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.8}
       style={[styles.chip, active && styles.active]}
+      testID={testID}
+      accessibilityLabel={testID}
     >
       {emoji && <Text style={styles.emoji}>{emoji}</Text>}
       <Text style={[styles.text, active && styles.activeText]}>{label}</Text>

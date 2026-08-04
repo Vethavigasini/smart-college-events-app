@@ -47,6 +47,8 @@ export default function EventCard({ event, style, compact = false }: EventCardPr
       onPress={() => router.push(`/event/${event.id}`)}
       activeOpacity={0.92}
       style={[styles.card, compact && styles.compact, style]}
+      testID={"event_card_" + event.id}
+      accessibilityLabel={"event_card_" + event.id}
     >
       {/* Color Header */}
       <View style={[styles.header, { backgroundColor: catColor }]}>

@@ -149,25 +149,25 @@ export default function AdminDashboard() {
 
             {/* Quick Actions */}
             <View style={styles.quickActions}>
-              <TouchableOpacity style={styles.quickAction} onPress={() => router.push('/admin/create-event')} activeOpacity={0.85}>
+              <TouchableOpacity style={styles.quickAction} onPress={() => router.push('/admin/create-event')} activeOpacity={0.85} testID="admin_quick_create_event" accessibilityLabel="admin_quick_create_event">
                 <LinearGradient colors={['rgba(255,255,255,0.25)', 'rgba(255,255,255,0.1)']} style={styles.qaGrad}>
                   <Ionicons name="add-circle-outline" size={28} color="#fff" />
                   <Text style={styles.qaLabel}>Create Event</Text>
                 </LinearGradient>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.quickAction} onPress={() => router.push('/admin/attendance')} activeOpacity={0.85}>
+              <TouchableOpacity style={styles.quickAction} onPress={() => router.push('/admin/attendance')} activeOpacity={0.85} testID="admin_quick_attendance" accessibilityLabel="admin_quick_attendance">
                 <LinearGradient colors={['rgba(255,255,255,0.25)', 'rgba(255,255,255,0.1)']} style={styles.qaGrad}>
                   <Ionicons name="scan-outline" size={28} color="#fff" />
                   <Text style={styles.qaLabel}>QR Attendance</Text>
                 </LinearGradient>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.quickAction} onPress={() => router.push('/admin/analytics')} activeOpacity={0.85}>
+              <TouchableOpacity style={styles.quickAction} onPress={() => router.push('/admin/analytics')} activeOpacity={0.85} testID="admin_quick_analytics" accessibilityLabel="admin_quick_analytics">
                 <LinearGradient colors={['rgba(255,255,255,0.25)', 'rgba(255,255,255,0.1)']} style={styles.qaGrad}>
                   <Ionicons name="bar-chart-outline" size={28} color="#fff" />
                   <Text style={styles.qaLabel}>Analytics</Text>
                 </LinearGradient>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.quickAction} onPress={() => router.push('/admin/users')} activeOpacity={0.85}>
+              <TouchableOpacity style={styles.quickAction} onPress={() => router.push('/admin/users')} activeOpacity={0.85} testID="admin_quick_users" accessibilityLabel="admin_quick_users">
                 <LinearGradient colors={['rgba(255,255,255,0.25)', 'rgba(255,255,255,0.1)']} style={styles.qaGrad}>
                   <Ionicons name="people-outline" size={28} color="#fff" />
                   <Text style={styles.qaLabel}>Users</Text>
@@ -198,7 +198,7 @@ export default function AdminDashboard() {
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>📋 All Events</Text>
-            <TouchableOpacity style={styles.createBtn} onPress={() => router.push('/admin/create-event')}>
+            <TouchableOpacity style={styles.createBtn} onPress={() => router.push('/admin/create-event')} testID="admin_create_event" accessibilityLabel="admin_create_event">
               <Ionicons name="add" size={18} color={Colors.white} />
               <Text style={styles.createBtnText}>New</Text>
             </TouchableOpacity>
@@ -217,13 +217,13 @@ export default function AdminDashboard() {
                 </View>
               </View>
               <View style={styles.eventActions}>
-                <TouchableOpacity style={styles.actionBtn} onPress={() => router.push(`/event/${event.id}` as any)}>
+                <TouchableOpacity style={styles.actionBtn} onPress={() => router.push(`/event/${event.id}` as any)} testID={"admin_view_event_" + event.id} accessibilityLabel={"admin_view_event_" + event.id}>
                   <Ionicons name="eye-outline" size={18} color={Colors.primary} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.actionBtn} onPress={() => router.push(`/admin/create-event?editId=${event.id}` as any)}>
+                <TouchableOpacity style={styles.actionBtn} onPress={() => router.push(`/admin/create-event?editId=${event.id}` as any)} testID={"admin_update_event_" + event.id} accessibilityLabel={"admin_update_event_" + event.id}>
                   <Ionicons name="pencil-outline" size={18} color={Colors.warning} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.actionBtn} onPress={() => handleDeleteEvent(event.id, event.title)}>
+                <TouchableOpacity style={styles.actionBtn} onPress={() => handleDeleteEvent(event.id, event.title)} testID={"admin_delete_event_" + event.id} accessibilityLabel={"admin_delete_event_" + event.id}>
                   <Ionicons name="trash-outline" size={18} color={Colors.error} />
                 </TouchableOpacity>
               </View>

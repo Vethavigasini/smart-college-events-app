@@ -23,7 +23,7 @@ function SortModal({ visible, onClose, value, onChange }: { visible: boolean; on
       <View style={mStyles.sheet}>
         <Text style={mStyles.title}>Sort By</Text>
         {SORT_OPTIONS.map(opt => (
-          <TouchableOpacity key={opt} style={mStyles.row} onPress={() => { onChange(opt); onClose(); }}>
+          <TouchableOpacity key={opt} style={mStyles.row} onPress={() => { onChange(opt); onClose(); }} testID={"sort_option_" + opt.replace(/\s+/g, '_').replace(/[()]/g, '').toLowerCase()} accessibilityLabel={"sort_option_" + opt.replace(/\s+/g, '_').replace(/[()]/g, '').toLowerCase()}>
             <Text style={[mStyles.opt, value === opt && mStyles.optActive]}>{opt}</Text>
             {value === opt && <Ionicons name="checkmark-circle" size={20} color={Colors.primary} />}
           </TouchableOpacity>
@@ -79,7 +79,7 @@ export default function EventsScreen() {
           <Text style={styles.headerTitle}>Events</Text>
           <Text style={styles.headerSub}>{filtered.length} event{filtered.length !== 1 ? 's' : ''} found</Text>
         </View>
-        <TouchableOpacity style={styles.sortBtn} onPress={() => setShowSort(true)}>
+        <TouchableOpacity style={styles.sortBtn} onPress={() => setShowSort(true)} testID="event_sort_btn" accessibilityLabel="event_sort_btn">
           <Ionicons name="funnel-outline" size={18} color={Colors.primary} />
           <Text style={styles.sortText}>Sort</Text>
         </TouchableOpacity>
@@ -87,7 +87,7 @@ export default function EventsScreen() {
 
       {/* Search */}
       <View style={styles.searchWrap}>
-        <SearchBar value={query} onChangeText={setQuery} />
+        <SearchBar value={query} onChangeText={setQuery} testID="dashboard_search" />
       </View>
 
       {/* Category Chips */}
@@ -98,6 +98,7 @@ export default function EventsScreen() {
             label={c}
             active={category === c}
             onPress={() => setCategory(c)}
+            testID={"category_chip_" + c.toLowerCase()}
           />
         ))}
       </ScrollView>
@@ -109,6 +110,8 @@ export default function EventsScreen() {
             key={s}
             style={[styles.statusTab, status === s && styles.statusTabActive]}
             onPress={() => setStatus(s)}
+            testID={"status_filter_" + s.toLowerCase()}
+            accessibilityLabel={"status_filter_" + s.toLowerCase()}
           >
             <Text style={[styles.statusTabText, status === s && styles.statusTabTextActive]}>{s}</Text>
           </TouchableOpacity>

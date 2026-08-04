@@ -184,6 +184,8 @@ export default function EventDetailScreen() {
                   placeholder="+91 XXXXX XXXXX"
                   placeholderTextColor={Colors.textMuted}
                   keyboardType="phone-pad"
+                  testID="event_registration_phone"
+                  accessibilityLabel="event_registration_phone"
                 />
               </View>
             </View>
@@ -217,6 +219,8 @@ export default function EventDetailScreen() {
               onPress={handleRegister}
               disabled={regLoading || (event.price > 0 && !paymentScreenshot)}
               activeOpacity={0.85}
+              testID="event_registration_submit"
+              accessibilityLabel="event_registration_submit"
             >
               <LinearGradient colors={Gradients.aurora} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.modalRegGrad}>
                 {regLoading ? <ActivityIndicator color="#fff" /> : (
@@ -344,7 +348,7 @@ export default function EventDetailScreen() {
               <Ionicons name="checkmark-circle" size={20} color={Colors.success} />
               <Text style={styles.registeredText}>You're Registered!</Text>
             </View>
-            <TouchableOpacity style={styles.cancelRegBtn} onPress={handleCancel}>
+            <TouchableOpacity style={styles.cancelRegBtn} onPress={handleCancel} testID="event_cancel" accessibilityLabel="event_cancel">
               <Text style={styles.cancelRegText}>Cancel</Text>
             </TouchableOpacity>
           </View>
@@ -357,6 +361,8 @@ export default function EventDetailScreen() {
             }}
             disabled={isFull || event.status === 'completed'}
             activeOpacity={0.85}
+            testID="event_register"
+            accessibilityLabel="event_register"
           >
             <LinearGradient
               colors={isFull || event.status === 'completed' ? ['#B0D0F0', '#9EC5E8'] : Gradients.aurora}

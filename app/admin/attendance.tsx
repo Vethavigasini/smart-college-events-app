@@ -63,7 +63,7 @@ export default function AttendanceScreen() {
 
         {/* Header */}
         <LinearGradient colors={Gradients.aurora} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.header}>
-          <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
+          <TouchableOpacity style={styles.backBtn} onPress={() => router.back()} testID="admin_attendance_back" accessibilityLabel="admin_attendance_back">
             <Ionicons name="arrow-back" size={22} color={Colors.textPrimary} />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>QR Attendance</Text>
@@ -93,6 +93,8 @@ export default function AttendanceScreen() {
                   key={event.id}
                   style={[styles.eventChip, selectedEventId === event.id && styles.eventChipActive]}
                   onPress={() => setSelectedEventId(event.id)}
+                  testID={"admin_attendance_event_" + event.id}
+                  accessibilityLabel={"admin_attendance_event_" + event.id}
                 >
                   <Text style={[styles.eventChipText, selectedEventId === event.id && styles.eventChipTextActive]} numberOfLines={1}>
                     {event.title}
@@ -143,7 +145,7 @@ export default function AttendanceScreen() {
                 <Text style={styles.qrHint}>Position student QR code within the frame</Text>
 
                 {/* Simulate Button */}
-                <TouchableOpacity style={styles.demoBtn} onPress={handleSimulate} activeOpacity={0.85}>
+                <TouchableOpacity style={styles.demoBtn} onPress={handleSimulate} activeOpacity={0.85} testID="admin_attendance_simulate" accessibilityLabel="admin_attendance_simulate">
                   <LinearGradient colors={Gradients.aurora} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.demoBtnGrad}>
                     <Ionicons name="qr-code-outline" size={20} color="#fff" />
                     <Text style={styles.demoBtnText}>Simulate QR Scan (Demo)</Text>
@@ -181,6 +183,8 @@ export default function AttendanceScreen() {
                           style={[styles.markBtn, markingId === reg.userId && styles.markBtnLoading]}
                           onPress={() => handleMark(reg.userId, reg.userName)}
                           disabled={markingId === reg.userId}
+                          testID={"admin_attendance_mark_" + reg.userId}
+                          accessibilityLabel={"admin_attendance_mark_" + reg.userId}
                         >
                           <Text style={styles.markBtnText}>
                             {markingId === reg.userId ? 'Marking…' : 'Mark ✓'}

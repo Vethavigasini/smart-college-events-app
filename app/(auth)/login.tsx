@@ -80,15 +80,15 @@ export default function LoginScreen() {
             {/* Demo Buttons */}
             <View style={styles.demoRow}>
               <Text style={styles.demoLabel}>Quick Demo:</Text>
-              <TouchableOpacity style={styles.demoBtn} onPress={() => fillDemo('student')}>
+              <TouchableOpacity style={styles.demoBtn} onPress={() => fillDemo('student')} testID="demo_student" accessibilityLabel="demo_student">
                 <Ionicons name="person" size={13} color={Colors.primary} />
                 <Text style={styles.demoBtnText}>Student</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.demoBtn, styles.demoBtnAdmin]} onPress={() => fillDemo('admin')}>
+              <TouchableOpacity style={[styles.demoBtn, styles.demoBtnAdmin]} onPress={() => fillDemo('admin')} testID="demo_admin" accessibilityLabel="demo_admin">
                 <Ionicons name="shield-checkmark" size={13} color={Colors.accentPurple} />
                 <Text style={[styles.demoBtnText, { color: Colors.accentPurple }]}>Admin</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.demoBtn, styles.demoBtnFaculty]} onPress={() => fillDemo('faculty')}>
+              <TouchableOpacity style={[styles.demoBtn, styles.demoBtnFaculty]} onPress={() => fillDemo('faculty')} testID="demo_faculty" accessibilityLabel="demo_faculty">
                 <Ionicons name="school" size={13} color={Colors.accentTeal} />
                 <Text style={[styles.demoBtnText, { color: Colors.accentTeal }]}>Faculty</Text>
               </TouchableOpacity>
@@ -114,6 +114,8 @@ export default function LoginScreen() {
                   placeholderTextColor={Colors.textMuted}
                   keyboardType="email-address"
                   autoCapitalize="none"
+                  testID="login_email"
+                  accessibilityLabel="login_email"
                 />
               </View>
               {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
@@ -131,6 +133,8 @@ export default function LoginScreen() {
                   placeholder="Enter your password"
                   placeholderTextColor={Colors.textMuted}
                   secureTextEntry={!showPassword}
+                  testID="login_password"
+                  accessibilityLabel="login_password"
                 />
                 <TouchableOpacity onPress={() => setShowPassword(v => !v)} style={styles.eyeBtn}>
                   <Ionicons name={showPassword ? 'eye-off-outline' : 'eye-outline'} size={18} color={Colors.textMuted} />
@@ -144,7 +148,7 @@ export default function LoginScreen() {
             </TouchableOpacity>
 
             {/* Login Button */}
-            <TouchableOpacity style={styles.shadowWrapper} onPress={handleLogin} disabled={loading} activeOpacity={0.85}>
+            <TouchableOpacity style={styles.shadowWrapper} onPress={handleLogin} disabled={loading} activeOpacity={0.85} testID="login_submit" accessibilityLabel="login_submit">
               <LinearGradient colors={Gradients.aurora} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.loginGradient}>
                 {loading
                   ? <ActivityIndicator color="#fff" />
@@ -159,7 +163,7 @@ export default function LoginScreen() {
             {/* Register Link */}
             <View style={styles.registerRow}>
               <Text style={styles.registerLabel}>Don't have an account? </Text>
-              <TouchableOpacity onPress={() => router.push('/(auth)/register')}>
+              <TouchableOpacity onPress={() => router.push('/(auth)/register')} testID="login_signup_link" accessibilityLabel="login_signup_link">
                 <Text style={styles.registerLink}>Create Account</Text>
               </TouchableOpacity>
             </View>

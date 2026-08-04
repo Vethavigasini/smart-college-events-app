@@ -68,7 +68,7 @@ export default function RegisterScreen() {
         {isWeb && <View style={styles.blob2} />}
 
         <View style={styles.header}>
-          <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
+          <TouchableOpacity style={styles.backBtn} onPress={() => router.back()} testID="signup_back_btn" accessibilityLabel="signup_back_btn">
             <Ionicons name="arrow-back" size={22} color={Colors.textPrimary} />
           </TouchableOpacity>
           <LinearGradient colors={Gradients.aurora} style={styles.logoCircle}>
@@ -96,6 +96,8 @@ export default function RegisterScreen() {
                   key={r}
                   style={[styles.roleBtn, role === r && styles.roleBtnActive]}
                   onPress={() => setRole(r)}
+                  testID={"signup_role_" + r}
+                  accessibilityLabel={"signup_role_" + r}
                 >
                   <Ionicons
                     name={r === 'student' ? 'person' : r === 'admin' ? 'shield-checkmark' : 'school'}
@@ -126,6 +128,8 @@ export default function RegisterScreen() {
                     placeholderTextColor={Colors.textMuted}
                     keyboardType={(f as any).keyboard || 'default'}
                     autoCapitalize={(f as any).autoCapitalize || 'words'}
+                    testID={"signup_" + f.key}
+                    accessibilityLabel={"signup_" + f.key}
                   />
                 </View>
                 {errors[f.key] ? <Text style={styles.errorText}>{errors[f.key]}</Text> : null}
@@ -141,6 +145,7 @@ export default function RegisterScreen() {
                     key={d}
                     style={[styles.deptChip, department === d && styles.deptChipActive]}
                     onPress={() => setDepartment(department === d ? '' : d)}
+                    testID={"signup_dept_" + d.replace(/\s+/g, '_').toLowerCase()}
                   >
                     <Text style={[styles.deptChipText, department === d && styles.deptChipTextActive]}>
                       {d}
@@ -162,6 +167,8 @@ export default function RegisterScreen() {
                   placeholder="Min. 6 characters"
                   placeholderTextColor={Colors.textMuted}
                   secureTextEntry={!showPassword}
+                  testID="signup_password"
+                  accessibilityLabel="signup_password"
                 />
                 <TouchableOpacity onPress={() => setShowPassword(v => !v)} style={{ padding: 8 }}>
                   <Ionicons name={showPassword ? 'eye-off-outline' : 'eye-outline'} size={18} color={Colors.textMuted} />
@@ -181,12 +188,14 @@ export default function RegisterScreen() {
                   placeholder="Repeat password"
                   placeholderTextColor={Colors.textMuted}
                   secureTextEntry={!showPassword}
+                  testID="signup_confirm_password"
+                  accessibilityLabel="signup_confirm_password"
                 />
               </View>
               {errors.confirm ? <Text style={styles.errorText}>{errors.confirm}</Text> : null}
             </View>
 
-            <TouchableOpacity style={styles.shadowWrapper} onPress={handleRegister} disabled={loading} activeOpacity={0.85}>
+            <TouchableOpacity style={styles.shadowWrapper} onPress={handleRegister} disabled={loading} activeOpacity={0.85} testID="signup_submit" accessibilityLabel="signup_submit">
               <LinearGradient colors={Gradients.aurora} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.registerGradient}>
                 {loading
                   ? <ActivityIndicator color="#fff" />
@@ -200,7 +209,7 @@ export default function RegisterScreen() {
 
             <View style={styles.loginRow}>
               <Text style={styles.loginLabel}>Already have an account? </Text>
-              <TouchableOpacity onPress={() => router.back()}>
+              <TouchableOpacity onPress={() => router.back()} testID="signup_login_link" accessibilityLabel="signup_login_link">
                 <Text style={styles.loginLink}>Sign In</Text>
               </TouchableOpacity>
             </View>

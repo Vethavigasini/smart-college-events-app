@@ -156,7 +156,7 @@ export default function CreateEventScreen() {
       <View style={styles.webContainer}>
       {/* Header */}
       <LinearGradient colors={Gradients.aurora} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.header}>
-        <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
+        <TouchableOpacity style={styles.backBtn} onPress={() => router.back()} testID="admin_create_back" accessibilityLabel="admin_create_back">
           <Ionicons name="arrow-back" size={22} color={Colors.textPrimary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{existing ? 'Edit Event' : 'Create New Event'}</Text>
@@ -173,6 +173,8 @@ export default function CreateEventScreen() {
                 key={cat}
                 style={[styles.catChip, form.category === cat && styles.catChipActive]}
                 onPress={() => set('category', cat)}
+                testID={"admin_create_cat_" + cat.toLowerCase()}
+                accessibilityLabel={"admin_create_cat_" + cat.toLowerCase()}
               >
                 <Text style={styles.catEmoji}>{CATEGORY_EMOJI[cat]}</Text>
                 <Text style={[styles.catText, form.category === cat && styles.catTextActive]}>{cat}</Text>
@@ -189,6 +191,8 @@ export default function CreateEventScreen() {
             onChangeText={v => set('title', v)}
             placeholder="e.g. National Tech Symposium 2025"
             placeholderTextColor={Colors.textMuted}
+            testID="admin_create_title"
+            accessibilityLabel="admin_create_title"
           />
         </Field>
 
@@ -200,6 +204,8 @@ export default function CreateEventScreen() {
             onChangeText={v => set('shortDescription', v)}
             placeholder="Brief one-line summary (used in cards)"
             placeholderTextColor={Colors.textMuted}
+            testID="admin_create_short_desc"
+            accessibilityLabel="admin_create_short_desc"
           />
         </Field>
 
@@ -214,6 +220,8 @@ export default function CreateEventScreen() {
             multiline
             numberOfLines={5}
             textAlignVertical="top"
+            testID="admin_create_desc"
+            accessibilityLabel="admin_create_desc"
           />
         </Field>
 
@@ -226,6 +234,8 @@ export default function CreateEventScreen() {
               onChangeText={v => set('date', v)}
               placeholder="YYYY-MM-DDTHH:MM"
               placeholderTextColor={Colors.textMuted}
+              testID="admin_create_start_date"
+              accessibilityLabel="admin_create_start_date"
             />
           </Field>
           <Field label="End Date & Time">
@@ -235,6 +245,8 @@ export default function CreateEventScreen() {
               onChangeText={v => set('endDate', v)}
               placeholder="YYYY-MM-DDTHH:MM"
               placeholderTextColor={Colors.textMuted}
+              testID="admin_create_end_date"
+              accessibilityLabel="admin_create_end_date"
             />
           </Field>
         </View>
@@ -247,6 +259,8 @@ export default function CreateEventScreen() {
             onChangeText={v => set('venue', v)}
             placeholder="e.g. Main Auditorium, Block A"
             placeholderTextColor={Colors.textMuted}
+            testID="admin_create_venue"
+            accessibilityLabel="admin_create_venue"
           />
         </Field>
 
@@ -257,6 +271,8 @@ export default function CreateEventScreen() {
             onChangeText={v => set('venueAddress', v)}
             placeholder="Full address"
             placeholderTextColor={Colors.textMuted}
+            testID="admin_create_venue_address"
+            accessibilityLabel="admin_create_venue_address"
           />
         </Field>
 
@@ -268,6 +284,8 @@ export default function CreateEventScreen() {
             onChangeText={v => set('organizer', v)}
             placeholder="e.g. Tech Club"
             placeholderTextColor={Colors.textMuted}
+            testID="admin_create_organizer"
+            accessibilityLabel="admin_create_organizer"
           />
         </Field>
 
@@ -281,6 +299,8 @@ export default function CreateEventScreen() {
               placeholderTextColor={Colors.textMuted}
               keyboardType="email-address"
               autoCapitalize="none"
+              testID="admin_create_org_email"
+              accessibilityLabel="admin_create_org_email"
             />
           </Field>
           <Field label="Organizer Phone">
@@ -291,6 +311,8 @@ export default function CreateEventScreen() {
               placeholder="+91 XXXXX XXXXX"
               placeholderTextColor={Colors.textMuted}
               keyboardType="phone-pad"
+              testID="admin_create_org_phone"
+              accessibilityLabel="admin_create_org_phone"
             />
           </Field>
         </View>
@@ -304,6 +326,8 @@ export default function CreateEventScreen() {
               placeholder="e.g. 200"
               placeholderTextColor={Colors.textMuted}
               keyboardType="number-pad"
+              testID="admin_create_capacity"
+              accessibilityLabel="admin_create_capacity"
             />
           </Field>
           <Field label="Registration Fee (₹)">
@@ -314,6 +338,8 @@ export default function CreateEventScreen() {
               placeholder="0 = Free"
               placeholderTextColor={Colors.textMuted}
               keyboardType="number-pad"
+              testID="admin_create_price"
+              accessibilityLabel="admin_create_price"
             />
           </Field>
         </View>
@@ -340,6 +366,8 @@ export default function CreateEventScreen() {
             onChangeText={v => set('tags', v)}
             placeholder="e.g. AI, ML, Workshop"
             placeholderTextColor={Colors.textMuted}
+            testID="admin_create_tags"
+            accessibilityLabel="admin_create_tags"
           />
         </Field>
 
@@ -354,6 +382,7 @@ export default function CreateEventScreen() {
             onValueChange={v => set('featured', v)}
             trackColor={{ false: Colors.border, true: Colors.primary }}
             thumbColor={Colors.white}
+            testID="admin_create_featured_switch"
           />
         </View>
 
@@ -363,6 +392,8 @@ export default function CreateEventScreen() {
           onPress={handleSubmit}
           disabled={loading}
           activeOpacity={0.85}
+          testID={existing ? "admin_update_event" : "admin_create_event"}
+          accessibilityLabel={existing ? "admin_update_event" : "admin_create_event"}
         >
           <LinearGradient colors={Gradients.aurora} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.submitGrad}>
             <Ionicons name={existing ? 'checkmark-circle-outline' : 'add-circle-outline'} size={22} color="#fff" />

@@ -136,6 +136,8 @@ export default function ProfileScreen() {
             <TouchableOpacity
               style={styles.editBtn}
               onPress={() => editing ? handleSave() : setEditing(true)}
+              testID={editing ? "profile_save" : "profile_edit"}
+              accessibilityLabel={editing ? "profile_save" : "profile_edit"}
             >
               <Ionicons name={editing ? 'checkmark' : 'pencil'} size={16} color={Colors.primary} />
               <Text style={styles.editBtnText}>{editing ? 'Save' : 'Edit'}</Text>
@@ -157,6 +159,8 @@ export default function ProfileScreen() {
                       placeholder="Enter phone number"
                       placeholderTextColor={Colors.textMuted}
                       keyboardType="phone-pad"
+                      testID="profile_phone_input"
+                      accessibilityLabel="profile_phone_input"
                     />
                   ) : (
                     <Text style={styles.infoValue}>{(user as any)[field.key] || '—'}</Text>
@@ -237,7 +241,7 @@ export default function ProfileScreen() {
 
         {/* Logout */}
         <View style={[styles.section, { paddingBottom: 40 }]}>
-          <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout} activeOpacity={0.85}>
+          <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout} activeOpacity={0.85} testID="logout_button" accessibilityLabel="logout_button">
             <Ionicons name="log-out-outline" size={20} color={Colors.error} />
             <Text style={styles.logoutText}>Logout</Text>
           </TouchableOpacity>
