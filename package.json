@@ -11,7 +11,7 @@
     "appium:start": "appium --base-path /",
     "appium:test": "wdio run automation/appium/config/wdio.conf.ts",
     "android:test": "npm run emulator:start && sleep 10 && $ANDROID_HOME/platform-tools/adb reverse tcp:8081 tcp:8081 && $ANDROID_HOME/platform-tools/adb reverse tcp:5005 tcp:5005 && npm run appium:test",
-    "reports": "npx ts-node automation/appium/utils/generateReports.ts"
+    "reports": "npx ts-node automation/appium/utils/generateTestCaseMaster.ts && npx ts-node automation/appium/utils/generateReports.ts"
   },
   "dependencies": {
     "@expo/metro-runtime": "~3.2.3",

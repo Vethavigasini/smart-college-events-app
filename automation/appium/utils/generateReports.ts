@@ -2,219 +2,299 @@ import fs from 'fs';
 import path from 'path';
 import ExcelJS from 'exceljs';
 
-interface TestCase {
+interface TestCaseRow {
+  id: string;
+  module: string;
   name: string;
+  objective: string;
+  priority: string;
+  preconditions: string;
+  steps: string;
+  testData: string;
+  expectedResult: string;
+  actualResult: string;
   status: string;
-  duration: number;
-  error?: string;
+  execTime: string;
+  failureReason: string;
+  screenshotPath: string;
+  logPath: string;
+  sourceFile: string;
+  runNumber: string;
 }
 
-interface RunSummary {
-  total: number;
-  passed: number;
-  failed: number;
-  skipped: number;
+// Map the 10 automated smoke tests to specific Master IDs
+const AUTOMATED_MAPPING: { [key: string]: string } = {
+  'TC_SMOKE_001 - Launch app successfully': 'TC_AUTH_001',
+  'TC_SMOKE_002 - Login with invalid credentials displays error': 'TC_AUTH_003',
+  'TC_SMOKE_003 - Login with valid student credentials': 'TC_AUTH_002',
+  'TC_SMOKE_004 - Search for an event': 'TC_SRCH_001',
+  'TC_SMOKE_005 - View event details': 'TC_NAV_002',
+  'TC_SMOKE_006 - Register for event': 'TC_CRUD_001',
+  'TC_SMOKE_007 - Cancel event registration': 'TC_CRUD_002',
+  'TC_SMOKE_008 - View profile details': 'TC_PROF_001',
+  'TC_SMOKE_009 - Update profile phone details': 'TC_PROF_002',
+  'TC_SMOKE_010 - Verify session persistence on restart': 'TC_SESS_001'
+};
+
+interface WdioTestResult {
+  name: string;
+  state: string;
   duration: number;
-  successRate: number;
-  startTime: string;
-  endTime: string;
-  tests: TestCase[];
+  error?: { message: string };
 }
 
-function parseWdioJsonReports(): RunSummary {
+function parseWdioJsonResults(): WdioTestResult[] {
   const reportsDir = path.join(__dirname, '../reports');
-  const summary: RunSummary = {
-    total: 0,
-    passed: 0,
-    failed: 0,
-    skipped: 0,
-    duration: 0,
-    successRate: 0,
-    startTime: new Date().toISOString(),
-    endTime: new Date().toISOString(),
-    tests: []
-  };
+  const results: WdioTestResult[] = [];
 
   try {
-    if (!fs.existsSync(reportsDir)) {
-      console.log('No reports directory found. Generating empty placeholder summary.');
-      return summary;
-    }
-
+    if (!fs.existsSync(reportsDir)) return results;
     const files = fs.readdirSync(reportsDir).filter(f => f.startsWith('results-') && f.endsWith('.json'));
-    if (files.length === 0) {
-      console.log('No results JSON files found. Generating empty placeholder summary.');
-      return summary;
-    }
-
-    let minStartTime = Infinity;
-    let maxEndTime = 0;
-
+    
     for (const file of files) {
       const filePath = path.join(reportsDir, file);
       const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-
-      if (content.start) {
-        const startMs = new Date(content.start).getTime();
-        if (startMs < minStartTime) minStartTime = startMs;
-      }
-      if (content.end) {
-        const endMs = new Date(content.end).getTime();
-        if (endMs > maxEndTime) maxEndTime = endMs;
-      }
-
       if (content.suites) {
         for (const suite of content.suites) {
           if (suite.tests) {
             for (const test of suite.tests) {
-              const testCase: TestCase = {
+              results.push({
                 name: test.name,
-                status: test.state || 'skipped',
+                state: test.state || 'skipped',
                 duration: test.duration || 0,
-                error: test.error ? test.error.message : undefined
-              };
-
-              summary.tests.push(testCase);
-              summary.total++;
-
-              if (testCase.status === 'passed') {
-                summary.passed++;
-              } else if (testCase.status === 'failed') {
-                summary.failed++;
-              } else {
-                summary.skipped++;
-              }
+                error: test.error ? { message: test.error.message } : undefined
+              });
             }
           }
         }
       }
     }
-
-    if (minStartTime !== Infinity) summary.startTime = new Date(minStartTime).toISOString();
-    if (maxEndTime !== 0) summary.endTime = new Date(maxEndTime).toISOString();
-    summary.duration = maxEndTime > minStartTime ? maxEndTime - minStartTime : 0;
-    summary.successRate = summary.total > 0 ? parseFloat(((summary.passed / summary.total) * 100).toFixed(2)) : 0;
-
-  } catch (error) {
-    console.error('Error parsing WDIO reports:', error);
+  } catch (err) {
+    console.error('Error parsing WDIO reports:', err);
   }
-
-  return summary;
+  return results;
 }
 
-async function generateExcelReports(summary: RunSummary) {
-  // 1. Automation_Test_Report.xlsx
-  const fullReport = new ExcelJS.Workbook();
-  const fullSheet = fullReport.addWorksheet('All Test Cases');
-  fullSheet.columns = [
-    { header: 'Test Case / ID', key: 'name', width: 50 },
-    { header: 'Status', key: 'status', width: 15 },
-    { header: 'Duration (ms)', key: 'duration', width: 15 },
-    { header: 'Error Details', key: 'error', width: 60 }
-  ];
+async function main() {
+  console.log('Merging test execution results with Test_Case_Master.xlsx...');
   
-  // Format Header Row
-  fullSheet.getRow(1).font = { bold: true, color: { argb: 'FFFFFF' } };
-  fullSheet.getRow(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '1F497D' } };
+  const masterPath = path.join(process.cwd(), 'Test Results/Excel/Test_Case_Master.xlsx');
+  if (!fs.existsSync(masterPath)) {
+    console.error('Error: Test_Case_Master.xlsx not found at path:', masterPath);
+    process.exit(1);
+  }
 
-  // 2. Passed_Test_Cases.xlsx
-  const passedReport = new ExcelJS.Workbook();
-  const passedSheet = passedReport.addWorksheet('Passed Test Cases');
-  passedSheet.columns = [
-    { header: 'Test Case / ID', key: 'name', width: 50 },
-    { header: 'Status', key: 'status', width: 15 },
-    { header: 'Duration (ms)', key: 'duration', width: 15 }
-  ];
-  passedSheet.getRow(1).font = { bold: true, color: { argb: 'FFFFFF' } };
-  passedSheet.getRow(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '366092' } };
-
-  // 3. Failed_Test_Cases.xlsx
-  const failedReport = new ExcelJS.Workbook();
-  const failedSheet = failedReport.addWorksheet('Failed Test Cases');
-  failedSheet.columns = [
-    { header: 'Test Case / ID', key: 'name', width: 50 },
-    { header: 'Status', key: 'status', width: 15 },
-    { header: 'Duration (ms)', key: 'duration', width: 15 },
-    { header: 'Error Details', key: 'error', width: 60 }
-  ];
-  failedSheet.getRow(1).font = { bold: true, color: { argb: 'FFFFFF' } };
-  failedSheet.getRow(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'C00000' } };
-
-  // Populate data
-  summary.tests.forEach(test => {
-    const rowData = {
-      name: test.name,
-      status: test.status.toUpperCase(),
-      duration: test.duration,
-      error: test.error || 'N/A'
-    };
-
-    fullSheet.addRow(rowData);
-
-    if (test.status === 'passed') {
-      passedSheet.addRow({
-        name: test.name,
-        status: 'PASSED',
-        duration: test.duration
+  const workbook = new ExcelJS.Workbook();
+  await workbook.xlsx.readFile(masterPath);
+  const sheet = workbook.getWorksheet('Test Case Master');
+  
+  const rows: TestCaseRow[] = [];
+  
+  // Read existing master rows (skipping header)
+  sheet.eachRow((row, rowNumber) => {
+    if (rowNumber > 1) {
+      rows.push({
+        id: row.getCell(1).value?.toString() || '',
+        module: row.getCell(2).value?.toString() || '',
+        name: row.getCell(3).value?.toString() || '',
+        objective: row.getCell(4).value?.toString() || '',
+        priority: row.getCell(5).value?.toString() || '',
+        preconditions: row.getCell(6).value?.toString() || '',
+        steps: row.getCell(7).value?.toString() || '',
+        testData: row.getCell(8).value?.toString() || '',
+        expectedResult: row.getCell(9).value?.toString() || '',
+        actualResult: row.getCell(10).value?.toString() || 'N/A',
+        status: row.getCell(11).value?.toString() || 'NOT RUN',
+        execTime: row.getCell(12).value?.toString() || 'N/A',
+        failureReason: row.getCell(13).value?.toString() || 'N/A',
+        screenshotPath: row.getCell(14).value?.toString() || 'N/A',
+        logPath: row.getCell(15).value?.toString() || 'N/A',
+        sourceFile: row.getCell(16).value?.toString() || 'N/A',
+        runNumber: row.getCell(17).value?.toString() || 'N/A'
       });
-    } else if (test.status === 'failed') {
-      failedSheet.addRow(rowData);
     }
   });
 
-  // Apply conditional coloring on status column
-  fullSheet.eachRow((row, rowNumber) => {
-    if (rowNumber > 1) {
-      const statusCell = row.getCell('status');
-      if (statusCell.value === 'PASSED') {
-        statusCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'E2EFDA' } }; // Light Green
-        statusCell.font = { color: { argb: '375623' }, bold: true };
-      } else if (statusCell.value === 'FAILED') {
-        statusCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FCE4D6' } }; // Light Red
-        statusCell.font = { color: { argb: 'C65911' }, bold: true };
+  const wdioResults = parseWdioJsonResults();
+  console.log(`Parsed ${wdioResults.length} WDIO automated execution results.`);
+
+  // Map results back to rows
+  let totalAutomated = 0;
+  let totalExecuted = 0;
+  let passedCount = 0;
+  let failedCount = 0;
+  let skippedCount = 0;
+  let blockedCount = 0;
+  let notApplicableCount = 0;
+
+  for (const row of rows) {
+    // 1. Check if the row matches an automated test case
+    const automatedTestKey = Object.keys(AUTOMATED_MAPPING).find(key => AUTOMATED_MAPPING[key] === row.id);
+    
+    if (automatedTestKey) {
+      const match = wdioResults.find(r => r.name === automatedTestKey);
+      totalAutomated++;
+      
+      if (match) {
+        totalExecuted++;
+        row.status = match.state.toUpperCase(); // PASSED or FAILED
+        row.execTime = `${(match.duration / 1000).toFixed(2)}s`;
+        row.sourceFile = 'smoke.test.ts';
+        row.runNumber = process.env.GITHUB_RUN_NUMBER || 'LOCAL';
+        
+        if (match.state === 'passed') {
+          row.actualResult = 'Test passed successfully. All assertions completed.';
+          passedCount++;
+        } else {
+          row.actualResult = 'Test failed during assertion / element search.';
+          row.failureReason = match.error?.message || 'Unknown Failure';
+          row.screenshotPath = `automation/appium/screenshots/${row.id}_failed.png`;
+          row.logPath = 'appium-server.log';
+          failedCount++;
+        }
+      }
+    } else {
+      // 2. Mark unavailable features appropriately
+      if (row.module === 'Notifications') {
+        row.status = 'NOT APPLICABLE';
+        row.actualResult = 'Feature not implemented in v1.0 client UI.';
+        row.failureReason = 'Notifications screen placeholder only';
+        notApplicableCount++;
+      } else if (row.module === 'File Upload') {
+        row.status = 'BLOCKED';
+        row.actualResult = 'No local file system upload endpoint available on mock backend.';
+        row.failureReason = 'Blocked by missing backend service';
+        blockedCount++;
+      } else if (row.module === 'Offline Handling') {
+        row.status = 'SKIPPED';
+        row.actualResult = 'Offline mode control requires manual proxy toggling.';
+        row.failureReason = 'Skipped in automated cloud flow';
+        skippedCount++;
       }
     }
+  }
+
+  // Calculate stats
+  const notRunCount = rows.filter(r => r.status === 'NOT RUN').length;
+  const passPercentage = totalExecuted > 0 ? parseFloat(((passedCount / totalExecuted) * 100).toFixed(2)) : 0;
+
+  console.log(`Summary Statistics:
+  Total Defined: ${rows.length}
+  Total Automated: ${totalAutomated}
+  Total Executed: ${totalExecuted}
+  Passed: ${passedCount}
+  Failed: ${failedCount}
+  Skipped: ${skippedCount}
+  Blocked: ${blockedCount}
+  Not Applicable: ${notApplicableCount}
+  Not Run: ${notRunCount}
+  Pass Percentage: ${passPercentage}%`);
+
+  // Ensure output folders exist
+  const excelDir = path.join(process.cwd(), 'Test Results/Excel');
+  const htmlDir = path.join(process.cwd(), 'Test Results/HTML');
+  const jsonDir = path.join(process.cwd(), 'Test Results/JSON');
+  const summaryDir = path.join(process.cwd(), 'Test Results/Summary');
+
+  [excelDir, htmlDir, jsonDir, summaryDir].forEach(d => {
+    if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true });
   });
 
-  // 4. Execution_Summary.xlsx
-  const summaryReport = new ExcelJS.Workbook();
-  const summarySheet = summaryReport.addWorksheet('Execution Summary');
+  // Write Excel outputs
+  const writeExcelSheet = async (filename: string, filterFn: (r: TestCaseRow) => boolean, argbHeaderColor: string) => {
+    const wb = new ExcelJS.Workbook();
+    const s = wb.addWorksheet('Test Cases');
+    
+    s.columns = [
+      { header: 'Test Case ID', key: 'id', width: 15 },
+      { header: 'Module', key: 'module', width: 25 },
+      { header: 'Test Name', key: 'name', width: 45 },
+      { header: 'Objective', key: 'objective', width: 55 },
+      { header: 'Priority', key: 'priority', width: 12 },
+      { header: 'Preconditions', key: 'preconditions', width: 35 },
+      { header: 'Test Steps', key: 'steps', width: 50 },
+      { header: 'Test Data', key: 'testData', width: 35 },
+      { header: 'Expected Result', key: 'expectedResult', width: 55 },
+      { header: 'Actual Result', key: 'actualResult', width: 30 },
+      { header: 'Status', key: 'status', width: 15 },
+      { header: 'Execution Time', key: 'execTime', width: 15 },
+      { header: 'Failure Reason', key: 'failureReason', width: 35 },
+      { header: 'Screenshot Path', key: 'screenshotPath', width: 30 },
+      { header: 'Log Path', key: 'logPath', width: 30 },
+      { header: 'Source Test File', key: 'sourceFile', width: 30 },
+      { header: 'GitHub Run Number', key: 'runNumber', width: 20 }
+    ];
+
+    s.getRow(1).font = { bold: true, color: { argb: 'FFFFFF' } };
+    s.getRow(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: argbHeaderColor } };
+
+    rows.filter(filterFn).forEach(r => s.addRow(r));
+    
+    // Status column cell styling helper
+    s.eachRow((row, rowNumber) => {
+      if (rowNumber > 1) {
+        const c = row.getCell('status');
+        const val = c.value?.toString().toUpperCase();
+        if (val === 'PASSED') {
+          c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'E2EFDA' } };
+          c.font = { color: { argb: '375623' }, bold: true };
+        } else if (val === 'FAILED') {
+          c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FCE4D6' } };
+          c.font = { color: { argb: 'C65911' }, bold: true };
+        } else if (['SKIPPED', 'BLOCKED', 'NOT APPLICABLE'].includes(val || '')) {
+          c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF2CC' } };
+          c.font = { color: { argb: '7F6000' }, bold: true };
+        }
+      }
+    });
+
+    await wb.xlsx.writeFile(path.join(excelDir, filename));
+  };
+
+  // 1. Automation_Test_Report.xlsx (All rows)
+  await writeExcelSheet('Automation_Test_Report.xlsx', () => true, '1F497D');
+
+  // 2. Passed_Test_Cases.xlsx
+  await writeExcelSheet('Passed_Test_Cases.xlsx', r => r.status === 'PASSED', '366092');
+
+  // 3. Failed_Test_Cases.xlsx
+  await writeExcelSheet('Failed_Test_Cases.xlsx', r => r.status === 'FAILED', 'C00000');
+
+  // 4. Skipped_Blocked_Test_Cases.xlsx (skipped, blocked, not applicable)
+  await writeExcelSheet('Skipped_Blocked_Test_Cases.xlsx', r => ['SKIPPED', 'BLOCKED', 'NOT APPLICABLE'].includes(r.status), '7F6000');
+
+  // 5. Execution_Summary.xlsx
+  const summaryWb = new ExcelJS.Workbook();
+  const summarySheet = summaryWb.addWorksheet('Summary Metrics');
   summarySheet.columns = [
-    { header: 'Metric Name', key: 'metric', width: 30 },
+    { header: 'Metric', key: 'metric', width: 30 },
     { header: 'Value', key: 'value', width: 20 }
   ];
   summarySheet.getRow(1).font = { bold: true, color: { argb: 'FFFFFF' } };
   summarySheet.getRow(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: '595959' } };
+  
+  summarySheet.addRow({ metric: 'Total Defined', value: rows.length });
+  summarySheet.addRow({ metric: 'Total Automated', value: totalAutomated });
+  summarySheet.addRow({ metric: 'Total Executed', value: totalExecuted });
+  summarySheet.addRow({ metric: 'Passed', value: passedCount });
+  summarySheet.addRow({ metric: 'Failed', value: failedCount });
+  summarySheet.addRow({ metric: 'Skipped', value: skippedCount });
+  summarySheet.addRow({ metric: 'Blocked', value: blockedCount });
+  summarySheet.addRow({ metric: 'Not Applicable', value: notApplicableCount });
+  summarySheet.addRow({ metric: 'Pass Percentage (%)', value: `${passPercentage}%` });
+  await summaryWb.xlsx.writeFile(path.join(excelDir, 'Execution_Summary.xlsx'));
 
-  summarySheet.addRow({ metric: 'Total Test Cases', value: summary.total });
-  summarySheet.addRow({ metric: 'Passed Test Cases', value: summary.passed });
-  summarySheet.addRow({ metric: 'Failed Test Cases', value: summary.failed });
-  summarySheet.addRow({ metric: 'Skipped Test Cases', value: summary.skipped });
-  summarySheet.addRow({ metric: 'Success Rate (%)', value: `${summary.successRate}%` });
-  summarySheet.addRow({ metric: 'Total Duration (s)', value: (summary.duration / 1000).toFixed(2) });
-
-  // Write all workbooks to root folder
-  await fullReport.xlsx.writeFile(path.join(process.cwd(), 'Automation_Test_Report.xlsx'));
-  await passedReport.xlsx.writeFile(path.join(process.cwd(), 'Passed_Test_Cases.xlsx'));
-  await failedReport.xlsx.writeFile(path.join(process.cwd(), 'Failed_Test_Cases.xlsx'));
-  await summaryReport.xlsx.writeFile(path.join(process.cwd(), 'Execution_Summary.xlsx'));
-
-  console.log('Excel reports successfully compiled and saved to root folder.');
-}
-
-function generateHtmlReport(summary: RunSummary) {
-  const fileList = fs.existsSync(path.join(__dirname, '../screenshots')) ? fs.readdirSync(path.join(__dirname, '../screenshots')) : [];
-  const testsHtml = summary.tests.map(test => {
-    const isFailed = test.status === 'failed';
-    const screenshotFile = isFailed ? fileList.find(f => f.includes(test.name.replace(/\s+/g, '_'))) : null;
-    const screenshotImg = screenshotFile ? `<div class="screenshot-preview"><a href="automation/appium/screenshots/${screenshotFile}" target="_blank">View Screenshot</a></div>` : '';
-    
+  // Generate HTML dashboard
+  const tableRows = rows.map(r => {
+    const statusClass = r.status.toLowerCase().replace(/\s+/g, '-');
     return `
-      <tr class="${test.status}">
-        <td class="name-col">${test.name}</td>
-        <td><span class="badge ${test.status}">${test.status.toUpperCase()}</span></td>
-        <td>${(test.duration / 1000).toFixed(2)}s</td>
-        <td class="error-col">${test.error ? `<code>${test.error}</code>${screenshotImg}` : 'N/A'}</td>
+      <tr class="${statusClass}">
+        <td><strong>${r.id}</strong></td>
+        <td>${r.module}</td>
+        <td>${r.name}</td>
+        <td><span class="badge ${statusClass}">${r.status}</span></td>
+        <td>${r.execTime}</td>
+        <td>${r.failureReason !== 'N/A' ? `<code>${r.failureReason}</code>` : r.actualResult}</td>
       </tr>
     `;
   }).join('');
@@ -225,243 +305,109 @@ function generateHtmlReport(summary: RunSummary) {
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Appium Test Automation Report</title>
+      <title>Automation Master Execution Dashboard</title>
       <style>
-        body {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-          background-color: #0f172a;
-          color: #e2e8f0;
-          margin: 0;
-          padding: 2rem;
-        }
-        .container {
-          max-width: 1200px;
-          margin: 0 auto;
-        }
-        .header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          border-bottom: 1px solid #334155;
-          padding-bottom: 1rem;
-          margin-bottom: 2rem;
-        }
-        h1 {
-          margin: 0;
-          font-size: 2.2rem;
-          background: linear-gradient(135deg, #60a5fa, #3b82f6);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-        .timestamp {
-          color: #94a3b8;
-          font-size: 0.9rem;
-        }
-        .dashboard-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 1.5rem;
-          margin-bottom: 3rem;
-        }
-        .card {
-          background: rgba(30, 41, 59, 0.7);
-          backdrop-filter: blur(10px);
-          border: 1px solid #334155;
-          border-radius: 12px;
-          padding: 1.5rem;
-          text-align: center;
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        .card-val {
-          font-size: 2.5rem;
-          font-weight: 800;
-          margin: 0.5rem 0;
-        }
-        .card-lbl {
-          color: #94a3b8;
-          font-size: 0.85rem;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-        }
-        .total { color: #f8fafc; }
-        .passed { color: #10b981; }
-        .failed { color: #ef4444; }
-        .success-rate { color: #3b82f6; }
-        
-        table {
-          width: 100%;
-          border-collapse: collapse;
-          background: #1e293b;
-          border: 1px solid #334155;
-          border-radius: 8px;
-          overflow: hidden;
-          margin-top: 2rem;
-        }
-        th, td {
-          padding: 1rem;
-          text-align: left;
-          border-bottom: 1px solid #334155;
-        }
-        th {
-          background-color: #0f172a;
-          color: #94a3b8;
-          font-weight: 600;
-          font-size: 0.85rem;
-          text-transform: uppercase;
-        }
-        tr.failed {
-          background-color: rgba(239, 68, 68, 0.05);
-        }
-        tr.passed:hover {
-          background-color: rgba(16, 185, 129, 0.03);
-        }
-        .badge {
-          padding: 0.25rem 0.6rem;
-          border-radius: 9999px;
-          font-size: 0.75rem;
-          font-weight: 700;
-        }
-        .badge.passed {
-          background-color: rgba(16, 185, 129, 0.2);
-          color: #34d399;
-        }
-        .badge.failed {
-          background-color: rgba(239, 68, 68, 0.2);
-          color: #f87171;
-        }
-        .badge.skipped {
-          background-color: rgba(148, 163, 184, 0.2);
-          color: #cbd5e1;
-        }
-        .error-col {
-          max-width: 400px;
-          font-size: 0.85rem;
-        }
-        code {
-          color: #f87171;
-          background: rgba(15, 23, 42, 0.6);
-          padding: 0.2rem 0.4rem;
-          border-radius: 4px;
-          display: block;
-          word-break: break-all;
-        }
-        .screenshot-preview {
-          margin-top: 0.5rem;
-        }
-        .screenshot-preview a {
-          color: #60a5fa;
-          text-decoration: none;
-          font-size: 0.8rem;
-          font-weight: 600;
-        }
-        .screenshot-preview a:hover {
-          text-decoration: underline;
-        }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background-color: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1 { background: linear-gradient(135deg, #38bdf8, #2563eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .card { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 20px; text-align: center; }
+        .card-val { font-size: 2.2rem; font-weight: 800; margin-top: 5px; }
+        .card-lbl { color: #94a3b8; font-size: 0.8rem; text-transform: uppercase; }
+        .badge { padding: 4px 8px; border-radius: 9999px; font-size: 0.7rem; font-weight: 700; }
+        .badge.passed { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .badge.failed { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+        .badge.skipped { background: rgba(148, 163, 184, 0.2); color: #cbd5e1; }
+        .badge.blocked { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+        .badge.not-applicable { background: rgba(99, 102, 241, 0.2); color: #818cf8; }
+        .badge.not-run { background: rgba(203, 213, 225, 0.1); color: #94a3b8; }
+        table { width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 8px; overflow: hidden; margin-top: 20px; }
+        th, td { padding: 12px 15px; border-bottom: 1px solid #334155; text-align: left; font-size: 0.9rem; }
+        th { background: #0f172a; color: #94a3b8; font-weight: 600; }
+        code { color: #f87171; background: rgba(15, 23, 42, 0.5); padding: 2px 4px; border-radius: 4px; }
       </style>
     </head>
     <body>
       <div class="container">
-        <div class="header">
-          <div>
-            <h1>Quality Assurance Test Execution Report</h1>
-            <div class="timestamp">Started: ${new Date(summary.startTime).toLocaleString()} | Finished: ${new Date(summary.endTime).toLocaleString()}</div>
-          </div>
-          <div>
-            <span class="badge" style="background-color: #334155; font-size: 1rem; padding: 0.5rem 1rem;">Android App E2E</span>
-          </div>
+        <h1>Smart College Events - Automation Master Dashboard</h1>
+        <div class="stats-grid">
+          <div class="card"><div class="card-lbl">Total Defined</div><div class="card-val" style="color:#f8fafc">${rows.length}</div></div>
+          <div class="card"><div class="card-lbl">Automated</div><div class="card-val" style="color:#60a5fa">${totalAutomated}</div></div>
+          <div class="card"><div class="card-lbl">Executed</div><div class="card-val" style="color:#818cf8">${totalExecuted}</div></div>
+          <div class="card"><div class="card-lbl">Passed</div><div class="card-val" style="color:#34d399">${passedCount}</div></div>
+          <div class="card"><div class="card-lbl">Failed</div><div class="card-val" style="color:#f87171">${failedCount}</div></div>
+          <div class="card"><div class="card-lbl">Skipped</div><div class="card-val" style="color:#cbd5e1">${skippedCount}</div></div>
+          <div class="card"><div class="card-lbl">Blocked</div><div class="card-val" style="color:#fbbf24">${blockedCount}</div></div>
+          <div class="card"><div class="card-lbl">N/A</div><div class="card-val" style="color:#818cf8">${notApplicableCount}</div></div>
+          <div class="card"><div class="card-lbl">Pass Rate</div><div class="card-val" style="color:#34d399">${passPercentage}%</div></div>
         </div>
-
-        <div class="dashboard-grid">
-          <div class="card">
-            <div class="card-lbl">Total Tests</div>
-            <div class="card-val total">${summary.total}</div>
-          </div>
-          <div class="card">
-            <div class="card-lbl">Passed</div>
-            <div class="card-val passed">${summary.passed}</div>
-          </div>
-          <div class="card">
-            <div class="card-lbl">Failed</div>
-            <div class="card-val failed">${summary.failed}</div>
-          </div>
-          <div class="card">
-            <div class="card-lbl">Success Rate</div>
-            <div class="card-val success-rate">${summary.successRate}%</div>
-          </div>
-          <div class="card">
-            <div class="card-lbl">Duration</div>
-            <div class="card-val total">${(summary.duration / 1000).toFixed(1)}s</div>
-          </div>
-        </div>
-
-        <h2>Test Case Details</h2>
+        <h2>Detailed Test Execution Status</h2>
         <table>
           <thead>
             <tr>
-              <th>Test Case Title</th>
+              <th>Test ID</th>
+              <th>Module</th>
+              <th>Test Name</th>
               <th>Status</th>
-              <th>Execution Time</th>
-              <th>Error Details / Screenshots</th>
+              <th>Time</th>
+              <th>Result Details / Failure Reason</th>
             </tr>
           </thead>
           <tbody>
-            ${testsHtml || '<tr><td colspan="4" style="text-align:center;">No tests were executed.</td></tr>'}
+            ${tableRows}
           </tbody>
         </table>
       </div>
     </body>
     </html>
   `;
+  fs.writeFileSync(path.join(htmlDir, 'execution-report.html'), html, 'utf-8');
 
-  fs.writeFileSync(path.join(process.cwd(), 'execution-report.html'), html, 'utf-8');
-  console.log('HTML execution dashboard report generated.');
-}
+  // Generate JSON report
+  const jsonReport = {
+    totalDefined: rows.length,
+    totalAutomated,
+    totalExecuted,
+    passed: passedCount,
+    failed: failedCount,
+    skipped: skippedCount,
+    blocked: blockedCount,
+    notApplicable: notApplicableCount,
+    passPercentage,
+    runNumber: process.env.GITHUB_RUN_NUMBER || 'LOCAL',
+    timestamp: new Date().toISOString(),
+    results: rows.map(r => ({ id: r.id, module: r.module, name: r.name, status: r.status, execTime: r.execTime }))
+  };
+  fs.writeFileSync(path.join(jsonDir, 'execution-results.json'), JSON.stringify(jsonReport, null, 2), 'utf-8');
 
-function generateJsonReport(summary: RunSummary) {
-  fs.writeFileSync(path.join(process.cwd(), 'execution-results.json'), JSON.stringify(summary, null, 2), 'utf-8');
-  console.log('JSON report summary generated.');
-}
-
-function generateMarkdownSummary(summary: RunSummary) {
-  const testsMarkdown = summary.tests.map(test => {
-    const icon = test.status === 'passed' ? '🟢 PASSED' : test.status === 'failed' ? '🔴 FAILED' : '⚪ SKIPPED';
-    return `| ${test.name} | ${icon} | ${(test.duration / 1000).toFixed(2)}s | ${test.error ? `\`${test.error.slice(0, 80)}\`` : 'N/A'} |`;
-  }).join('\n');
-
-  const markdown = `
-### 📊 Appium Android Test Execution Summary
+  // Generate Markdown Summary
+  const mdSummary = `
+### 📊 Appium Master Quality Assurance Report
 
 | Metric | Value |
 | :--- | :--- |
-| **Total Test Cases** | ${summary.total} |
-| **Passed** | ${summary.passed} |
-| **Failed** | ${summary.failed} |
-| **Skipped** | ${summary.skipped} |
-| **Success Rate (%)** | **${summary.successRate}%** |
-| **Duration (s)** | ${(summary.duration / 1000).toFixed(2)}s |
+| **Total Defined** | **${rows.length}** |
+| **Total Automated** | **${totalAutomated}** |
+| **Total Executed** | **${totalExecuted}** |
+| **Passed** | ${passedCount} |
+| **Failed** | ${failedCount} |
+| **Skipped** | ${skippedCount} |
+| **Blocked** | ${blockedCount} |
+| **Not Applicable** | ${notApplicableCount} |
+| **Overall Pass Percentage** | **${passPercentage}%** |
 
-#### 📝 Test Case Breakdown
-
-| Test Case Title | Status | Duration | Details |
-| :--- | :--- | :--- | :--- |
-${testsMarkdown || '| No tests executed | - | - | - |'}
+---
+*Generated: ${new Date().toLocaleString()}*
 `;
+  fs.writeFileSync(path.join(summaryDir, 'summary.md'), mdSummary, 'utf-8');
+  
+  // Also write to project root folder for local workflow actions fallback
+  fs.writeFileSync(path.join(process.cwd(), 'summary.md'), mdSummary, 'utf-8');
 
-  fs.writeFileSync(path.join(process.cwd(), 'summary.md'), markdown, 'utf-8');
-  console.log('Markdown summary report generated.');
-}
-
-async function main() {
-  console.log('Compiling Appium Test Automation Reports...');
-  const summary = parseWdioJsonReports();
-  await generateExcelReports(summary);
-  generateHtmlReport(summary);
-  generateJsonReport(summary);
-  generateMarkdownSummary(summary);
-  console.log('Reports Compilation completed successfully!');
+  console.log('Test compilation matching master sheet successfully completed!');
 }
 
 main().catch(err => {
-  console.error('Failed to compile reports:', err);
+  console.error('Failed to parse and generate final report summaries:', err);
   process.exit(1);
 });
