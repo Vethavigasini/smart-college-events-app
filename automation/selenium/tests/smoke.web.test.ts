@@ -70,14 +70,11 @@ describe('Smart College Events - Web E2E Smoke Tests', function () {
           fs.mkdirSync(path.dirname(logFile), { recursive: true });
         }
         fs.appendFileSync(logFile, `\n--- FAILURE LOG: ${testTitle} ---\n` + JSON.stringify(logs, null, 2));
-      } catch (err) {
-        console.error('Failed to capture logs or screenshot:', err);
-      }
+      } catch (err) {}
     }
   });
 
   it('TC_WEB_001 - Launch application and verify homepage loads', async () => {
-    console.log(`Navigating to BASE_URL: ${baseUrl}`);
     await driver.get(baseUrl);
     
     // Allow loading delay

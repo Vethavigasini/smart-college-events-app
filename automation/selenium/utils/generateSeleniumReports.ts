@@ -50,7 +50,10 @@ function parseMochaJsonResult(): MochaTestResult[] {
       console.log('No results.json found. Generating empty placeholder list.');
       return results;
     }
-    const content = JSON.parse(fs.readFileSync(resultFile, 'utf-8'));
+    const raw = fs.readFileSync(resultFile, 'utf-8');
+    const jsonStart = raw.indexOf('{');
+    if (jsonStart === -1) return results;
+    const content = JSON.parse(raw.substring(jsonStart));
     if (content.tests) {
       for (const t of content.tests) {
         results.push({

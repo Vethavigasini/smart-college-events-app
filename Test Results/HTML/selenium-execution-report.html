@@ -32,13 +32,13 @@
         <div class="stats-grid">
           <div class="card"><div class="card-lbl">Total Defined</div><div class="card-val" style="color:#f8fafc">470</div></div>
           <div class="card"><div class="card-lbl">Automated</div><div class="card-val" style="color:#60a5fa">10</div></div>
-          <div class="card"><div class="card-lbl">Executed</div><div class="card-val" style="color:#818cf8">0</div></div>
-          <div class="card"><div class="card-lbl">Passed</div><div class="card-val" style="color:#34d399">0</div></div>
-          <div class="card"><div class="card-lbl">Failed</div><div class="card-val" style="color:#f87171">0</div></div>
+          <div class="card"><div class="card-lbl">Executed</div><div class="card-val" style="color:#818cf8">10</div></div>
+          <div class="card"><div class="card-lbl">Passed</div><div class="card-val" style="color:#34d399">1</div></div>
+          <div class="card"><div class="card-lbl">Failed</div><div class="card-val" style="color:#f87171">9</div></div>
           <div class="card"><div class="card-lbl">Skipped</div><div class="card-val" style="color:#cbd5e1">30</div></div>
           <div class="card"><div class="card-lbl">Blocked</div><div class="card-val" style="color:#fbbf24">30</div></div>
           <div class="card"><div class="card-lbl">N/A</div><div class="card-val" style="color:#818cf8">30</div></div>
-          <div class="card"><div class="card-lbl">Pass Rate</div><div class="card-val" style="color:#34d399">0%</div></div>
+          <div class="card"><div class="card-lbl">Pass Rate</div><div class="card-val" style="color:#34d399">10%</div></div>
         </div>
         <h2>Detailed Web Test Execution Status</h2>
         <table>
@@ -54,31 +54,33 @@
           </thead>
           <tbody>
             
-      <tr class="not-run">
+      <tr class="failed">
         <td><strong>TC_WEB_AUTH_001</strong></td>
         <td>Authentication</td>
         <td>Web login with valid student credentials - Case 1</td>
-        <td><span class="badge not-run">NOT RUN</span></td>
-        <td>N/A</td>
-        <td>N/A</td>
+        <td><span class="badge failed">FAILED</span></td>
+        <td>5.35s</td>
+        <td><code>expected false to be true</code></td>
       </tr>
     
-      <tr class="not-run">
+      <tr class="failed">
         <td><strong>TC_WEB_AUTH_002</strong></td>
         <td>Authentication</td>
         <td>Web login empty fields verification - Case 2</td>
-        <td><span class="badge not-run">NOT RUN</span></td>
-        <td>N/A</td>
-        <td>N/A</td>
+        <td><span class="badge failed">FAILED</span></td>
+        <td>15.05s</td>
+        <td><code>Waiting for element to be located By(css selector, [data-testid="login_email"], input[type="email"])
+Wait timed out after 15051ms</code></td>
       </tr>
     
-      <tr class="not-run">
+      <tr class="failed">
         <td><strong>TC_WEB_AUTH_003</strong></td>
         <td>Authentication</td>
         <td>Web login with valid student credentials - Case 3</td>
-        <td><span class="badge not-run">NOT RUN</span></td>
-        <td>N/A</td>
-        <td>N/A</td>
+        <td><span class="badge failed">FAILED</span></td>
+        <td>15.11s</td>
+        <td><code>Waiting for element to be located By(css selector, [data-testid="login_email"], input[type="email"])
+Wait timed out after 15105ms</code></td>
       </tr>
     
       <tr class="not-run">
@@ -594,22 +596,24 @@
         <td>N/A</td>
       </tr>
     
-      <tr class="not-run">
+      <tr class="failed">
         <td><strong>TC_WEB_NAV_001</strong></td>
         <td>Navigation</td>
         <td>Click header back button in details page - Case 1</td>
-        <td><span class="badge not-run">NOT RUN</span></td>
-        <td>N/A</td>
-        <td>N/A</td>
+        <td><span class="badge failed">FAILED</span></td>
+        <td>15.05s</td>
+        <td><code>Waiting for element to be located By(css selector, [data-testid^="event_card_"], div[role="button"])
+Wait timed out after 15054ms</code></td>
       </tr>
     
-      <tr class="not-run">
+      <tr class="failed">
         <td><strong>TC_WEB_NAV_002</strong></td>
         <td>Navigation</td>
         <td>Click header back button in details page - Case 2</td>
-        <td><span class="badge not-run">NOT RUN</span></td>
-        <td>N/A</td>
-        <td>N/A</td>
+        <td><span class="badge failed">FAILED</span></td>
+        <td>15.07s</td>
+        <td><code>Waiting for element to be located By(css selector, [data-testid="tab_profile"])
+Wait timed out after 15070ms</code></td>
       </tr>
     
       <tr class="not-run">
@@ -1134,13 +1138,14 @@
         <td>N/A</td>
       </tr>
     
-      <tr class="not-run">
+      <tr class="failed">
         <td><strong>TC_WEB_FORM_001</strong></td>
         <td>Forms</td>
         <td>Fill event creation details - Case 1</td>
-        <td><span class="badge not-run">NOT RUN</span></td>
-        <td>N/A</td>
-        <td>N/A</td>
+        <td><span class="badge failed">FAILED</span></td>
+        <td>15.07s</td>
+        <td><code>Waiting for element to be located By(css selector, [data-testid="profile_edit"])
+Wait timed out after 15065ms</code></td>
       </tr>
     
       <tr class="not-run">
@@ -1494,31 +1499,33 @@
         <td>N/A</td>
       </tr>
     
-      <tr class="not-run">
+      <tr class="failed">
         <td><strong>TC_WEB_CRUD_001</strong></td>
         <td>CRUD</td>
         <td>Student registration for event on web client - Case 1</td>
-        <td><span class="badge not-run">NOT RUN</span></td>
-        <td>N/A</td>
-        <td>N/A</td>
+        <td><span class="badge failed">FAILED</span></td>
+        <td>15.11s</td>
+        <td><code>Waiting for element to be located By(css selector, [data-testid="dashboard_search"], input[placeholder*="Search"])
+Wait timed out after 15110ms</code></td>
       </tr>
     
-      <tr class="not-run">
+      <tr class="passed">
         <td><strong>TC_WEB_CRUD_002</strong></td>
         <td>CRUD</td>
         <td>Student cancellation of event registration on web - Case 2</td>
-        <td><span class="badge not-run">NOT RUN</span></td>
-        <td>N/A</td>
-        <td>N/A</td>
+        <td><span class="badge passed">PASSED</span></td>
+        <td>0.01s</td>
+        <td>Web elements located and assertions completed successfully.</td>
       </tr>
     
-      <tr class="not-run">
+      <tr class="failed">
         <td><strong>TC_WEB_CRUD_003</strong></td>
         <td>CRUD</td>
         <td>Student registration for event on web client - Case 3</td>
-        <td><span class="badge not-run">NOT RUN</span></td>
-        <td>N/A</td>
-        <td>N/A</td>
+        <td><span class="badge failed">FAILED</span></td>
+        <td>15.03s</td>
+        <td><code>Waiting for element to be located By(css selector, [data-testid="event_detail_back"])
+Wait timed out after 15023ms</code></td>
       </tr>
     
       <tr class="not-run">
@@ -2484,13 +2491,13 @@
         <td>N/A</td>
       </tr>
     
-      <tr class="not-run">
+      <tr class="failed">
         <td><strong>TC_WEB_SESS_001</strong></td>
         <td>Session Management</td>
         <td>Verify session persistence across reload - Case 1</td>
-        <td><span class="badge not-run">NOT RUN</span></td>
-        <td>N/A</td>
-        <td>N/A</td>
+        <td><span class="badge failed">FAILED</span></td>
+        <td>5.08s</td>
+        <td><code>expected false to be true</code></td>
       </tr>
     
       <tr class="not-run">
