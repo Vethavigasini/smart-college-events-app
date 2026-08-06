@@ -1,0 +1,26 @@
+{
+  "metrics": {
+    "vus": 100,
+    "duration": "1m 00s",
+    "totalRequests": 12450,
+    "rps": 207.5,
+    "successfulRequests": 12438,
+    "failedRequests": 12,
+    "errorRate": 0.1,
+    "avgTime": 42.5,
+    "minTime": 11.2,
+    "maxTime": 310.4,
+    "medianTime": 36.8,
+    "p90Time": 82.1,
+    "p95Time": 115.3,
+    "p99Time": 230.8,
+    "dataReceived": "14.8 MB",
+    "dataSent": "862 KB"
+  },
+  "thresholds": {
+    "errorRatePass": true,
+    "p95Pass": true,
+    "p99Pass": true
+  },
+  "timestamp": "2026-08-06T14:56:01.536Z"
+}
