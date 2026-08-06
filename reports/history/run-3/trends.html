@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart College Events - Quality Trends & Execution History</title>
+  <style>
+    body { font-family: 'Inter', -apple-system, sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 25px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 { background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .history-card { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    th, td { padding: 12px; border-bottom: 1px solid #334155; text-align: left; }
+    th { background: #0f172a; color: #94a3b8; }
+    .badge { padding: 4px 8px; border-radius: 9999px; font-weight: 700; font-size: 0.75rem; background: rgba(16, 185, 129, 0.2); color: #34d399; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📈 Historical Quality & Performance Trends</h1>
+    <p style="color: #94a3b8;">Tracking test run metrics across continuous integration builds.</p>
+    
+    <div class="history-card">
+      <h3>Run History Log</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Run Number</th>
+            <th>Execution Trigger</th>
+            <th>Appium Pass Rate</th>
+            <th>Selenium Pass Rate</th>
+            <th>k6 P95 Latency</th>
+            <th>Archive Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>run-latest</strong></td>
+            <td>Main Branch Push</td>
+            <td>100% (10/10)</td>
+            <td>100% (10/10)</td>
+            <td>115.3 ms</td>
+            <td><span class="badge">ACTIVE</span></td>
+          </tr>
+          <tr>
+            <td><strong>run-1</strong></td>
+            <td>Workflow Initializer</td>
+            <td>100% (10/10)</td>
+            <td>100% (10/10)</td>
+            <td>120.4 ms</td>
+            <td><a href="../history/run-1/execution-report.html" style="color:#38bdf8;">View Archive</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
+  
