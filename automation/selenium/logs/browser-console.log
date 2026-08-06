@@ -31,3 +31,592 @@
     "type": ""
   }
 ]
+--- FAILURE LOG: TC_WEB_001 - Launch application and verify homepage loads ---
+[
+  {
+    "level": "SEVERE",
+    "message": "https://vethavigasini.github.io/smart-college-events-app/ - Failed to load resource: the server responded with a status of 404 ()",
+    "timestamp": 1786028322355,
+    "type": ""
+  }
+]
+--- FAILURE LOG: TC_WEB_002 - Login with invalid credentials displays error ---
+[]
+--- FAILURE LOG: TC_WEB_003 - Login with valid student credentials ---
+[]
+--- FAILURE LOG: TC_WEB_004 - Search for an event on Dashboard ---
+[]
+--- FAILURE LOG: TC_WEB_001 - Launch application and verify homepage loads ---
+[
+  {
+    "level": "SEVERE",
+    "message": "https://vethavigasini.github.io/smart-college-events-app/ - Failed to load resource: the server responded with a status of 404 ()",
+    "timestamp": 1786028476550,
+    "type": ""
+  }
+]
+--- FAILURE LOG: TC_WEB_002 - Login with invalid credentials displays error ---
+[]
+--- FAILURE LOG: TC_WEB_003 - Login with valid student credentials ---
+[]
+--- FAILURE LOG: TC_WEB_004 - Search for an event on Dashboard ---
+[]
+--- FAILURE LOG: TC_WEB_005 - View event details modal ---
+[]
+--- FAILURE LOG: TC_WEB_007 - Cancel event registration ---
+[]
+--- FAILURE LOG: TC_WEB_008 - View profile screen ---
+[]
+--- FAILURE LOG: TC_WEB_009 - Update profile phone number ---
+[]
+--- FAILURE LOG: TC_WEB_010 - Verify session persistence on page refresh ---
+[
+  {
+    "level": "SEVERE",
+    "message": "https://vethavigasini.github.io/smart-college-events-app/ - Failed to load resource: the server responded with a status of 404 ()",
+    "timestamp": 1786028592073,
+    "type": ""
+  }
+]
+--- FAILURE LOG: TC_WEB_001 - Launch application and verify homepage loads ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786030269862,
+    "type": ""
+  }
+]
+--- FAILURE LOG: TC_WEB_002 - Login with invalid credentials displays error ---
+[]
+--- FAILURE LOG: TC_WEB_001 - Launch application and verify homepage loads ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786030311280,
+    "type": ""
+  }
+]
+--- FAILURE LOG: TC_WEB_002 - Login with invalid credentials displays error ---
+[]
+--- FAILURE LOG: TC_WEB_003 - Login with valid student credentials ---
+[]
+--- FAILURE LOG: TC_WEB_004 - Search for an event on Dashboard ---
+[]
+--- FAILURE LOG: TC_WEB_005 - View event details modal ---
+[]
+--- FAILURE LOG: TC_WEB_007 - Cancel event registration ---
+[]
+--- FAILURE LOG: TC_WEB_008 - View profile screen ---
+[]
+--- FAILURE LOG: TC_WEB_009 - Update profile phone number ---
+[]
+--- FAILURE LOG: TC_WEB_010 - Verify session persistence on page refresh ---
+[]
+--- FAILURE LOG: TC_WEB_001 - Launch application and verify homepage loads ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786030605360,
+    "type": ""
+  }
+]
+--- FAILURE LOG: TC_WEB_002 - Login with invalid credentials displays error ---
+[]
+--- FAILURE LOG: TC_WEB_001 - Launch application and verify homepage loads ---
+[
+  {
+    "level": "SEVERE",
+    "message": "https://vethavigasini.github.io/smart-college-events-app/ - Failed to load resource: the server responded with a status of 404 ()",
+    "timestamp": 1786030948101,
+    "type": ""
+  }
+]
+--- FAILURE LOG: TC_WEB_002 - Login with invalid credentials displays error ---
+[]
+--- FAILURE LOG: TC_WEB_003 - Login with valid student credentials ---
+[]
+--- FAILURE LOG: TC_WEB_003 - Login with valid student credentials ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786030992732,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_004 - Search for an event on Dashboard ---
+[]
+--- FAILURE LOG: TC_WEB_005 - View event details modal ---
+[]
+--- FAILURE LOG: TC_WEB_007 - Cancel event registration ---
+[]
+--- FAILURE LOG: TC_WEB_008 - View profile screen ---
+[]
+--- FAILURE LOG: TC_WEB_009 - Update profile phone number ---
+[]
+--- FAILURE LOG: TC_WEB_010 - Verify session persistence on page refresh ---
+[
+  {
+    "level": "SEVERE",
+    "message": "https://vethavigasini.github.io/smart-college-events-app/ - Failed to load resource: the server responded with a status of 404 ()",
+    "timestamp": 1786031063366,
+    "type": ""
+  }
+]
+--- FAILURE LOG: TC_WEB_004 - Search for an event on Dashboard ---
+[
+  {
+    "level": "SEVERE",
+    "message": "https://vethavigasini.github.io/smart-college-events-app/ - Failed to load resource: the server responded with a status of 404 ()",
+    "timestamp": 1786031185526,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_004 - Search for an event on Dashboard ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786031244554,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_006 - Register for event ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786031638692,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_004 - Search for an event on Events screen ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786032021858,
+    "type": ""
+  },
+  {
+    "level": "SEVERE",
+    "message": "https://smart-events-backend.onrender.com/api/auth/login - Failed to load resource: the server responded with a status of 404 ()",
+    "timestamp": 1786032028231,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_005 - View event details ---
+[]
+
+--- FAILURE LOG: TC_WEB_006 - Register for event ---
+[]
+
+--- FAILURE LOG: TC_WEB_007 - Cancel event registration ---
+[]
+
+--- FAILURE LOG: TC_WEB_008 - View profile screen ---
+[]
+
+--- FAILURE LOG: TC_WEB_009 - Update profile phone number ---
+[]
+
+--- FAILURE LOG: TC_WEB_010 - Verify session persistence on page refresh ---
+[]
+
+--- FAILURE LOG: TC_WEB_004 - Search for an event on Events screen ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786032527366,
+    "type": ""
+  },
+  {
+    "level": "SEVERE",
+    "message": "https://smart-events-backend.onrender.com/api/auth/login - Failed to load resource: the server responded with a status of 404 ()",
+    "timestamp": 1786032541069,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_005 - View event details ---
+[]
+
+--- FAILURE LOG: TC_WEB_006 - Register for event ---
+[]
+
+--- FAILURE LOG: TC_WEB_007 - Cancel event registration ---
+[]
+
+--- FAILURE LOG: TC_WEB_004 - Search for an event on Events screen ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786032648032,
+    "type": ""
+  },
+  {
+    "level": "SEVERE",
+    "message": "https://smart-events-backend.onrender.com/api/auth/login - Failed to load resource: the server responded with a status of 404 ()",
+    "timestamp": 1786032661603,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_005 - View event details ---
+[]
+
+--- FAILURE LOG: TC_WEB_006 - Register for event ---
+[]
+
+--- FAILURE LOG: TC_WEB_007 - Cancel event registration ---
+[]
+
+--- FAILURE LOG: TC_WEB_008 - View profile screen ---
+[]
+
+--- FAILURE LOG: TC_WEB_009 - Update profile phone number ---
+[]
+
+--- FAILURE LOG: TC_WEB_010 - Verify session persistence on page refresh ---
+[]
+
+--- FAILURE LOG: TC_WEB_004 - Search for an event on Events screen ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786032976867,
+    "type": ""
+  },
+  {
+    "level": "SEVERE",
+    "message": "https://smart-events-backend.onrender.com/api/auth/login - Failed to load resource: the server responded with a status of 404 ()",
+    "timestamp": 1786032983287,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_005 - View event details ---
+[]
+
+--- FAILURE LOG: TC_WEB_006 - Register for event ---
+[]
+
+--- FAILURE LOG: TC_WEB_007 - Cancel event registration ---
+[]
+
+--- FAILURE LOG: TC_WEB_008 - View profile screen ---
+[]
+
+--- FAILURE LOG: TC_WEB_009 - Update profile phone number ---
+[]
+
+--- FAILURE LOG: TC_WEB_010 - Verify session persistence on page refresh ---
+[]
+
+--- FAILURE LOG: TC_WEB_004 - Search for an event on Events screen ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786033390405,
+    "type": ""
+  },
+  {
+    "level": "SEVERE",
+    "message": "https://smart-events-backend.onrender.com/api/auth/login - Failed to load resource: the server responded with a status of 404 ()",
+    "timestamp": 1786033396778,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_005 - View event details ---
+[]
+
+--- FAILURE LOG: TC_WEB_006 - Register for event ---
+[]
+
+--- FAILURE LOG: TC_WEB_007 - Cancel event registration ---
+[]
+
+--- FAILURE LOG: TC_WEB_008 - View profile screen ---
+[]
+
+--- FAILURE LOG: TC_WEB_009 - Update profile phone number ---
+[]
+
+--- FAILURE LOG: TC_WEB_004 - Search for an event on Events screen ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786033620617,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_005 - View event details ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786033634705,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_006 - Register for event ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786033648914,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_007 - Cancel event registration ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786033663110,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_008 - View profile screen ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786033677347,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_009 - Update profile phone number ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786033691460,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_005 - View event details ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034014735,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_006 - Register for event ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034031942,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_007 - Cancel event registration ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034049298,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_009 - Update profile phone number ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:3000/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034080293,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_005 - View event details ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:8080/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034202365,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_006 - Register for event ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:8080/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034219775,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_007 - Cancel event registration ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:8080/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034236989,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_009 - Update profile phone number ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:8080/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034268012,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_005 - View event details ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:8080/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034314393,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_006 - Register for event ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:8080/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034331894,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_007 - Cancel event registration ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:8080/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034349279,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_005 - View event details ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:8080/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034389496,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_009 - Update profile phone number ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:8080/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034380411,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_006 - Register for event ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:8080/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034407442,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_007 - Cancel event registration ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:8080/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034425258,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_009 - Update profile phone number ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:8080/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034456768,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_005 - View event details ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:8080/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034527320,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_006 - Register for event ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:8080/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034547271,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_007 - Cancel event registration ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:8080/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034567059,
+    "type": ""
+  }
+]
+
+--- FAILURE LOG: TC_WEB_005 - View event details ---
+[
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:8080/favicon.ico - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034645301,
+    "type": ""
+  },
+  {
+    "level": "SEVERE",
+    "message": "http://localhost:8080/event/e1 - Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "timestamp": 1786034651624,
+    "type": ""
+  }
+]

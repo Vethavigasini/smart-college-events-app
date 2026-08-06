@@ -1,288 +1,197 @@
-Navigating to BASE_URL: https://Vethavigasini.github.io/smart-college-events-app/
-[Screenshot] Saved failure screenshot to: TC_WEB_001_-_Launch_application_and_verify_homepage_loads_failed_2026-08-06T14-21-19-217Z.png
-[Screenshot] Saved failure screenshot to: TC_WEB_002_-_Login_with_invalid_credentials_displays_error_failed_2026-08-06T14-21-34-826Z.png
-[Screenshot] Saved failure screenshot to: TC_WEB_003_-_Login_with_valid_student_credentials_failed_2026-08-06T14-21-50-478Z.png
-[Screenshot] Saved failure screenshot to: TC_WEB_004_-_Search_for_an_event_on_Dashboard_failed_2026-08-06T14-22-06-150Z.png
-[Screenshot] Saved failure screenshot to: TC_WEB_005_-_View_event_details_modal_failed_2026-08-06T14-22-21-766Z.png
-[Screenshot] Saved failure screenshot to: TC_WEB_007_-_Cancel_event_registration_failed_2026-08-06T14-22-37-365Z.png
-[Screenshot] Saved failure screenshot to: TC_WEB_008_-_View_profile_screen_failed_2026-08-06T14-22-52-997Z.png
-[Screenshot] Saved failure screenshot to: TC_WEB_009_-_Update_profile_phone_number_failed_2026-08-06T14-23-08-616Z.png
-[Screenshot] Saved failure screenshot to: TC_WEB_010_-_Verify_session_persistence_on_page_refresh_failed_2026-08-06T14-23-14-265Z.png
 {
   "stats": {
     "suites": 1,
     "tests": 10,
-    "passes": 1,
+    "passes": 10,
     "pending": 0,
-    "failures": 9,
-    "start": "2026-08-06T14:21:08.732Z",
-    "end": "2026-08-06T14:23:14.324Z",
-    "duration": 125592
+    "failures": 0,
+    "start": "2026-08-06T16:45:54.542Z",
+    "end": "2026-08-06T16:48:02.873Z",
+    "duration": 128331
   },
   "tests": [
     {
       "title": "TC_WEB_001 - Launch application and verify homepage loads",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_001 - Launch application and verify homepage loads",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 5353,
+      "duration": 3175,
       "currentRetry": 0,
-      "err": {
-        "message": "expected false to be true",
-        "showDiff": true,
-        "actual": "false",
-        "expected": "true",
-        "operator": "strictEqual",
-        "stack": "AssertionError: expected false to be true\n    at Context.<anonymous> (automation/selenium/tests/smoke.web.test.ts:87:35)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
-      }
+      "speed": "slow",
+      "err": {}
     },
     {
       "title": "TC_WEB_002 - Login with invalid credentials displays error",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_002 - Login with invalid credentials displays error",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 15052,
+      "duration": 6471,
       "currentRetry": 0,
-      "err": {
-        "stack": "TimeoutError: Waiting for element to be located By(css selector, [data-testid=\"login_email\"], input[type=\"email\"])\nWait timed out after 15051ms\n    at /Users/vethavigasini/Desktop/Clg event/Clg event/node_modules/selenium-webdriver/lib/webdriver.js:929:22\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)",
-        "message": "Waiting for element to be located By(css selector, [data-testid=\"login_email\"], input[type=\"email\"])\nWait timed out after 15051ms",
-        "name": "TimeoutError",
-        "remoteStacktrace": ""
-      }
+      "speed": "slow",
+      "err": {}
     },
     {
       "title": "TC_WEB_003 - Login with valid student credentials",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_003 - Login with valid student credentials",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 15105,
+      "duration": 9498,
       "currentRetry": 0,
-      "err": {
-        "stack": "TimeoutError: Waiting for element to be located By(css selector, [data-testid=\"login_email\"], input[type=\"email\"])\nWait timed out after 15105ms\n    at /Users/vethavigasini/Desktop/Clg event/Clg event/node_modules/selenium-webdriver/lib/webdriver.js:929:22\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)",
-        "message": "Waiting for element to be located By(css selector, [data-testid=\"login_email\"], input[type=\"email\"])\nWait timed out after 15105ms",
-        "name": "TimeoutError",
-        "remoteStacktrace": ""
-      }
+      "speed": "slow",
+      "err": {}
     },
     {
-      "title": "TC_WEB_004 - Search for an event on Dashboard",
-      "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_004 - Search for an event on Dashboard",
+      "title": "TC_WEB_004 - Search for an event on Events screen",
+      "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_004 - Search for an event on Events screen",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 15110,
+      "duration": 17669,
       "currentRetry": 0,
-      "err": {
-        "stack": "TimeoutError: Waiting for element to be located By(css selector, [data-testid=\"dashboard_search\"], input[placeholder*=\"Search\"])\nWait timed out after 15110ms\n    at /Users/vethavigasini/Desktop/Clg event/Clg event/node_modules/selenium-webdriver/lib/webdriver.js:929:22\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)",
-        "message": "Waiting for element to be located By(css selector, [data-testid=\"dashboard_search\"], input[placeholder*=\"Search\"])\nWait timed out after 15110ms",
-        "name": "TimeoutError",
-        "remoteStacktrace": ""
-      }
+      "speed": "slow",
+      "err": {}
     },
     {
-      "title": "TC_WEB_005 - View event details modal",
-      "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_005 - View event details modal",
+      "title": "TC_WEB_005 - View event details",
+      "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_005 - View event details",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 15054,
+      "duration": 13521,
       "currentRetry": 0,
-      "err": {
-        "stack": "TimeoutError: Waiting for element to be located By(css selector, [data-testid^=\"event_card_\"], div[role=\"button\"])\nWait timed out after 15054ms\n    at /Users/vethavigasini/Desktop/Clg event/Clg event/node_modules/selenium-webdriver/lib/webdriver.js:929:22\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)",
-        "message": "Waiting for element to be located By(css selector, [data-testid^=\"event_card_\"], div[role=\"button\"])\nWait timed out after 15054ms",
-        "name": "TimeoutError",
-        "remoteStacktrace": ""
-      }
+      "speed": "slow",
+      "err": {}
     },
     {
       "title": "TC_WEB_006 - Register for event",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_006 - Register for event",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 8,
+      "duration": 13504,
       "currentRetry": 0,
-      "speed": "fast",
+      "speed": "slow",
       "err": {}
     },
     {
       "title": "TC_WEB_007 - Cancel event registration",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_007 - Cancel event registration",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 15029,
+      "duration": 13510,
       "currentRetry": 0,
-      "err": {
-        "stack": "TimeoutError: Waiting for element to be located By(css selector, [data-testid=\"event_detail_back\"])\nWait timed out after 15023ms\n    at /Users/vethavigasini/Desktop/Clg event/Clg event/node_modules/selenium-webdriver/lib/webdriver.js:929:22\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)",
-        "message": "Waiting for element to be located By(css selector, [data-testid=\"event_detail_back\"])\nWait timed out after 15023ms",
-        "name": "TimeoutError",
-        "remoteStacktrace": ""
-      }
+      "speed": "slow",
+      "err": {}
     },
     {
       "title": "TC_WEB_008 - View profile screen",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_008 - View profile screen",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 15071,
+      "duration": 12546,
       "currentRetry": 0,
-      "err": {
-        "stack": "TimeoutError: Waiting for element to be located By(css selector, [data-testid=\"tab_profile\"])\nWait timed out after 15070ms\n    at /Users/vethavigasini/Desktop/Clg event/Clg event/node_modules/selenium-webdriver/lib/webdriver.js:929:22\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)",
-        "message": "Waiting for element to be located By(css selector, [data-testid=\"tab_profile\"])\nWait timed out after 15070ms",
-        "name": "TimeoutError",
-        "remoteStacktrace": ""
-      }
+      "speed": "slow",
+      "err": {}
     },
     {
       "title": "TC_WEB_009 - Update profile phone number",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_009 - Update profile phone number",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 15066,
+      "duration": 12573,
       "currentRetry": 0,
-      "err": {
-        "stack": "TimeoutError: Waiting for element to be located By(css selector, [data-testid=\"profile_edit\"])\nWait timed out after 15065ms\n    at /Users/vethavigasini/Desktop/Clg event/Clg event/node_modules/selenium-webdriver/lib/webdriver.js:929:22\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)",
-        "message": "Waiting for element to be located By(css selector, [data-testid=\"profile_edit\"])\nWait timed out after 15065ms",
-        "name": "TimeoutError",
-        "remoteStacktrace": ""
-      }
+      "speed": "slow",
+      "err": {}
     },
     {
       "title": "TC_WEB_010 - Verify session persistence on page refresh",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_010 - Verify session persistence on page refresh",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 5085,
+      "duration": 14589,
       "currentRetry": 0,
-      "err": {
-        "message": "expected false to be true",
-        "showDiff": true,
-        "actual": "false",
-        "expected": "true",
-        "operator": "strictEqual",
-        "stack": "AssertionError: expected false to be true\n    at Context.<anonymous> (automation/selenium/tests/smoke.web.test.ts:185:43)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
-      }
+      "speed": "slow",
+      "err": {}
     }
   ],
   "pending": [],
-  "failures": [
+  "failures": [],
+  "passes": [
     {
       "title": "TC_WEB_001 - Launch application and verify homepage loads",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_001 - Launch application and verify homepage loads",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 5353,
+      "duration": 3175,
       "currentRetry": 0,
-      "err": {
-        "message": "expected false to be true",
-        "showDiff": true,
-        "actual": "false",
-        "expected": "true",
-        "operator": "strictEqual",
-        "stack": "AssertionError: expected false to be true\n    at Context.<anonymous> (automation/selenium/tests/smoke.web.test.ts:87:35)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
-      }
+      "speed": "slow",
+      "err": {}
     },
     {
       "title": "TC_WEB_002 - Login with invalid credentials displays error",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_002 - Login with invalid credentials displays error",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 15052,
+      "duration": 6471,
       "currentRetry": 0,
-      "err": {
-        "stack": "TimeoutError: Waiting for element to be located By(css selector, [data-testid=\"login_email\"], input[type=\"email\"])\nWait timed out after 15051ms\n    at /Users/vethavigasini/Desktop/Clg event/Clg event/node_modules/selenium-webdriver/lib/webdriver.js:929:22\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)",
-        "message": "Waiting for element to be located By(css selector, [data-testid=\"login_email\"], input[type=\"email\"])\nWait timed out after 15051ms",
-        "name": "TimeoutError",
-        "remoteStacktrace": ""
-      }
+      "speed": "slow",
+      "err": {}
     },
     {
       "title": "TC_WEB_003 - Login with valid student credentials",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_003 - Login with valid student credentials",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 15105,
+      "duration": 9498,
       "currentRetry": 0,
-      "err": {
-        "stack": "TimeoutError: Waiting for element to be located By(css selector, [data-testid=\"login_email\"], input[type=\"email\"])\nWait timed out after 15105ms\n    at /Users/vethavigasini/Desktop/Clg event/Clg event/node_modules/selenium-webdriver/lib/webdriver.js:929:22\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)",
-        "message": "Waiting for element to be located By(css selector, [data-testid=\"login_email\"], input[type=\"email\"])\nWait timed out after 15105ms",
-        "name": "TimeoutError",
-        "remoteStacktrace": ""
-      }
+      "speed": "slow",
+      "err": {}
     },
     {
-      "title": "TC_WEB_004 - Search for an event on Dashboard",
-      "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_004 - Search for an event on Dashboard",
+      "title": "TC_WEB_004 - Search for an event on Events screen",
+      "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_004 - Search for an event on Events screen",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 15110,
+      "duration": 17669,
       "currentRetry": 0,
-      "err": {
-        "stack": "TimeoutError: Waiting for element to be located By(css selector, [data-testid=\"dashboard_search\"], input[placeholder*=\"Search\"])\nWait timed out after 15110ms\n    at /Users/vethavigasini/Desktop/Clg event/Clg event/node_modules/selenium-webdriver/lib/webdriver.js:929:22\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)",
-        "message": "Waiting for element to be located By(css selector, [data-testid=\"dashboard_search\"], input[placeholder*=\"Search\"])\nWait timed out after 15110ms",
-        "name": "TimeoutError",
-        "remoteStacktrace": ""
-      }
+      "speed": "slow",
+      "err": {}
     },
     {
-      "title": "TC_WEB_005 - View event details modal",
-      "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_005 - View event details modal",
+      "title": "TC_WEB_005 - View event details",
+      "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_005 - View event details",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 15054,
+      "duration": 13521,
       "currentRetry": 0,
-      "err": {
-        "stack": "TimeoutError: Waiting for element to be located By(css selector, [data-testid^=\"event_card_\"], div[role=\"button\"])\nWait timed out after 15054ms\n    at /Users/vethavigasini/Desktop/Clg event/Clg event/node_modules/selenium-webdriver/lib/webdriver.js:929:22\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)",
-        "message": "Waiting for element to be located By(css selector, [data-testid^=\"event_card_\"], div[role=\"button\"])\nWait timed out after 15054ms",
-        "name": "TimeoutError",
-        "remoteStacktrace": ""
-      }
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "TC_WEB_006 - Register for event",
+      "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_006 - Register for event",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
+      "duration": 13504,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
     },
     {
       "title": "TC_WEB_007 - Cancel event registration",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_007 - Cancel event registration",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 15029,
+      "duration": 13510,
       "currentRetry": 0,
-      "err": {
-        "stack": "TimeoutError: Waiting for element to be located By(css selector, [data-testid=\"event_detail_back\"])\nWait timed out after 15023ms\n    at /Users/vethavigasini/Desktop/Clg event/Clg event/node_modules/selenium-webdriver/lib/webdriver.js:929:22\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)",
-        "message": "Waiting for element to be located By(css selector, [data-testid=\"event_detail_back\"])\nWait timed out after 15023ms",
-        "name": "TimeoutError",
-        "remoteStacktrace": ""
-      }
+      "speed": "slow",
+      "err": {}
     },
     {
       "title": "TC_WEB_008 - View profile screen",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_008 - View profile screen",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 15071,
+      "duration": 12546,
       "currentRetry": 0,
-      "err": {
-        "stack": "TimeoutError: Waiting for element to be located By(css selector, [data-testid=\"tab_profile\"])\nWait timed out after 15070ms\n    at /Users/vethavigasini/Desktop/Clg event/Clg event/node_modules/selenium-webdriver/lib/webdriver.js:929:22\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)",
-        "message": "Waiting for element to be located By(css selector, [data-testid=\"tab_profile\"])\nWait timed out after 15070ms",
-        "name": "TimeoutError",
-        "remoteStacktrace": ""
-      }
+      "speed": "slow",
+      "err": {}
     },
     {
       "title": "TC_WEB_009 - Update profile phone number",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_009 - Update profile phone number",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 15066,
+      "duration": 12573,
       "currentRetry": 0,
-      "err": {
-        "stack": "TimeoutError: Waiting for element to be located By(css selector, [data-testid=\"profile_edit\"])\nWait timed out after 15065ms\n    at /Users/vethavigasini/Desktop/Clg event/Clg event/node_modules/selenium-webdriver/lib/webdriver.js:929:22\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)",
-        "message": "Waiting for element to be located By(css selector, [data-testid=\"profile_edit\"])\nWait timed out after 15065ms",
-        "name": "TimeoutError",
-        "remoteStacktrace": ""
-      }
+      "speed": "slow",
+      "err": {}
     },
     {
       "title": "TC_WEB_010 - Verify session persistence on page refresh",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_010 - Verify session persistence on page refresh",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 5085,
+      "duration": 14589,
       "currentRetry": 0,
-      "err": {
-        "message": "expected false to be true",
-        "showDiff": true,
-        "actual": "false",
-        "expected": "true",
-        "operator": "strictEqual",
-        "stack": "AssertionError: expected false to be true\n    at Context.<anonymous> (automation/selenium/tests/smoke.web.test.ts:185:43)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
-      }
-    }
-  ],
-  "passes": [
-    {
-      "title": "TC_WEB_006 - Register for event",
-      "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_006 - Register for event",
-      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 8,
-      "currentRetry": 0,
-      "speed": "fast",
+      "speed": "slow",
       "err": {}
     }
   ]

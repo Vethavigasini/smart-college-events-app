@@ -1,19 +1,17 @@
 
-### 📊 Multi-Engine Quality Assurance Execution Summary
+### 🌐 Selenium Web E2E Test Execution Summary
 
-| Metric | Count / Percentage |
+| Metric | Value |
 | :--- | :--- |
-| **Total Defined Specifications** | **545** |
-| **Appium Automated** | 10 |
-| **Selenium Automated** | 10 |
-| **API Automated** | 15 |
-| **k6 Automated** | 5 |
-| **Security Automated** | 5 |
-| **Total Executed** | **25** |
-| **Passed** | **25** |
-| **Failed** | **0** |
-| **Executed Pass Percentage** | 🟢 **100.00%** |
-| **Full Suite Completion** | 🟢 **4.59%** |
+| **Total Defined** | **470** |
+| **Total Automated** | **10** |
+| **Total Executed** | **8** |
+| **Passed** | 8 |
+| **Failed** | 0 |
+| **Skipped** | 30 |
+| **Blocked** | 30 |
+| **Not Applicable** | 30 |
+| **Overall Pass Percentage** | **100%** |
 
 ---
-*Generated: 8/6/2026, 8:22:53 PM*
+*Generated: 8/6/2026, 10:18:27 PM*

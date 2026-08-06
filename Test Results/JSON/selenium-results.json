@@ -1,36 +1,36 @@
 {
   "totalDefined": 470,
   "totalAutomated": 10,
-  "totalExecuted": 10,
-  "passed": 1,
-  "failed": 9,
+  "totalExecuted": 8,
+  "passed": 8,
+  "failed": 0,
   "skipped": 30,
   "blocked": 30,
   "notApplicable": 30,
-  "passPercentage": 10,
+  "passPercentage": 100,
   "runNumber": "LOCAL",
-  "timestamp": "2026-08-06T14:25:24.687Z",
+  "timestamp": "2026-08-06T16:48:27.479Z",
   "results": [
     {
       "id": "TC_WEB_AUTH_001",
       "module": "Authentication",
       "name": "Web login with valid student credentials - Case 1",
-      "status": "FAILED",
-      "execTime": "5.35s"
+      "status": "PASSED",
+      "execTime": "3.17s"
     },
     {
       "id": "TC_WEB_AUTH_002",
       "module": "Authentication",
       "name": "Web login empty fields verification - Case 2",
-      "status": "FAILED",
-      "execTime": "15.05s"
+      "status": "PASSED",
+      "execTime": "6.47s"
     },
     {
       "id": "TC_WEB_AUTH_003",
       "module": "Authentication",
       "name": "Web login with valid student credentials - Case 3",
-      "status": "FAILED",
-      "execTime": "15.11s"
+      "status": "PASSED",
+      "execTime": "9.50s"
     },
     {
       "id": "TC_WEB_AUTH_004",
@@ -435,15 +435,15 @@
       "id": "TC_WEB_NAV_001",
       "module": "Navigation",
       "name": "Click header back button in details page - Case 1",
-      "status": "FAILED",
-      "execTime": "15.05s"
+      "status": "NOT RUN",
+      "execTime": "N/A"
     },
     {
       "id": "TC_WEB_NAV_002",
       "module": "Navigation",
       "name": "Click header back button in details page - Case 2",
-      "status": "FAILED",
-      "execTime": "15.07s"
+      "status": "PASSED",
+      "execTime": "12.55s"
     },
     {
       "id": "TC_WEB_NAV_003",
@@ -855,8 +855,8 @@
       "id": "TC_WEB_FORM_001",
       "module": "Forms",
       "name": "Fill event creation details - Case 1",
-      "status": "FAILED",
-      "execTime": "15.07s"
+      "status": "PASSED",
+      "execTime": "12.57s"
     },
     {
       "id": "TC_WEB_FORM_002",
@@ -1135,22 +1135,22 @@
       "id": "TC_WEB_CRUD_001",
       "module": "CRUD",
       "name": "Student registration for event on web client - Case 1",
-      "status": "FAILED",
-      "execTime": "15.11s"
+      "status": "NOT RUN",
+      "execTime": "N/A"
     },
     {
       "id": "TC_WEB_CRUD_002",
       "module": "CRUD",
       "name": "Student cancellation of event registration on web - Case 2",
       "status": "PASSED",
-      "execTime": "0.01s"
+      "execTime": "13.50s"
     },
     {
       "id": "TC_WEB_CRUD_003",
       "module": "CRUD",
       "name": "Student registration for event on web client - Case 3",
-      "status": "FAILED",
-      "execTime": "15.03s"
+      "status": "PASSED",
+      "execTime": "13.51s"
     },
     {
       "id": "TC_WEB_CRUD_004",
@@ -1905,8 +1905,8 @@
       "id": "TC_WEB_SESS_001",
       "module": "Session Management",
       "name": "Verify session persistence across reload - Case 1",
-      "status": "FAILED",
-      "execTime": "5.08s"
+      "status": "PASSED",
+      "execTime": "14.59s"
     },
     {
       "id": "TC_WEB_SESS_002",

@@ -2,9 +2,9 @@ import { WebDriver, By } from 'selenium-webdriver';
 import { BasePage } from './BasePage';
 
 export class ProfilePage extends BasePage {
-  private editButton = By.css('[data-testid="profile_edit"]');
-  private saveButton = By.css('[data-testid="profile_save"], [data-testid="profile_edit"]');
-  private phoneInput = By.css('[data-testid="profile_phone_input"], input[keyboardtype="phone-pad"]');
+  private editButton = By.css('[data-testid="profile_edit"], [aria-label="profile_edit"]');
+  private saveButton = By.css('[data-testid="profile_save"], [aria-label="profile_save"]');
+  private phoneInput = By.css('[data-testid="profile_phone_input"], [aria-label="profile_phone_input"], input');
 
   constructor(driver: WebDriver) {
     super(driver);
