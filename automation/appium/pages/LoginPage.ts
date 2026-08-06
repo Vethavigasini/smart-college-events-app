@@ -1,6 +1,18 @@
+declare const browser: any;
+
 import BasePage from './BasePage';
 
 class LoginPage extends BasePage {
+  public async dismissCompatibilityDialog() {
+    try {
+      // Send Enter keycode (66) to dismiss the native dialog if present
+      await browser.pressKeyCode(66);
+      await this.pause(1000);
+    } catch (err) {
+      console.log('Failed to dismiss compatibility dialog:', err);
+    }
+  }
+
   public async login(email: string, pass: string) {
     await this.setValue('login_email', email);
     await this.setValue('login_password', pass);
@@ -24,6 +36,13 @@ class LoginPage extends BasePage {
 
   public async clickSignUpLink() {
     await this.click('login_signup_link');
+  }
+
+  public async navigateToLoginScreen() {
+    const isLanding = await this.isDisplayed('landing_explore_btn');
+    if (isLanding) {
+      await this.click('landing_explore_btn');
+    }
   }
 
   public async isLoginScreenDisplayed(): Promise<boolean> {

@@ -1,0 +1,288 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 15,
+    "passes": 15,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-08-06T14:49:55.738Z",
+    "end": "2026-08-06T14:49:55.767Z",
+    "duration": 29
+  },
+  "tests": [
+    {
+      "title": "TC_API_001 - POST /api/auth/login with valid email returns user details",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_001 - POST /api/auth/login with valid email returns user details",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 20,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_002 - POST /api/auth/login with non-existent email returns 404",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_002 - POST /api/auth/login with non-existent email returns 404",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 1,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_003 - POST /api/auth/login with empty payload returns 400 error",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_003 - POST /api/auth/login with empty payload returns 400 error",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 1,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_004 - POST /api/auth/register creates new user account",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_004 - POST /api/auth/register creates new user account",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 1,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_005 - POST /api/auth/register duplicate email returns error",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_005 - POST /api/auth/register duplicate email returns error",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 0,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_006 - GET /api/events returns array of published events",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_006 - GET /api/events returns array of published events",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 1,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_007 - POST /api/events creates new college event entry",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_007 - POST /api/events creates new college event entry",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 1,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_008 - GET /api/events/:id returns specific event details",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_008 - GET /api/events/:id returns specific event details",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 0,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_009 - GET /api/events/:id with invalid ID returns 404",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_009 - GET /api/events/:id with invalid ID returns 404",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 1,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_010 - PUT /api/events/:id updates event metadata",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_010 - PUT /api/events/:id updates event metadata",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 1,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_011 - POST /api/events/:id/register registers user to event",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_011 - POST /api/events/:id/register registers user to event",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 0,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_012 - DELETE /api/events/:id/register/:userId cancels registration",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_012 - DELETE /api/events/:id/register/:userId cancels registration",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 1,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_013 - POST /api/events/:id/attendance records student attendance",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_013 - POST /api/events/:id/attendance records student attendance",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 0,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_014 - PUT /api/auth/profile updates profile phone details",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_014 - PUT /api/auth/profile updates profile phone details",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 1,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_015 - DELETE /api/events/:id deletes event entry",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_015 - DELETE /api/events/:id deletes event entry",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 0,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "TC_API_001 - POST /api/auth/login with valid email returns user details",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_001 - POST /api/auth/login with valid email returns user details",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 20,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_002 - POST /api/auth/login with non-existent email returns 404",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_002 - POST /api/auth/login with non-existent email returns 404",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 1,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_003 - POST /api/auth/login with empty payload returns 400 error",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_003 - POST /api/auth/login with empty payload returns 400 error",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 1,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_004 - POST /api/auth/register creates new user account",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_004 - POST /api/auth/register creates new user account",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 1,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_005 - POST /api/auth/register duplicate email returns error",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_005 - POST /api/auth/register duplicate email returns error",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 0,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_006 - GET /api/events returns array of published events",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_006 - GET /api/events returns array of published events",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 1,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_007 - POST /api/events creates new college event entry",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_007 - POST /api/events creates new college event entry",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 1,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_008 - GET /api/events/:id returns specific event details",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_008 - GET /api/events/:id returns specific event details",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 0,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_009 - GET /api/events/:id with invalid ID returns 404",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_009 - GET /api/events/:id with invalid ID returns 404",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 1,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_010 - PUT /api/events/:id updates event metadata",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_010 - PUT /api/events/:id updates event metadata",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 1,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_011 - POST /api/events/:id/register registers user to event",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_011 - POST /api/events/:id/register registers user to event",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 0,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_012 - DELETE /api/events/:id/register/:userId cancels registration",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_012 - DELETE /api/events/:id/register/:userId cancels registration",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 1,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_013 - POST /api/events/:id/attendance records student attendance",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_013 - POST /api/events/:id/attendance records student attendance",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 0,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_014 - PUT /api/auth/profile updates profile phone details",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_014 - PUT /api/auth/profile updates profile phone details",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 1,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "TC_API_015 - DELETE /api/events/:id deletes event entry",
+      "fullTitle": "REST API Automation Test Suite (Batch 2: 15 Real Cases) TC_API_015 - DELETE /api/events/:id deletes event entry",
+      "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/api/tests/api.test.ts",
+      "duration": 0,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    }
+  ]
+}

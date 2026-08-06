@@ -20,7 +20,8 @@
     "load:spike": "k6 run automation/load/spike.js",
     "load:endurance": "k6 run automation/load/endurance.js",
     "load:reports": "npx ts-node automation/load/utils/generateLoadReports.ts",
-    "reports:master": "npx ts-node automation/shared/utils/generateMasterDashboard.ts"
+    "reports:master": "npx ts-node automation/shared/utils/generateMasterDashboard.ts",
+    "api:test": "mkdir -p automation/api/reports && npx mocha -r ts-node/register automation/api/tests/api.test.ts --reporter json > automation/api/reports/results.json"
   },
   "dependencies": {
     "@expo/metro-runtime": "~3.2.3",

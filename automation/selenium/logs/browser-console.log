@@ -1,0 +1,33 @@
+
+--- FAILURE LOG: TC_WEB_001 - Launch application and verify homepage loads ---
+[
+  {
+    "level": "SEVERE",
+    "message": "https://vethavigasini.github.io/smart-college-events-app/ - Failed to load resource: the server responded with a status of 404 ()",
+    "timestamp": 1786026073577,
+    "type": ""
+  }
+]
+--- FAILURE LOG: TC_WEB_002 - Login with invalid credentials displays error ---
+[]
+--- FAILURE LOG: TC_WEB_003 - Login with valid student credentials ---
+[]
+--- FAILURE LOG: TC_WEB_004 - Search for an event on Dashboard ---
+[]
+--- FAILURE LOG: TC_WEB_005 - View event details modal ---
+[]
+--- FAILURE LOG: TC_WEB_007 - Cancel event registration ---
+[]
+--- FAILURE LOG: TC_WEB_008 - View profile screen ---
+[]
+--- FAILURE LOG: TC_WEB_009 - Update profile phone number ---
+[]
+--- FAILURE LOG: TC_WEB_010 - Verify session persistence on page refresh ---
+[
+  {
+    "level": "SEVERE",
+    "message": "https://vethavigasini.github.io/smart-college-events-app/ - Failed to load resource: the server responded with a status of 404 ()",
+    "timestamp": 1786026188681,
+    "type": ""
+  }
+]

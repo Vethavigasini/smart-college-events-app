@@ -1,7 +1,7 @@
 import path from 'path';
 import { androidCapabilities } from './capabilities';
 
-export const config: WebdriverIO.Config = {
+export const config: any = {
   // Runner configuration
   runner: 'local',
   autoCompileOpts: {
@@ -53,7 +53,7 @@ export const config: WebdriverIO.Config = {
       'json',
       {
         outputDir: path.join(__dirname, '../reports'),
-        outputFileFormat: function (opts) {
+        outputFileFormat: function (opts: any) {
           return `results-${opts.cid}.json`;
         }
       }
@@ -71,7 +71,7 @@ export const config: WebdriverIO.Config = {
     // Shared state configuration can be set up here
   },
 
-  afterTest: async function (test, context, { error, result, duration, passed, retries }) {
+  afterTest: async function (test: any, context: any, { error, result, duration, passed, retries }: any) {
     if (!passed) {
       const screenshotDir = path.join(__dirname, '../screenshots');
       const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
@@ -79,7 +79,7 @@ export const config: WebdriverIO.Config = {
       const filepath = path.join(screenshotDir, filename);
 
       try {
-        await browser.saveScreenshot(filepath);
+        await (global as any).browser.saveScreenshot(filepath);
         console.log(`[Screenshot] Saved failure screenshot to: ${filepath}`);
       } catch (err) {
         console.error('[Screenshot] Failed to capture screenshot:', err);

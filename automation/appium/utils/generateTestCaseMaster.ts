@@ -407,6 +407,67 @@ function generate500TestCases(): RawTestCase[] {
     }
   }
 
+  // Prepend Batch 2 API, Security, k6, and Web automated test specifications
+  for (let i = 1; i <= 15; i++) {
+    const idx = String(i).padStart(3, '0');
+    list.push({
+      id: `TC_API_${idx}`,
+      module: 'API Automation',
+      name: `REST API Endpoint Case ${i}`,
+      objective: `Verify REST API endpoint behavior for API case ${i}`,
+      priority: 'HIGH',
+      preconditions: 'Express backend server running on port 5005',
+      steps: `1. Send HTTP request to backend endpoint.\n2. Verify HTTP status and JSON response.`,
+      testData: `API test payload ${i}`,
+      expectedResult: `HTTP status 200/201/404 returned as expected.`
+    });
+  }
+
+  for (let i = 1; i <= 5; i++) {
+    const idx = String(i).padStart(3, '0');
+    list.push({
+      id: `TC_SEC_${idx}`,
+      module: 'Security Automation',
+      name: `Security SAST / Audit Scan ${i}`,
+      objective: `Verify static security analysis rule ${i}`,
+      priority: 'HIGH',
+      preconditions: 'Security scanners installed.',
+      steps: `1. Execute security audit scanner.\n2. Parse findings log file.`,
+      testData: `Scan scope ${i}`,
+      expectedResult: `Security audit findings logged with 0 critical unhandled vulnerabilities.`
+    });
+  }
+
+  for (let i = 1; i <= 5; i++) {
+    const idx = String(i).padStart(3, '0');
+    list.push({
+      id: `TC_K6_${idx}`,
+      module: 'k6 Performance',
+      name: `k6 Load Metric Rule ${i}`,
+      objective: `Verify k6 load performance threshold ${i}`,
+      priority: 'HIGH',
+      preconditions: 'k6 load test engine executed.',
+      steps: `1. Run baseline 100 VU load test.\n2. Evaluate metric threshold.`,
+      testData: `Load profile 100 VUs`,
+      expectedResult: `Latency / RPS threshold satisfied.`
+    });
+  }
+
+  for (let i = 1; i <= 10; i++) {
+    const idx = String(i).padStart(3, '0');
+    list.push({
+      id: `TC_WEB_${idx}`,
+      module: 'Selenium Web',
+      name: `Selenium Web E2E Flow ${i}`,
+      objective: `Verify web application flow ${i} on GitHub Pages`,
+      priority: 'MEDIUM',
+      preconditions: 'Live GitHub Pages deployment active.',
+      steps: `1. Navigate to BASE_URL.\n2. Verify web DOM elements.`,
+      testData: `Headless Chrome`,
+      expectedResult: `Web DOM elements rendered cleanly.`
+    });
+  }
+
   return list;
 }
 
@@ -429,6 +490,9 @@ async function main() {
     { header: 'Test Steps', key: 'steps', width: 50 },
     { header: 'Test Data', key: 'testData', width: 35 },
     { header: 'Expected Result', key: 'expectedResult', width: 55 },
+    { header: 'Automation Type', key: 'automationType', width: 22 },
+    { header: 'Automatable', key: 'automatable', width: 15 },
+    { header: 'Execution Command', key: 'execCmd', width: 30 },
     { header: 'Actual Result', key: 'actualResult', width: 30 },
     { header: 'Status', key: 'status', width: 12 },
     { header: 'Execution Time', key: 'execTime', width: 15 },
@@ -445,6 +509,32 @@ async function main() {
 
   // Add rows
   for (const tc of testCases) {
+    let type = 'APPIUM_ANDROID';
+    let automatable = 'YES';
+    let cmd = 'npm run appium:test';
+
+    if (tc.id.startsWith('TC_API_')) {
+      type = 'API_AUTOMATION';
+      cmd = 'npm run api:test';
+    } else if (tc.id.startsWith('TC_SEC_')) {
+      type = 'SECURITY_AUTOMATION';
+      cmd = 'npm run security:reports';
+    } else if (tc.id.startsWith('TC_K6_')) {
+      type = 'K6_PERFORMANCE';
+      cmd = 'npm run load:baseline';
+    } else if (tc.id.startsWith('TC_WEB_')) {
+      type = 'SELENIUM_WEB';
+      cmd = 'npm run selenium:test';
+    } else if (tc.module === 'Accessibility' || tc.module === 'Responsive UI') {
+      type = 'MANUAL';
+      automatable = 'NO';
+      cmd = 'N/A';
+    } else if (tc.module === 'File Upload' || tc.module === 'Offline Handling') {
+      type = 'BLOCKED';
+      automatable = 'NO';
+      cmd = 'N/A';
+    }
+
     sheet.addRow({
       id: tc.id,
       module: tc.module,
@@ -455,6 +545,9 @@ async function main() {
       steps: tc.steps,
       testData: tc.testData,
       expectedResult: tc.expectedResult,
+      automationType: type,
+      automatable: automatable,
+      execCmd: cmd,
       actualResult: 'N/A',
       status: 'NOT RUN',
       execTime: 'N/A',
