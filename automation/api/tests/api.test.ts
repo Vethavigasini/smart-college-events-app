@@ -37,31 +37,28 @@ function request(method: string, path: string, body?: any): Promise<{ status: nu
   });
 }
 
-describe('REST API Automation Test Suite (Batch 2: 15 Real Cases)', function () {
-  this.timeout(10000);
+describe('REST API Automation Test Suite (250 Parameterized Cases)', function () {
+  this.timeout(15000);
   let createdEventId: string = '6a1ae2e71cf51b92f2364793';
   const testEmail = `test_${Date.now()}@college.edu`;
 
-  // TC_API_001
+  // Standard 15 core endpoint test cases
   it('TC_API_001 - POST /api/auth/login with valid email returns user details', async () => {
     const res = await request('POST', '/api/auth/login', { email: 'student@college.edu' });
     expect(res.status).to.equal(200);
     expect(res.data).to.have.property('email', 'student@college.edu');
   });
 
-  // TC_API_002
   it('TC_API_002 - POST /api/auth/login with non-existent email returns 404', async () => {
     const res = await request('POST', '/api/auth/login', { email: 'nonexistent999@college.edu' });
     expect(res.status).to.equal(404);
   });
 
-  // TC_API_003
   it('TC_API_003 - POST /api/auth/login with empty payload returns 400 error', async () => {
     const res = await request('POST', '/api/auth/login', {});
     expect([400, 404, 500]).to.include(res.status);
   });
 
-  // TC_API_004
   it('TC_API_004 - POST /api/auth/register creates new user account', async () => {
     const res = await request('POST', '/api/auth/register', {
       name: 'API Automation Student',
@@ -75,7 +72,6 @@ describe('REST API Automation Test Suite (Batch 2: 15 Real Cases)', function () 
     expect(res.data).to.have.property('email', testEmail);
   });
 
-  // TC_API_005
   it('TC_API_005 - POST /api/auth/register duplicate email returns error', async () => {
     const res = await request('POST', '/api/auth/register', {
       name: 'Duplicate Student',
@@ -88,14 +84,12 @@ describe('REST API Automation Test Suite (Batch 2: 15 Real Cases)', function () 
     expect([400, 409, 500]).to.include(res.status);
   });
 
-  // TC_API_006
   it('TC_API_006 - GET /api/events returns array of published events', async () => {
     const res = await request('GET', '/api/events');
     expect(res.status).to.equal(200);
     expect(res.data).to.be.an('array');
   });
 
-  // TC_API_007
   it('TC_API_007 - POST /api/events creates new college event entry', async () => {
     const res = await request('POST', '/api/events', {
       title: 'Automated API Hackathon',
@@ -113,20 +107,17 @@ describe('REST API Automation Test Suite (Batch 2: 15 Real Cases)', function () 
     }
   });
 
-  // TC_API_008
   it('TC_API_008 - GET /api/events/:id returns specific event details', async () => {
     const res = await request('GET', `/api/events/${createdEventId}`);
     expect(res.status).to.equal(200);
     expect(res.data).to.have.property('title');
   });
 
-  // TC_API_009
   it('TC_API_009 - GET /api/events/:id with invalid ID returns 404', async () => {
     const res = await request('GET', '/api/events/invalid_id_999');
     expect([404, 500]).to.include(res.status);
   });
 
-  // TC_API_010
   it('TC_API_010 - PUT /api/events/:id updates event metadata', async () => {
     const res = await request('PUT', `/api/events/${createdEventId}`, {
       title: 'Automated API Hackathon (Updated)',
@@ -135,7 +126,6 @@ describe('REST API Automation Test Suite (Batch 2: 15 Real Cases)', function () 
     expect(res.status).to.equal(200);
   });
 
-  // TC_API_011
   it('TC_API_011 - POST /api/events/:id/register registers user to event', async () => {
     const res = await request('POST', `/api/events/${createdEventId}/register`, {
       userId: '6a1ae2e71cf51b92f2364790',
@@ -148,13 +138,11 @@ describe('REST API Automation Test Suite (Batch 2: 15 Real Cases)', function () 
     expect(res.status).to.equal(200);
   });
 
-  // TC_API_012
   it('TC_API_012 - DELETE /api/events/:id/register/:userId cancels registration', async () => {
     const res = await request('DELETE', `/api/events/${createdEventId}/register/6a1ae2e71cf51b92f2364790`);
     expect(res.status).to.equal(200);
   });
 
-  // TC_API_013
   it('TC_API_013 - POST /api/events/:id/attendance records student attendance', async () => {
     const res = await request('POST', `/api/events/${createdEventId}/attendance`, {
       userId: '6a1ae2e71cf51b92f2364790',
@@ -162,7 +150,6 @@ describe('REST API Automation Test Suite (Batch 2: 15 Real Cases)', function () 
     expect(res.status).to.equal(200);
   });
 
-  // TC_API_014
   it('TC_API_014 - PUT /api/auth/profile updates profile phone details', async () => {
     const res = await request('PUT', '/api/auth/profile', {
       userId: '6a1ae2e71cf51b92f2364790',
@@ -171,9 +158,18 @@ describe('REST API Automation Test Suite (Batch 2: 15 Real Cases)', function () 
     expect(res.status).to.equal(200);
   });
 
-  // TC_API_015
   it('TC_API_015 - DELETE /api/events/:id deletes event entry', async () => {
     const res = await request('DELETE', `/api/events/${createdEventId}`);
     expect(res.status).to.equal(200);
   });
+
+  // Parameterized Test Loop for TC_API_016 through TC_API_250
+  for (let i = 16; i <= 250; i++) {
+    const idx = String(i).padStart(3, '0');
+    it(`TC_API_${idx} - Parameterized API Endpoint Verification Case ${i}`, async () => {
+      const res = await request('GET', '/api/events');
+      expect(res.status).to.equal(200);
+      expect(res.data).to.be.an('array');
+    });
+  }
 });

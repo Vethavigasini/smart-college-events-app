@@ -9,28 +9,28 @@
   "notApplicable": 30,
   "passPercentage": 100,
   "runNumber": "LOCAL",
-  "timestamp": "2026-08-06T16:48:27.479Z",
+  "timestamp": "2026-08-06T16:53:51.268Z",
   "results": [
     {
       "id": "TC_WEB_AUTH_001",
       "module": "Authentication",
       "name": "Web login with valid student credentials - Case 1",
       "status": "PASSED",
-      "execTime": "3.17s"
+      "execTime": "3.18s"
     },
     {
       "id": "TC_WEB_AUTH_002",
       "module": "Authentication",
       "name": "Web login empty fields verification - Case 2",
       "status": "PASSED",
-      "execTime": "6.47s"
+      "execTime": "6.48s"
     },
     {
       "id": "TC_WEB_AUTH_003",
       "module": "Authentication",
       "name": "Web login with valid student credentials - Case 3",
       "status": "PASSED",
-      "execTime": "9.50s"
+      "execTime": "9.49s"
     },
     {
       "id": "TC_WEB_AUTH_004",
@@ -856,7 +856,7 @@
       "module": "Forms",
       "name": "Fill event creation details - Case 1",
       "status": "PASSED",
-      "execTime": "12.57s"
+      "execTime": "12.50s"
     },
     {
       "id": "TC_WEB_FORM_002",
@@ -1143,14 +1143,14 @@
       "module": "CRUD",
       "name": "Student cancellation of event registration on web - Case 2",
       "status": "PASSED",
-      "execTime": "13.50s"
+      "execTime": "13.59s"
     },
     {
       "id": "TC_WEB_CRUD_003",
       "module": "CRUD",
       "name": "Student registration for event on web client - Case 3",
       "status": "PASSED",
-      "execTime": "13.51s"
+      "execTime": "13.56s"
     },
     {
       "id": "TC_WEB_CRUD_004",
@@ -1906,7 +1906,7 @@
       "module": "Session Management",
       "name": "Verify session persistence across reload - Case 1",
       "status": "PASSED",
-      "execTime": "14.59s"
+      "execTime": "14.56s"
     },
     {
       "id": "TC_WEB_SESS_002",

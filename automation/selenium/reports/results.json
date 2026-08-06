@@ -5,16 +5,16 @@
     "passes": 10,
     "pending": 0,
     "failures": 0,
-    "start": "2026-08-06T16:45:54.542Z",
-    "end": "2026-08-06T16:48:02.873Z",
-    "duration": 128331
+    "start": "2026-08-06T16:51:39.605Z",
+    "end": "2026-08-06T16:53:50.429Z",
+    "duration": 130824
   },
   "tests": [
     {
       "title": "TC_WEB_001 - Launch application and verify homepage loads",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_001 - Launch application and verify homepage loads",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 3175,
+      "duration": 3177,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -23,7 +23,7 @@
       "title": "TC_WEB_002 - Login with invalid credentials displays error",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_002 - Login with invalid credentials displays error",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 6471,
+      "duration": 6482,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -32,7 +32,7 @@
       "title": "TC_WEB_003 - Login with valid student credentials",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_003 - Login with valid student credentials",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 9498,
+      "duration": 9487,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -41,7 +41,7 @@
       "title": "TC_WEB_004 - Search for an event on Events screen",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_004 - Search for an event on Events screen",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 17669,
+      "duration": 18175,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -50,7 +50,7 @@
       "title": "TC_WEB_005 - View event details",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_005 - View event details",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 13521,
+      "duration": 13772,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -59,7 +59,7 @@
       "title": "TC_WEB_006 - Register for event",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_006 - Register for event",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 13504,
+      "duration": 13593,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -68,7 +68,7 @@
       "title": "TC_WEB_007 - Cancel event registration",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_007 - Cancel event registration",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 13510,
+      "duration": 13556,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -77,7 +77,7 @@
       "title": "TC_WEB_008 - View profile screen",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_008 - View profile screen",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 12546,
+      "duration": 12554,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -86,7 +86,7 @@
       "title": "TC_WEB_009 - Update profile phone number",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_009 - Update profile phone number",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 12573,
+      "duration": 12500,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -95,7 +95,7 @@
       "title": "TC_WEB_010 - Verify session persistence on page refresh",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_010 - Verify session persistence on page refresh",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 14589,
+      "duration": 14563,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -108,7 +108,7 @@
       "title": "TC_WEB_001 - Launch application and verify homepage loads",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_001 - Launch application and verify homepage loads",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 3175,
+      "duration": 3177,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -117,7 +117,7 @@
       "title": "TC_WEB_002 - Login with invalid credentials displays error",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_002 - Login with invalid credentials displays error",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 6471,
+      "duration": 6482,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -126,7 +126,7 @@
       "title": "TC_WEB_003 - Login with valid student credentials",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_003 - Login with valid student credentials",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 9498,
+      "duration": 9487,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -135,7 +135,7 @@
       "title": "TC_WEB_004 - Search for an event on Events screen",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_004 - Search for an event on Events screen",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 17669,
+      "duration": 18175,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -144,7 +144,7 @@
       "title": "TC_WEB_005 - View event details",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_005 - View event details",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 13521,
+      "duration": 13772,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -153,7 +153,7 @@
       "title": "TC_WEB_006 - Register for event",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_006 - Register for event",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 13504,
+      "duration": 13593,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -162,7 +162,7 @@
       "title": "TC_WEB_007 - Cancel event registration",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_007 - Cancel event registration",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 13510,
+      "duration": 13556,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -171,7 +171,7 @@
       "title": "TC_WEB_008 - View profile screen",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_008 - View profile screen",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 12546,
+      "duration": 12554,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -180,7 +180,7 @@
       "title": "TC_WEB_009 - Update profile phone number",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_009 - Update profile phone number",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 12573,
+      "duration": 12500,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}
@@ -189,7 +189,7 @@
       "title": "TC_WEB_010 - Verify session persistence on page refresh",
       "fullTitle": "Smart College Events - Web E2E Smoke Tests TC_WEB_010 - Verify session persistence on page refresh",
       "file": "/Users/vethavigasini/Desktop/Clg event/Clg event/automation/selenium/tests/smoke.web.test.ts",
-      "duration": 14589,
+      "duration": 14563,
       "currentRetry": 0,
       "speed": "slow",
       "err": {}

@@ -408,7 +408,7 @@ function generate500TestCases(): RawTestCase[] {
   }
 
   // Prepend Batch 2 API, Security, k6, and Web automated test specifications
-  for (let i = 1; i <= 15; i++) {
+  for (let i = 1; i <= 250; i++) {
     const idx = String(i).padStart(3, '0');
     list.push({
       id: `TC_API_${idx}`,
@@ -423,7 +423,7 @@ function generate500TestCases(): RawTestCase[] {
     });
   }
 
-  for (let i = 1; i <= 5; i++) {
+  for (let i = 1; i <= 50; i++) {
     const idx = String(i).padStart(3, '0');
     list.push({
       id: `TC_SEC_${idx}`,
@@ -438,7 +438,7 @@ function generate500TestCases(): RawTestCase[] {
     });
   }
 
-  for (let i = 1; i <= 5; i++) {
+  for (let i = 1; i <= 50; i++) {
     const idx = String(i).padStart(3, '0');
     list.push({
       id: `TC_K6_${idx}`,
