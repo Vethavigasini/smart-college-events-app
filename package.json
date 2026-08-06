@@ -13,7 +13,8 @@
     "android:test": "npm run emulator:start && sleep 10 && $ANDROID_HOME/platform-tools/adb reverse tcp:8081 tcp:8081 && $ANDROID_HOME/platform-tools/adb reverse tcp:5005 tcp:5005 && npm run appium:test",
     "reports": "npx ts-node automation/appium/utils/generateTestCaseMaster.ts && npx ts-node automation/appium/utils/generateReports.ts",
     "selenium:test": "mkdir -p automation/selenium/reports && npx mocha -r ts-node/register automation/selenium/tests/smoke.web.test.ts --reporter json > automation/selenium/reports/results.json",
-    "selenium:reports": "npx ts-node automation/selenium/utils/generateSeleniumTestCaseMaster.ts && npx ts-node automation/selenium/utils/generateSeleniumReports.ts"
+    "selenium:reports": "npx ts-node automation/selenium/utils/generateSeleniumTestCaseMaster.ts && npx ts-node automation/selenium/utils/generateSeleniumReports.ts",
+    "security:reports": "npx ts-node automation/selenium/utils/generateSecurityArtifacts.ts"
   },
   "dependencies": {
     "@expo/metro-runtime": "~3.2.3",
