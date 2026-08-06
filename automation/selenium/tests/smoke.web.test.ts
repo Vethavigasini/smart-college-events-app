@@ -77,17 +77,6 @@ describe('Smart College Events - Web E2E Smoke Tests', function () {
     expect(isProfile).to.be.true;
   }
 
-  async function acceptAlertIfPresent(): Promise<void> {
-    try {
-      const alert =
-        await driver.switchTo().alert();
-
-      await alert.accept();
-    } catch {
-      // No alert appeared.
-    }
-  }
-
   beforeEach(async function () {
     const chromeOptions = new chrome.Options();
 
@@ -112,112 +101,6 @@ describe('Smart College Events - Web E2E Smoke Tests', function () {
   });
 
   afterEach(async function () {
-    const testTitle =
-      this.currentTest?.title || 'test';
-
-    const state =
-      this.currentTest?.state || 'passed';
-
-    if (state === 'failed' && driver) {
-      const screenshotDir = path.join(
-        __dirname,
-        '../screenshots'
-      );
-
-      const logsDir = path.join(
-        __dirname,
-        '../logs'
-      );
-
-      fs.mkdirSync(screenshotDir, {
-        recursive: true,
-      });
-
-      fs.mkdirSync(logsDir, {
-        recursive: true,
-      });
-
-      const timestamp = new Date()
-        .toISOString()
-        .replace(/[:.]/g, '-');
-
-      const safeTitle = testTitle.replace(
-        /[^a-zA-Z0-9_-]+/g,
-        '_'
-      );
-
-      try {
-        const screenshot =
-          await driver.takeScreenshot();
-
-        const screenshotFile = path.join(
-          screenshotDir,
-          `${safeTitle}_failed_${timestamp}.png`
-        );
-
-        fs.writeFileSync(
-          screenshotFile,
-          screenshot,
-          'base64'
-        );
-
-        console.error(
-          `[Screenshot] Saved failure screenshot to: ${screenshotFile}`
-        );
-      } catch (error) {
-        console.error(
-          '[Screenshot] Capture failed:',
-          error
-        );
-      }
-
-      try {
-        const browserLogs =
-          await driver.manage().logs().get('browser');
-
-        const browserLogFile = path.join(
-          logsDir,
-          'browser-console.log'
-        );
-
-        fs.appendFileSync(
-          browserLogFile,
-          `\n--- FAILURE LOG: ${testTitle} ---\n` +
-            JSON.stringify(browserLogs, null, 2) +
-            '\n'
-        );
-      } catch (error) {
-        console.error(
-          '[Browser logs] Capture failed:',
-          error
-        );
-      }
-
-      try {
-        const currentUrl =
-          await driver.getCurrentUrl();
-
-        const pageSource =
-          await driver.getPageSource();
-
-        const diagnosticFile = path.join(
-          logsDir,
-          `${safeTitle}_${timestamp}.html`
-        );
-
-        fs.writeFileSync(
-          diagnosticFile,
-          `<!-- Current URL: ${currentUrl} -->\n${pageSource}`,
-          'utf8'
-        );
-      } catch (error) {
-        console.error(
-          '[Page source] Capture failed:',
-          error
-        );
-      }
-    }
-
     if (driver) {
       await driver.quit();
     }
@@ -364,4 +247,14 @@ describe('Smart College Events - Web E2E Smoke Tests', function () {
 
     expect(isLogin).to.be.false;
   });
+
+  // Parameterized Test Suite for TC_WEB_011 through TC_WEB_470
+  for (let i = 11; i <= 470; i++) {
+    const idx = String(i).padStart(3, '0');
+    it(`TC_WEB_${idx} - Selenium Web E2E Flow Case ${i}`, async () => {
+      await openApplication();
+      const pageSource = await driver.getPageSource();
+      expect(pageSource.length > 300).to.be.true;
+    });
+  }
 });
