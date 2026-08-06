@@ -14,7 +14,12 @@
     "reports": "npx ts-node automation/appium/utils/generateTestCaseMaster.ts && npx ts-node automation/appium/utils/generateReports.ts",
     "selenium:test": "mkdir -p automation/selenium/reports && npx mocha -r ts-node/register automation/selenium/tests/smoke.web.test.ts --reporter json > automation/selenium/reports/results.json",
     "selenium:reports": "npx ts-node automation/selenium/utils/generateSeleniumTestCaseMaster.ts && npx ts-node automation/selenium/utils/generateSeleniumReports.ts",
-    "security:reports": "npx ts-node automation/selenium/utils/generateSecurityArtifacts.ts"
+    "security:reports": "npx ts-node automation/selenium/utils/generateSecurityArtifacts.ts",
+    "load:baseline": "k6 run automation/load/baseline.js",
+    "load:stress": "k6 run automation/load/stress.js",
+    "load:spike": "k6 run automation/load/spike.js",
+    "load:endurance": "k6 run automation/load/endurance.js",
+    "load:reports": "npx ts-node automation/load/utils/generateLoadReports.ts"
   },
   "dependencies": {
     "@expo/metro-runtime": "~3.2.3",

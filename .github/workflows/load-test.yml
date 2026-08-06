@@ -1,0 +1,86 @@
+name: API Load & Performance Testing
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0' # Run weekly on Sundays
+  push:
+    branches: [ main, master ]
+
+jobs:
+  baseline-load-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      # Step 1: Checkout
+      - name: Step 1 - Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2: Setup Node.js
+      - name: Step 2 - Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # Step 3: Install Dependencies
+      - name: Step 3 - Install Dependencies
+        run: |
+          npm ci
+          if [ -d "backend" ]; then
+            cd backend && npm ci && cd ..
+          fi
+
+      # Step 4: Install k6
+      - name: Step 4 - Install k6 Load Test Engine
+        run: |
+          sudo gpg -k || true
+          sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+          sudo apt-get update
+          sudo apt-get install k6
+
+      # Step 5: Start Backend API Server
+      - name: Step 5 - Start Express Backend Server
+        run: |
+          cd backend
+          npm start &
+          sleep 5
+          curl -s http://localhost:5005/api/events || true
+          cd ..
+
+      # Step 6: Execute Baseline Load Test
+      - name: Step 6 - Execute k6 Baseline Load Test
+        env:
+          LOAD_BASE_URL: http://localhost:5005
+        run: |
+          mkdir -p "Test Results/JSON"
+          k6 run automation/load/baseline.js || true
+
+      # Step 7: Compile Multi-Format Reports
+      - name: Step 7 - Compile Performance Reports
+        if: always()
+        run: |
+          npm run load:reports || true
+
+      # Step 8: Upload Artifacts
+      - name: Step 8 - Upload Performance Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: performance-load-reports
+          path: |
+            Test Results/JSON/k6-summary.json
+            Test Results/HTML/performance-report.html
+            Test Results/Excel/Performance_Report.xlsx
+            Test Results/Summary/performance-summary.md
+          retention-days: 30
+
+      # Step 9: Publish GitHub Actions Summary
+      - name: Step 9 - Publish GitHub Summary Metrics
+        if: always()
+        run: |
+          if [ -f "Test Results/Summary/performance-summary.md" ]; then
+            cat "Test Results/Summary/performance-summary.md" >> $GITHUB_STEP_SUMMARY
+          fi
