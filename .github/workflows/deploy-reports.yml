@@ -6,16 +6,19 @@ on:
     branches: [ main, master ]
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
 concurrency:
-  group: 'pages'
+  group: pages
   cancel-in-progress: true
 
 jobs:
   publish-reports:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
@@ -26,7 +29,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Step 2: Setup Node.js
+      # Step 2: Setup Node.js 20
       - name: Step 2 - Setup Node.js 20
         uses: actions/setup-node@v4
         with:
@@ -37,8 +40,13 @@ jobs:
       - name: Step 3 - Install Dependencies
         run: npm ci
 
-      # Step 4: Generate All QA Reports
-      - name: Step 4 - Generate Master Dashboards & QA Reports
+      # Step 4: Export Expo Web Application
+      - name: Step 4 - Export Expo Web Application
+        run: |
+          npx expo export --platform web
+
+      # Step 5: Generate Master Dashboards & QA Reports
+      - name: Step 5 - Generate Master Dashboards & QA Reports
         run: |
           npm run reports || true
           npm run selenium:reports || true
@@ -46,60 +54,64 @@ jobs:
           npm run load:reports || true
           npm run reports:master || true
 
-      # Step 5: Prepare GitHub Pages Static Directory
-      - name: Step 5 - Prepare Reports Pages Directory
+      # Step 6: Assemble Combined GitHub Pages Site Payload
+      - name: Step 6 - Assemble Combined GitHub Pages Site Payload
         run: |
-          # Create deployment workspace folder
-          mkdir -p public_reports/reports/latest
+          mkdir -p public_site/reports/latest
           RUN_ID="${{ github.run_number }}"
-          HIST_DIR="public_reports/reports/history/run-${RUN_ID}"
+          HIST_DIR="public_site/reports/history/run-${RUN_ID}"
           mkdir -p "$HIST_DIR"
 
-          # Copy files into reports/latest/
-          cp -r "Test Results/HTML/"* public_reports/reports/latest/ || true
-          cp -r "Test Results/Summary/"* public_reports/reports/latest/ || true
-          cp -r "Test Results/JSON/"* public_reports/reports/latest/ || true
+          # 1. Copy Expo Web app assets to root /
+          cp -r dist/* public_site/
           
+          # 2. Touch .nojekyll to allow _expo static asset serving
+          touch public_site/.nojekyll
+
+          # 3. Copy QA reports into /reports/latest/
+          cp -r "Test Results/HTML/"* public_site/reports/latest/ || true
+          cp -r "Test Results/Summary/"* public_site/reports/latest/ || true
+          cp -r "Test Results/JSON/"* public_site/reports/latest/ || true
           if [ -d "Test Results/Screenshots" ]; then
-            cp -r "Test Results/Screenshots" public_reports/reports/latest/ || true
+            cp -r "Test Results/Screenshots" public_site/reports/latest/ || true
           fi
           if [ -d "Test Results/Logs" ]; then
-            cp -r "Test Results/Logs" public_reports/reports/latest/ || true
+            cp -r "Test Results/Logs" public_site/reports/latest/ || true
           fi
 
-          # Archive copy into history
-          cp -r public_reports/reports/latest/* "$HIST_DIR/"
+          # 4. Archive copy into history
+          cp -r public_site/reports/latest/* "$HIST_DIR/"
 
-      # Step 6: Deploy to GitHub Pages
-      - name: Step 6 - Deploy to GitHub Pages gh-pages Branch
-        uses: JamesIves/github-pages-deploy-action@v4
+      # Step 7: Configure GitHub Pages
+      - name: Step 7 - Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      # Step 8: Upload Pages Artifact
+      - name: Step 8 - Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          folder: public_reports
-          branch: gh-pages
-          clean: false # Preserve previous history folder builds!
+          path: 'public_site'
 
-      # Step 7: Upload Report Artifacts
-      - name: Step 7 - Upload Artifacts
+      # Step 9: Deploy to GitHub Pages
+      - name: Step 9 - Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      # Step 10: Upload Report Artifacts
+      - name: Step 10 - Upload Artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: published-github-pages-reports
-          path: public_reports/
+          path: public_site/
           retention-days: 30
 
-      # Step 8: Publish GitHub Actions Step Summary
-      - name: Step 8 - Publish GitHub Actions Step Summary
+      # Step 11: Publish GitHub Actions Step Summary
+      - name: Step 11 - Publish Step Summary
         if: always()
         run: |
-          echo "### 🌐 Published Live GitHub Pages Reports" >> $GITHUB_STEP_SUMMARY
+          echo "### 🌐 Published Live GitHub Pages Web App & QA Reports" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Live Application Root**: [https://Vethavigasini.github.io/smart-college-events-app/](https://Vethavigasini.github.io/smart-college-events-app/)" >> $GITHUB_STEP_SUMMARY
           echo "- **Latest Master Dashboard**: [https://Vethavigasini.github.io/smart-college-events-app/reports/latest/dashboard.html](https://Vethavigasini.github.io/smart-college-events-app/reports/latest/dashboard.html)" >> $GITHUB_STEP_SUMMARY
           echo "- **Execution Report**: [https://Vethavigasini.github.io/smart-college-events-app/reports/latest/execution-report.html](https://Vethavigasini.github.io/smart-college-events-app/reports/latest/execution-report.html)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Trends Dashboard**: [https://Vethavigasini.github.io/smart-college-events-app/reports/latest/trends.html](https://Vethavigasini.github.io/smart-college-events-app/reports/latest/trends.html)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Performance Dashboard**: [https://Vethavigasini.github.io/smart-college-events-app/reports/latest/performance-report.html](https://Vethavigasini.github.io/smart-college-events-app/reports/latest/performance-report.html)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Historical Run Archive**: \`https://Vethavigasini.github.io/smart-college-events-app/reports/history/run-${{ github.run_number }}/\`" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          
-          if [ -f "Test Results/Summary/summary.md" ]; then
-            cat "Test Results/Summary/summary.md" >> $GITHUB_STEP_SUMMARY
-          fi

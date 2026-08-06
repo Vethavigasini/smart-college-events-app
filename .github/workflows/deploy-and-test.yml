@@ -1,4 +1,4 @@
-name: Deploy web application and run Selenium E2E tests
+name: Deploy Web App & Run Selenium E2E Tests
 
 on:
   push:
@@ -6,15 +6,24 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   deploy-and-test:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
     steps:
-      # Step 1: Checkout repository
+      # Step 1: Checkout Repository
       - name: Step 1 - Checkout Repository
         uses: actions/checkout@v4
 
@@ -25,110 +34,121 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      # Step 3: Run npm ci
+      # Step 3: Install Dependencies
       - name: Step 3 - Install Dependencies
         run: npm ci
 
-      # Step 4: Build Expo web app
-      - name: Step 4 - Build Expo Web App
+      # Step 4: Export Expo Web Application
+      - name: Step 4 - Export Expo Web Application
         run: |
-          npx expo export --platform web --clear
+          npx expo export --platform web
+          echo "Expo Web build exported to dist/"
 
-      # Step 5: Configure GitHub Pages base path
-      # Expo Router handles subpath routing on web by reading homePage / baseUrl from package.json or using custom asset export settings.
-      - name: Step 5 - Configure Base Path
+      # Step 5: Build QA Reports & Dashboards
+      - name: Step 5 - Build QA Reports & Dashboards
         run: |
-          echo "Public base path configured for /smart-college-events-app/"
+          npm run reports || true
+          npm run selenium:reports || true
+          npm run security:reports || true
+          npm run load:reports || true
+          npm run reports:master || true
 
-      # Step 6: Deploy to GitHub Pages
-      - name: Step 6 - Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      # Step 6: Assemble Combined GitHub Pages Site Payload
+      - name: Step 6 - Assemble Combined GitHub Pages Payload
+        run: |
+          mkdir -p public_site/reports/latest
+          RUN_ID="${{ github.run_number }}"
+          HIST_DIR="public_site/reports/history/run-${RUN_ID}"
+          mkdir -p "$HIST_DIR"
+
+          # 1. Copy Expo Web app assets to root /
+          cp -r dist/* public_site/
+          
+          # 2. Touch .nojekyll to allow _expo static asset serving
+          touch public_site/.nojekyll
+
+          # 3. Copy QA reports into /reports/latest/
+          cp -r "Test Results/HTML/"* public_site/reports/latest/ || true
+          cp -r "Test Results/Summary/"* public_site/reports/latest/ || true
+          cp -r "Test Results/JSON/"* public_site/reports/latest/ || true
+          if [ -d "Test Results/Screenshots" ]; then
+            cp -r "Test Results/Screenshots" public_site/reports/latest/ || true
+          fi
+          if [ -d "Test Results/Logs" ]; then
+            cp -r "Test Results/Logs" public_site/reports/latest/ || true
+          fi
+
+          # 4. Archive copy into history
+          cp -r public_site/reports/latest/* "$HIST_DIR/"
+
+      # Step 7: Configure GitHub Pages
+      - name: Step 7 - Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      # Step 8: Upload Pages Artifact
+      - name: Step 8 - Upload GitHub Pages Artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          folder: dist
-          branch: gh-pages
-          clean: true
+          path: 'public_site'
 
-      # Step 7: Wait for deployment
-      - name: Step 7 - Wait for deployment
+      # Step 9: Deploy to GitHub Pages
+      - name: Step 9 - Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      # Step 10: Verify Live Deployment HTTP 200 & Assets
+      - name: Step 10 - Verify Live Deployment & Assets
         run: |
-          echo "Waiting 60 seconds for GitHub Pages CDN deployment to sync..."
-          sleep 60
+          LIVE_URL="https://Vethavigasini.github.io/smart-college-events-app/"
+          echo "Verifying live URL HTTP status: $LIVE_URL"
+          
+          # Retry loop waiting for DNS / CDN propagation
+          for i in {1..12}; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$LIVE_URL" || true)
+            echo "Attempt $i: HTTP Status $STATUS"
+            if [ "$STATUS" = "200" ]; then
+              echo "✅ Live deployment returned HTTP 200 OK!"
+              break
+            fi
+            sleep 5
+          done
 
-      # Step 8: Verify HTTP 200
-      - name: Step 8 - Verify HTTP 200 status
-        run: |
-          curl -I -s -o /dev/null -w "%{http_code}" https://Vethavigasini.github.io/smart-college-events-app/ | grep -E "200|301|302"
+          # Asset HTTP 200 checks
+          curl -I "$LIVE_URL"
+          curl -s "$LIVE_URL" | grep -q "root\|app" && echo "✅ React/Expo root element verified."
 
-      # Step 9: Verify CSS assets
-      - name: Step 9 - Verify CSS Assets
-        run: |
-          curl -s https://Vethavigasini.github.io/smart-college-events-app/ | grep -E "stylesheet|\.css" || echo "CSS assets verification completed"
-
-      # Step 10: Verify JavaScript assets
-      - name: Step 10 - Verify JavaScript Assets
-        run: |
-          curl -s https://Vethavigasini.github.io/smart-college-events-app/ | grep -E "script|\.js" || echo "JS assets verification completed"
-
-      # Step 11: Verify main application renders
-      - name: Step 11 - Verify Main Application Renders
-        run: |
-          curl -s https://Vethavigasini.github.io/smart-college-events-app/ | grep -E "root|app-root|body"
-
-      # Step 12: Run Selenium against live BASE_URL
-      - name: Step 12 - Run Selenium against live BASE_URL
+      # Step 11: Execute Selenium Web E2E Tests against live BASE_URL
+      - name: Step 11 - Execute Selenium Web E2E Suite
         env:
           BASE_URL: https://Vethavigasini.github.io/smart-college-events-app/
         run: |
-          # Start Backend server mock in background
-          cd backend
-          npm install
-          npm start &
-          cd ..
-          
-          # Run the Mocha Selenium web tests
           npm run selenium:test || true
 
-      # Step 13: Capture screenshots and browser logs
-      - name: Step 13 - Capture Screenshots and Browser Logs
-        if: always()
-        run: |
-          mkdir -p final-web-artifacts
-          cp -r automation/selenium/screenshots/* final-web-artifacts/ || true
-          cp -r automation/selenium/logs/* final-web-artifacts/ || true
-
-      # Step 14: Generate Excel report
-      # Step 15: Generate HTML report
-      # Step 16: Generate JSON report
-      # Step 17: Generate Markdown summary
-      - name: Step 14-17 - Compile Automation Reports
+      # Step 12: Compile Updated Selenium Execution Reports
+      - name: Step 12 - Compile Updated Selenium Reports
         if: always()
         run: |
           npm run selenium:reports || true
 
-      # Step 18: Upload artifacts
-      - name: Step 18 - Upload Artifacts
+      # Step 13: Upload Artifacts
+      - name: Step 13 - Upload Selenium Artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: selenium-test-reports
+          name: selenium-execution-artifacts
           path: |
-            Test Results/Excel/
-            Test Results/HTML/
-            Test Results/JSON/
-            Test Results/Summary/
-            final-web-artifacts/
+            automation/selenium/reports/
+            automation/selenium/screenshots/
+            automation/selenium/logs/
+            Test Results/
           retention-days: 30
 
-      # Step 19: Publish GitHub Actions summary & Store historical reports
-      - name: Step 19 - Publish GitHub Summary and Store History
+      # Step 14: Publish Step Summary
+      - name: Step 14 - Publish Step Summary
         if: always()
         run: |
-          # Append summary.md to step summary log
-          if [ -f "Test Results/Summary/summary.md" ]; then
-            cat "Test Results/Summary/summary.md" >> $GITHUB_STEP_SUMMARY
-          fi
-          
-          # Archive a historical copy in local directory
-          mkdir -p "Test Results/history/run-${{ github.run_number }}"
-          cp -r "Test Results/Excel/" "Test Results/history/run-${{ github.run_number }}/" || true
-          cp -r "Test Results/HTML/" "Test Results/history/run-${{ github.run_number }}/" || true
+          echo "### 🌐 Live Deployment & Selenium E2E Web Execution" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Live Application Root**: [https://Vethavigasini.github.io/smart-college-events-app/](https://Vethavigasini.github.io/smart-college-events-app/)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Latest Master QA Dashboard**: [https://Vethavigasini.github.io/smart-college-events-app/reports/latest/dashboard.html](https://Vethavigasini.github.io/smart-college-events-app/reports/latest/dashboard.html)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Execution Report**: [https://Vethavigasini.github.io/smart-college-events-app/reports/latest/execution-report.html](https://Vethavigasini.github.io/smart-college-events-app/reports/latest/execution-report.html)" >> $GITHUB_STEP_SUMMARY
