@@ -3,7 +3,7 @@ import {
   View, Text, StyleSheet, ScrollView, TextInput,
   TouchableOpacity, KeyboardAvoidingView, Platform, Alert, ActivityIndicator,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../../context/AuthContext';
@@ -38,13 +38,15 @@ export default function LoginScreen() {
     if (!result.success) {
       setErrors({ general: result.error || 'Login failed. Please try again.' });
     } else {
-      setTimeout(() => {
-        if (result.role === 'admin') {
-          router.replace('/admin/dashboard');
-        } else {
-          router.replace('/student/dashboard');
-        }
-      }, 100);
+      const targetRoute = result.role === 'admin' ? '/admin/dashboard' : '/student/dashboard';
+      try {
+        router.replace(targetRoute as any);
+      } catch {
+        // Fallback
+      }
+      if (Platform.OS === 'web' && typeof window !== 'undefined') {
+        window.location.href = '.' + targetRoute;
+      }
     }
   };
 
@@ -163,9 +165,11 @@ export default function LoginScreen() {
             {/* Register Link */}
             <View style={styles.registerRow}>
               <Text style={styles.registerLabel}>Don't have an account? </Text>
-              <TouchableOpacity onPress={() => router.push('/register')} testID="login_signup_link" accessibilityLabel="login_signup_link">
-                <Text style={styles.registerLink}>Create Account</Text>
-              </TouchableOpacity>
+              <Link href="/register" asChild>
+                <TouchableOpacity testID="login_signup_link" accessibilityLabel="login_signup_link">
+                  <Text style={styles.registerLink}>Create Account</Text>
+                </TouchableOpacity>
+              </Link>
             </View>
           </View>
         </ScrollView>

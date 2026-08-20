@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, Platform, SafeAreaView, Alert } from 'react-native';
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, Gradients } from '../constants/Colors';
@@ -15,11 +15,16 @@ export default function LandingPage() {
   const { isAuthenticated, user } = useAuth();
 
   const handleCtaPress = () => {
-    if (isAuthenticated) {
-      if (user?.role === 'admin') router.push('/admin/dashboard');
-      else router.push('/student/dashboard');
-    } else {
-      router.push('/login');
+    const targetPath = isAuthenticated
+      ? (user?.role === 'admin' ? '/admin/dashboard' : '/student/dashboard')
+      : '/login';
+    try {
+      router.push(targetPath as any);
+    } catch {
+      // Fallback
+    }
+    if (isWeb && typeof window !== 'undefined') {
+      window.location.href = '.' + targetPath;
     }
   };
 
@@ -44,14 +49,18 @@ export default function LandingPage() {
         <View style={styles.navActions}>
           {!isAuthenticated ? (
             <>
-              <TouchableOpacity onPress={() => router.push('/login')} testID="landing_login_link" accessibilityLabel="landing_login_link">
-                <Text style={styles.navLink}>Log In</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => router.push('/register')}>
-                <LinearGradient colors={Gradients.aurora} style={styles.navBtn} start={{x:0,y:0}} end={{x:1,y:1}}>
-                  <Text style={styles.navBtnText}>Get Started</Text>
-                </LinearGradient>
-              </TouchableOpacity>
+              <Link href="/login" asChild>
+                <TouchableOpacity testID="landing_login_link" accessibilityLabel="landing_login_link">
+                  <Text style={styles.navLink}>Log In</Text>
+                </TouchableOpacity>
+              </Link>
+              <Link href="/register" asChild>
+                <TouchableOpacity testID="landing_register_link">
+                  <LinearGradient colors={Gradients.aurora} style={styles.navBtn} start={{x:0,y:0}} end={{x:1,y:1}}>
+                    <Text style={styles.navBtnText}>Get Started</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </Link>
             </>
           ) : (
             <TouchableOpacity onPress={handleCtaPress}>
