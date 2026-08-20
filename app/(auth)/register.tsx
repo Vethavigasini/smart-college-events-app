@@ -114,7 +114,7 @@ export default function RegisterScreen() {
             {/* Fields */}
             {[
               { key: 'name', label: 'Full Name', placeholder: 'Your full name', icon: 'person-outline', value: name, setter: setName },
-              { key: 'email', label: 'Email Address', placeholder: 'you@college.edu', icon: 'mail-outline', value: email, setter: setEmail, keyboard: 'email-address', autoCapitalize: 'none' },
+              { key: 'email', label: 'Email Address', placeholder: 'your.email@gmail.com', icon: 'mail-outline', value: email, setter: setEmail, keyboard: 'email-address', autoCapitalize: 'none' },
             ].map(f => (
               <View style={styles.fieldGroup} key={f.key}>
                 <Text style={styles.label}>{f.label}</Text>

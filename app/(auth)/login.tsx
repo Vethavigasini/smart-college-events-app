@@ -110,7 +110,7 @@ export default function LoginScreen() {
                   style={styles.input}
                   value={email}
                   onChangeText={v => { setEmail(v); setErrors(e => ({ ...e, email: undefined })); }}
-                  placeholder="you@college.edu"
+                  placeholder="your.email@gmail.com"
                   placeholderTextColor={Colors.textMuted}
                   keyboardType="email-address"
                   autoCapitalize="none"

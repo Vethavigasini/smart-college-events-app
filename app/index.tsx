@@ -44,7 +44,7 @@ export default function LandingPage() {
         <View style={styles.navActions}>
           {!isAuthenticated ? (
             <>
-              <TouchableOpacity onPress={() => router.push('/(auth)/login')}>
+              <TouchableOpacity onPress={() => router.push('/(auth)/login')} testID="landing_login_link" accessibilityLabel="landing_login_link">
                 <Text style={styles.navLink}>Log In</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => router.push('/(auth)/register')}>
@@ -83,7 +83,7 @@ export default function LandingPage() {
               Streamline event planning, registrations, attendance tracking, and student engagement through one brilliant platform.
             </Text>
             <View style={styles.heroButtons}>
-              <TouchableOpacity style={styles.shadowWrapper} onPress={handleCtaPress}>
+              <TouchableOpacity style={styles.shadowWrapper} onPress={handleCtaPress} testID="landing_explore_btn" accessibilityLabel="landing_explore_btn">
                 <LinearGradient colors={Gradients.aurora} style={styles.primaryBtn} start={{x:0,y:0}} end={{x:1,y:1}}>
                   <Text style={styles.primaryBtnText}>{isAuthenticated ? 'Go to Dashboard' : 'Explore Platform'}</Text>
                   <Ionicons name="arrow-forward" size={18} color={Colors.white} />

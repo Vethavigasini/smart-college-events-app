@@ -239,7 +239,7 @@ export default function EventDetailScreen() {
         <View style={styles.webContainer}>
         {/* Color Header */}
         <View style={[styles.eventHeader, { backgroundColor: catColor }]}>
-          <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
+          <TouchableOpacity style={styles.backBtn} onPress={() => router.back()} testID="event_detail_back" accessibilityLabel="event_detail_back">
             <Ionicons name="arrow-back" size={22} color="#fff" />
           </TouchableOpacity>
           <Text style={styles.categoryEmoji}>{CATEGORY_EMOJI[event.category]}</Text>
