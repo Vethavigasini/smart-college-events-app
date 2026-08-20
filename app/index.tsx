@@ -68,8 +68,8 @@ export default function LandingPage() {
         {/* Crystal Hero Section */}
         <View style={styles.hero}>
           {/* Abstract Aurora Background Blobs */}
-          <View style={styles.blob1} />
-          <View style={styles.blob2} />
+          <View style={styles.blob1} pointerEvents="none" />
+          <View style={styles.blob2} pointerEvents="none" />
           
           <View style={styles.heroContent}>
             <View style={styles.badgeGlass}>

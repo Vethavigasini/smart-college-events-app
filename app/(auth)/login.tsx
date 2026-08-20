@@ -59,8 +59,8 @@ export default function LoginScreen() {
     <KeyboardAvoidingView style={{ flex: 1, width: '100%' }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <View style={styles.gradient}>
         {/* Colorful Abstract background blobs */}
-        {isWeb && <View style={styles.blob1} />}
-        {isWeb && <View style={styles.blob2} />}
+        {isWeb && <View style={styles.blob1} pointerEvents="none" />}
+        {isWeb && <View style={styles.blob2} pointerEvents="none" />}
 
         {/* Header */}
         <View style={styles.headerSection}>

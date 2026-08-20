@@ -64,8 +64,8 @@ export default function RegisterScreen() {
     <KeyboardAvoidingView style={{ flex: 1, width: '100%' }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <View style={styles.gradient}>
         {/* Colorful Abstract background blobs */}
-        {isWeb && <View style={styles.blob1} />}
-        {isWeb && <View style={styles.blob2} />}
+        {isWeb && <View style={styles.blob1} pointerEvents="none" />}
+        {isWeb && <View style={styles.blob2} pointerEvents="none" />}
 
         <View style={styles.header}>
           <TouchableOpacity style={styles.backBtn} onPress={() => router.back()} testID="signup_back_btn" accessibilityLabel="signup_back_btn">
