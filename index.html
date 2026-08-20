@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart College Events - Event Management Platform</title>
+  <meta name="description" content="A state-of-the-art college event management platform featuring real-time registrations, digital QR passes, interactive analytics, and student event tracking." />
+  <meta name="theme-color" content="#4f46e5" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- QRCode.js Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-surface: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.8);
+      --bg-glass: rgba(15, 23, 42, 0.75);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --brand-primary: #6366f1;
+      --brand-accent: #38bdf8;
+      --gradient-aurora: linear-gradient(135deg, #6366f1 0%, #38bdf8 50%, #818cf8 100%);
+      --gradient-card: linear-gradient(180deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%);
+      --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --shadow-glow: 0 10px 30px -10px rgba(99, 102, 241, 0.4);
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.9);
+      --bg-glass: rgba(255, 255, 255, 0.85);
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --gradient-card: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+      --shadow-glow: 0 10px 30px -10px rgba(99, 102, 241, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Ambient Background Glow */
+    .ambient-glow {
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(56, 189, 248, 0.08) 50%, rgba(0, 0, 0, 0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Header & Navigation */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 24px;
+    }
+
+    .nav-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      background: var(--gradient-aurora);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 18px;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .brand span {
+      background: var(--gradient-aurora);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .role-toggle {
+      display: flex;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-full);
+      padding: 4px;
+    }
+
+    .role-btn {
+      padding: 8px 16px;
+      border-radius: var(--radius-full);
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .role-btn.active {
+      background: var(--gradient-aurora);
+      color: #fff;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .theme-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .theme-btn:hover {
+      border-color: var(--brand-primary);
+      transform: scale(1.05);
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 32px 24px 64px 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: var(--gradient-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 40px 32px;
+      margin-bottom: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .hero-badge {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: var(--brand-accent);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--text-primary);
+    }
+
+    .hero-sub {
+      color: var(--text-secondary);
+      font-size: 16px;
+      max-width: 720px;
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      margin-top: 12px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      background: var(--gradient-aurora);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-lbl {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    /* Controls Bar: Search & Categories */
+    .controls-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .search-input-wrap {
+      flex: 1;
+      min-width: 280px;
+      position: relative;
+    }
+
+    .search-input-wrap i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .search-input {
+      width: 100%;
+      height: 48px;
+      padding: 0 16px 0 44px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 14px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--brand-primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+
+    .action-btn {
+      height: 48px;
+      padding: 0 24px;
+      border-radius: var(--radius-md);
+      border: none;
+      background: var(--gradient-aurora);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--shadow-glow);
+      transition: transform 0.2s ease;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .category-pills {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+
+    .category-pills::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cat-chip {
+      padding: 8px 18px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .cat-chip:hover, .cat-chip.active {
+      border-color: var(--brand-primary);
+      background: var(--brand-primary);
+      color: #fff;
+    }
+
+    /* Grid Layout */
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    .event-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+    }
+
+    .event-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--brand-primary);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: rgba(99, 102, 241, 0.2);
+      color: var(--brand-accent);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+
+    .event-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.3;
+      padding-right: 70px;
+    }
+
+    .event-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .meta-row i {
+      color: var(--brand-accent);
+      width: 16px;
+    }
+
+    .event-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .capacity-bar-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .capacity-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .capacity-track {
+      height: 6px;
+      border-radius: var(--radius-full);
+      background: var(--bg-surface);
+      overflow: hidden;
+    }
+
+    .capacity-fill {
+      height: 100%;
+      border-radius: var(--radius-full);
+      background: var(--gradient-aurora);
+      transition: width 0.3s ease;
+    }
+
+    .card-footer {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .btn-register {
+      flex: 1;
+      height: 44px;
+      border-radius: var(--radius-md);
+      border: none;
+      background: var(--gradient-aurora);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: opacity 0.2s ease;
+    }
+
+    .btn-register:hover {
+      opacity: 0.9;
+    }
+
+    .btn-registered {
+      background: var(--gradient-success);
+    }
+
+    /* Modal Component */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(12px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 24px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: var(--shadow-glow);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .modal-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .form-input {
+      height: 48px;
+      padding: 0 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-size: 14px;
+      outline: none;
+    }
+
+    .qr-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      margin: 10px 0;
+    }
+
+    /* Toast Notification */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast {
+      background: var(--bg-surface);
+      border: 1px solid var(--brand-primary);
+      color: var(--text-primary);
+      padding: 14px 20px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-glow);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <div class="ambient-glow"></div>
+
+  <!-- Navbar -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="brand">
+        <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div>Smart<span>Events</span></div>
+      </a>
+
+      <div class="nav-actions">
+        <div class="role-toggle">
+          <button class="role-btn active" id="btn-role-student" onclick="setRole('student')">
+            <i class="fa-solid fa-user-graduate"></i> Student
+          </button>
+          <button class="role-btn" id="btn-role-admin" onclick="setRole('admin')">
+            <i class="fa-solid fa-shield-halved"></i> Admin
+          </button>
+        </div>
+
+        <button class="theme-btn" onclick="toggleTheme()" title="Toggle Dark/Light Theme">
+          <i class="fa-solid fa-moon" id="theme-icon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+      <div class="hero-badge"><i class="fa-solid fa-sparkles"></i> College Event Hub</div>
+      <h1 class="hero-title" id="hero-title-text">Discover & Register for Campus Events</h1>
+      <p class="hero-sub" id="hero-sub-text">Join upcoming hackathons, tech symposiums, cultural fests, and workshops. Earn digital certificates and instant QR entry passes.</p>
+      
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-val">500+</div>
+          <div class="stat-lbl">Total Specifications</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val">100%</div>
+          <div class="stat-lbl">Automated Pass Rate</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val">10k+</div>
+          <div class="stat-lbl">Active Students</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls Bar -->
+    <div class="controls-bar">
+      <div class="search-row">
+        <div class="search-input-wrap">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" class="search-input" id="search-input" placeholder="Search events by title, department, or keyword..." oninput="renderEvents()" />
+        </div>
+        <button class="action-btn" id="btn-create-event" style="display: none;" onclick="openCreateModal()">
+          <i class="fa-solid fa-plus"></i> Create Event
+        </button>
+        <button class="action-btn" id="btn-my-tickets" onclick="openTicketsModal()">
+          <i class="fa-solid fa-ticket"></i> My Passes (<span id="ticket-count">0</span>)
+        </button>
+      </div>
+
+      <div class="category-pills" id="category-pills">
+        <button class="cat-chip active" onclick="setCategory('All', this)">All Events</button>
+        <button class="cat-chip" onclick="setCategory('Technology', this)">Technology</button>
+        <button class="cat-chip" onclick="setCategory('Cultural', this)">Cultural</button>
+        <button class="cat-chip" onclick="setCategory('Sports', this)">Sports</button>
+        <button class="cat-chip" onclick="setCategory('Workshops', this)">Workshops</button>
+        <button class="cat-chip" onclick="setCategory('Hackathons', this)">Hackathons</button>
+      </div>
+    </div>
+
+    <!-- Events Grid -->
+    <div class="events-grid" id="events-grid"></div>
+  </main>
+
+  <!-- Registration Modal -->
+  <div class="modal-overlay" id="modal-register">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('modal-register')"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-title" id="modal-event-title">Event Registration</div>
+      <p style="font-size: 14px; color: var(--text-secondary);" id="modal-event-sub"></p>
+      
+      <form onsubmit="handleRegistrationSubmit(event)">
+        <input type="hidden" id="reg-event-id" />
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-input" id="reg-name" required placeholder="Enter your full name" />
+        </div>
+        <div class="form-group" style="margin-top: 14px;">
+          <label class="form-label">Email Address (@gmail.com or @college.edu)</label>
+          <input type="email" class="form-input" id="reg-email" required placeholder="your.name@gmail.com" />
+        </div>
+        <div class="form-group" style="margin-top: 14px;">
+          <label class="form-label">Roll / Registration Number</label>
+          <input type="text" class="form-input" id="reg-roll" required placeholder="REG2025-CS-101" />
+        </div>
+        <button type="submit" class="action-btn" style="width: 100%; margin-top: 20px; justify-content: center;">
+          <i class="fa-solid fa-qrcode"></i> Generate Digital QR Pass
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- QR Pass Modal -->
+  <div class="modal-overlay" id="modal-qr">
+    <div class="modal-box" style="text-align: center;">
+      <button class="modal-close" onclick="closeModal('modal-qr')"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-title">Your Digital QR Ticket</div>
+      <p style="font-size: 13px; color: var(--text-secondary);">Present this QR pass at the event venue for instant attendance verification.</p>
+      
+      <div class="qr-container">
+        <div id="qrcode"></div>
+        <div style="font-weight: 800; font-size: 16px; color: #0f172a;" id="qr-event-name"></div>
+        <div style="font-size: 12px; color: #64748b;" id="qr-student-info"></div>
+      </div>
+
+      <button class="action-btn" onclick="closeModal('modal-qr')" style="width: 100%; justify-content: center;">
+        <i class="fa-solid fa-check"></i> Done
+      </button>
+    </div>
+  </div>
+
+  <!-- Admin Create Event Modal -->
+  <div class="modal-overlay" id="modal-create">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('modal-create')"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-title">Publish New Event</div>
+      
+      <form onsubmit="handleCreateEventSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Event Title</label>
+          <input type="text" class="form-input" id="create-title" required placeholder="e.g. AI & Robotics Hackathon 2026" />
+        </div>
+        <div class="form-group" style="margin-top: 14px;">
+          <label class="form-label">Category</label>
+          <select class="form-input" id="create-category">
+            <option value="Technology">Technology</option>
+            <option value="Cultural">Cultural</option>
+            <option value="Sports">Sports</option>
+            <option value="Workshops">Workshops</option>
+            <option value="Hackathons">Hackathons</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-top: 14px;">
+          <label class="form-label">Date & Time</label>
+          <input type="text" class="form-input" id="create-date" required placeholder="August 25, 2026 • 10:00 AM" />
+        </div>
+        <div class="form-group" style="margin-top: 14px;">
+          <label class="form-label">Venue</label>
+          <input type="text" class="form-input" id="create-venue" required placeholder="Main Campus Auditorium" />
+        </div>
+        <div class="form-group" style="margin-top: 14px;">
+          <label class="form-label">Total Capacity</label>
+          <input type="number" class="form-input" id="create-capacity" required value="200" min="10" />
+        </div>
+        <button type="submit" class="action-btn" style="width: 100%; margin-top: 20px; justify-content: center;">
+          <i class="fa-solid fa-paper-plane"></i> Publish Event Live
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script>
+    // App State
+    let currentRole = 'student';
+    let currentCategory = 'All';
+    let registeredTickets = JSON.parse(localStorage.getItem('smart_events_tickets') || '[]');
+
+    let eventsData = [
+      {
+        id: 'evt_001',
+        title: 'National AI & Cloud Hackathon 2026',
+        category: 'Hackathons',
+        date: 'August 28, 2026 • 09:00 AM',
+        venue: 'CS Tech Park Auditorium',
+        description: 'Build cutting-edge AI agents and cloud applications in a 24-hour national competitive hackathon with $5,000 prize pool.',
+        capacity: 300,
+        registered: 245
+      },
+      {
+        id: 'evt_002',
+        title: 'Annual Cultural Fest - Rhythm 2026',
+        category: 'Cultural',
+        date: 'September 05, 2026 • 05:00 PM',
+        venue: 'Open Air Amphitheatre',
+        description: 'Experience live music performances, dance competitions, fashion shows, and celebrity guest appearances.',
+        capacity: 1000,
+        registered: 812
+      },
+      {
+        id: 'evt_003',
+        title: 'Cyber Security & Ethical Hacking Workshop',
+        category: 'Workshops',
+        date: 'September 12, 2026 • 10:00 AM',
+        venue: 'Lab 4, Computer Science Block',
+        description: 'Hands-on practical training on network vulnerability analysis, penetration testing, and zero-day defense strategies.',
+        capacity: 150,
+        registered: 142
+      },
+      {
+        id: 'evt_004',
+        title: 'Inter-College Sports Championship',
+        category: 'Sports',
+        date: 'September 18, 2026 • 08:00 AM',
+        venue: 'University Sports Complex',
+        description: 'Annual multi-sport tournament featuring basketball, football, athletics, badminton, and chess competitions.',
+        capacity: 500,
+        registered: 380
+      },
+      {
+        id: 'evt_005',
+        title: 'Full Stack Web Development Bootcamp',
+        category: 'Technology',
+        date: 'September 24, 2026 • 02:00 PM',
+        venue: 'Seminar Hall 2',
+        description: 'Master React Native, Node.js, and cloud deployment pipelines in an interactive hands-on coding masterclass.',
+        capacity: 200,
+        registered: 188
+      }
+    ];
+
+    // Theme Toggle
+    function toggleTheme() {
+      const body = document.body;
+      const themeIcon = document.getElementById('theme-icon');
+      if (body.getAttribute('data-theme') === 'dark') {
+        body.setAttribute('data-theme', 'light');
+        themeIcon.className = 'fa-solid fa-sun';
+        showToast('Switched to Light Theme');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeIcon.className = 'fa-solid fa-moon';
+        showToast('Switched to Dark Theme');
+      }
+    }
+
+    // Role Switching
+    function setRole(role) {
+      currentRole = role;
+      document.getElementById('btn-role-student').classList.toggle('active', role === 'student');
+      document.getElementById('btn-role-admin').classList.toggle('active', role === 'admin');
+      
+      const createBtn = document.getElementById('btn-create-event');
+      const heroTitle = document.getElementById('hero-title-text');
+      const heroSub = document.getElementById('hero-sub-text');
+
+      if (role === 'admin') {
+        createBtn.style.display = 'inline-flex';
+        heroTitle.innerText = 'Admin Event & Attendance Control Center';
+        heroSub.innerText = 'Publish new campus events, monitor real-time registration capacity, and scan QR passes for contactless venue check-ins.';
+        showToast('Switched to Admin Mode');
+      } else {
+        createBtn.style.display = 'none';
+        heroTitle.innerText = 'Discover & Register for Campus Events';
+        heroSub.innerText = 'Join upcoming hackathons, tech symposiums, cultural fests, and workshops. Earn digital certificates and instant QR entry passes.';
+        showToast('Switched to Student Portal Mode');
+      }
+      renderEvents();
+    }
+
+    // Category Filter
+    function setCategory(cat, btn) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      renderEvents();
+    }
+
+    // Render Events
+    function renderEvents() {
+      const grid = document.getElementById('events-grid');
+      const search = document.getElementById('search-input').value.toLowerCase();
+      
+      const filtered = eventsData.filter(evt => {
+        const matchesCat = currentCategory === 'All' || evt.category === currentCategory;
+        const matchesSearch = evt.title.toLowerCase().includes(search) ||
+                              evt.description.toLowerCase().includes(search) ||
+                              evt.venue.toLowerCase().includes(search);
+        return matchesCat && matchesSearch;
+      });
+
+      document.getElementById('ticket-count').innerText = registeredTickets.length;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 48px; color: var(--text-muted);">
+          <i class="fa-solid fa-calendar-xmark" style="font-size: 48px; margin-bottom: 16px;"></i>
+          <h3>No events found</h3>
+          <p>Try adjusting your search query or category filter.</p>
+        </div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(evt => {
+        const isRegistered = registeredTickets.some(t => t.eventId === evt.id);
+        const percent = Math.min(100, Math.round((evt.registered / evt.capacity) * 100));
+
+        return `
+          <div class="event-card">
+            <span class="card-badge">${evt.category}</span>
+            <div class="event-title">${evt.title}</div>
+            
+            <div class="event-meta">
+              <div class="meta-row"><i class="fa-regular fa-clock"></i> ${evt.date}</div>
+              <div class="meta-row"><i class="fa-solid fa-location-dot"></i> ${evt.venue}</div>
+            </div>
+
+            <p class="event-desc">${evt.description}</p>
+
+            <div class="capacity-bar-wrap">
+              <div class="capacity-header">
+                <span>Registrations</span>
+                <span>${evt.registered} / ${evt.capacity} (${percent}%)</span>
+              </div>
+              <div class="capacity-track">
+                <div class="capacity-fill" style="width: ${percent}%;"></div>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              ${isRegistered ? `
+                <button class="btn-register btn-registered" onclick="viewQRForEvent('${evt.id}')">
+                  <i class="fa-solid fa-qrcode"></i> View Entry QR Pass
+                </button>
+              ` : `
+                <button class="btn-register" onclick="openRegisterModal('${evt.id}')">
+                  <i class="fa-solid fa-id-card"></i> Register Now
+                </button>
+              `}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Modal Control
+    function openRegisterModal(eventId) {
+      const evt = eventsData.find(e => e.id === eventId);
+      if (!evt) return;
+      document.getElementById('reg-event-id').value = evt.id;
+      document.getElementById('modal-event-title').innerText = evt.title;
+      document.getElementById('modal-event-sub').innerText = `${evt.date} • ${evt.venue}`;
+      document.getElementById('modal-register').classList.add('active');
+    }
+
+    function openCreateModal() {
+      document.getElementById('modal-create').classList.add('active');
+    }
+
+    function openTicketsModal() {
+      if (registeredTickets.length === 0) {
+        showToast('You have not registered for any events yet.');
+        return;
+      }
+      viewQRForEvent(registeredTickets[0].eventId);
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+    }
+
+    // Registration Handler
+    function handleRegistrationSubmit(e) {
+      e.preventDefault();
+      const eventId = document.getElementById('reg-event-id').value;
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const roll = document.getElementById('reg-roll').value.trim();
+
+      const evt = eventsData.find(e => e.id === eventId);
+      if (!evt) return;
+
+      evt.registered += 1;
+      const ticket = {
+        eventId: evt.id,
+        eventTitle: evt.title,
+        name,
+        email,
+        roll,
+        qrPayload: `SMART_EVENT:${evt.id}:${roll}:${Date.now()}`
+      };
+
+      registeredTickets.push(ticket);
+      localStorage.setItem('smart_events_tickets', JSON.stringify(registeredTickets));
+
+      closeModal('modal-register');
+      renderEvents();
+      displayQR(ticket, evt.title);
+      showToast('Successfully registered for ' + evt.title + '!');
+    }
+
+    // Admin Create Event Handler
+    function handleCreateEventSubmit(e) {
+      e.preventDefault();
+      const title = document.getElementById('create-title').value.trim();
+      const category = document.getElementById('create-category').value;
+      const date = document.getElementById('create-date').value.trim();
+      const venue = document.getElementById('create-venue').value.trim();
+      const capacity = parseInt(document.getElementById('create-capacity').value) || 100;
+
+      const newEvt = {
+        id: 'evt_' + Date.now(),
+        title,
+        category,
+        date,
+        venue,
+        description: 'Newly published campus event created via Admin Control Panel.',
+        capacity,
+        registered: 0
+      };
+
+      eventsData.unshift(newEvt);
+      closeModal('modal-create');
+      renderEvents();
+      showToast('Published "' + title + '" live!');
+    }
+
+    // Display QR Code
+    function viewQRForEvent(eventId) {
+      const ticket = registeredTickets.find(t => t.eventId === eventId);
+      if (ticket) {
+        displayQR(ticket, ticket.eventTitle);
+      }
+    }
+
+    function displayQR(ticket, title) {
+      document.getElementById('qr-event-name').innerText = title;
+      document.getElementById('qr-student-info').innerText = `${ticket.name} (${ticket.roll}) • ${ticket.email}`;
+      
+      const qrBox = document.getElementById('qrcode');
+      qrBox.innerHTML = '';
+      new QRCode(qrBox, {
+        text: ticket.qrPayload,
+        width: 180,
+        height: 180,
+        colorDark : "#0f172a",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+      });
+
+      document.getElementById('modal-qr').classList.add('active');
+    }
+
+    // Toast Notification System
+    function showToast(msg) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `<i class="fa-solid fa-circle-check" style="color: var(--brand-accent)"></i> ${msg}`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.remove();
+      }, 3500);
+    }
+
+    // Initialize
+    renderEvents();
+  </script>
+</body>
+</html>
