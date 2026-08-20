@@ -57,6 +57,7 @@
     "@types/chai": "^4.3.11",
     "@types/mocha": "^10.0.6",
     "@types/node": "^20.11.0",
+    "@react-native-community/cli-tools": "^15.0.0",
     "@types/react": "~19.1.0",
     "babel-preset-expo": "^54.0.0",
     "@types/selenium-webdriver": "^4.35.6",
