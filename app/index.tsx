@@ -19,7 +19,7 @@ export default function LandingPage() {
       if (user?.role === 'admin') router.push('/admin/dashboard');
       else router.push('/student/dashboard');
     } else {
-      router.push('/(auth)/login');
+      router.push('/login');
     }
   };
 
@@ -44,10 +44,10 @@ export default function LandingPage() {
         <View style={styles.navActions}>
           {!isAuthenticated ? (
             <>
-              <TouchableOpacity onPress={() => router.push('/(auth)/login')} testID="landing_login_link" accessibilityLabel="landing_login_link">
+              <TouchableOpacity onPress={() => router.push('/login')} testID="landing_login_link" accessibilityLabel="landing_login_link">
                 <Text style={styles.navLink}>Log In</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => router.push('/(auth)/register')}>
+              <TouchableOpacity onPress={() => router.push('/register')}>
                 <LinearGradient colors={Gradients.aurora} style={styles.navBtn} start={{x:0,y:0}} end={{x:1,y:1}}>
                   <Text style={styles.navBtnText}>Get Started</Text>
                 </LinearGradient>
