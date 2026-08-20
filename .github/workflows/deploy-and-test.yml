@@ -64,10 +64,23 @@ jobs:
           # 1. Copy Expo Web app assets to root /
           cp -r dist/* public_site/
           
-          # 2. Touch .nojekyll to allow _expo static asset serving
+          # 2. Copy standalone web application pages
+          cp index.html public_site/web-app.html || true
+
+          # 3. Create 404.html fallback for GitHub Pages SPA routing
+          cp dist/index.html public_site/404.html || true
+
+          # 4. Create directory structure for physical web routes
+          mkdir -p public_site/login public_site/register public_site/student/dashboard public_site/admin/dashboard
+          cp dist/index.html public_site/login/index.html || true
+          cp dist/index.html public_site/register/index.html || true
+          cp dist/index.html public_site/student/dashboard/index.html || true
+          cp dist/index.html public_site/admin/dashboard/index.html || true
+
+          # 5. Touch .nojekyll to allow _expo static asset serving
           touch public_site/.nojekyll
 
-          # 3. Copy QA reports into /reports/latest/
+          # 6. Copy QA reports into /reports/latest/
           cp -r "Test Results/HTML/"* public_site/reports/latest/ || true
           cp -r "Test Results/Summary/"* public_site/reports/latest/ || true
           cp -r "Test Results/JSON/"* public_site/reports/latest/ || true
@@ -78,7 +91,7 @@ jobs:
             cp -r "Test Results/Logs" public_site/reports/latest/ || true
           fi
 
-          # 4. Archive copy into history
+          # 7. Archive copy into history
           cp -r public_site/reports/latest/* "$HIST_DIR/"
 
       # Step 7: Configure GitHub Pages
