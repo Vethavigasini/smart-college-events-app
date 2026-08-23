@@ -12,16 +12,17 @@
     "appium:test": "wdio run automation/appium/config/wdio.conf.ts",
     "android:test": "npm run emulator:start && sleep 10 && $ANDROID_HOME/platform-tools/adb reverse tcp:8081 tcp:8081 && $ANDROID_HOME/platform-tools/adb reverse tcp:5005 tcp:5005 && npm run appium:test",
     "reports": "npx ts-node automation/appium/utils/generateTestCaseMaster.ts && npx ts-node automation/appium/utils/generateReports.ts",
-    "selenium:test": "mkdir -p automation/selenium/reports automation/selenium/logs && npx mocha -r ts-node/register automation/selenium/tests/smoke.web.test.ts --reporter json > automation/selenium/reports/results.json 2> automation/selenium/logs/selenium-run.log",
-    "selenium:reports": "npx ts-node automation/selenium/utils/generateSeleniumTestCaseMaster.ts && npx ts-node automation/selenium/utils/generateSeleniumReports.ts",
-    "security:reports": "npx ts-node automation/selenium/utils/generateSecurityArtifacts.ts",
+    "selenium:test": "mkdir -p automation/selenium/reports automation/selenium/logs && TS_NODE_PROJECT=\"automation/tsconfig.automation.json\" npx mocha -r ts-node/register automation/selenium/tests/smoke.web.test.ts --reporter json > automation/selenium/reports/results.json 2> automation/selenium/logs/selenium-run.log",
+    "selenium:reports": "TS_NODE_PROJECT=\"automation/tsconfig.automation.json\" npx ts-node automation/selenium/utils/generateSeleniumTestCaseMaster.ts && TS_NODE_PROJECT=\"automation/tsconfig.automation.json\" npx ts-node automation/selenium/utils/generateSeleniumReports.ts",
+    "security:reports": "TS_NODE_PROJECT=\"automation/tsconfig.automation.json\" npx ts-node automation/selenium/utils/generateSecurityArtifacts.ts",
+    "security:test": "mkdir -p automation/security/reports && TS_NODE_PROJECT=\"automation/tsconfig.automation.json\" npx mocha -r ts-node/register automation/security/tests/security.test.ts",
     "load:baseline": "k6 run automation/load/baseline.js",
     "load:stress": "k6 run automation/load/stress.js",
     "load:spike": "k6 run automation/load/spike.js",
     "load:endurance": "k6 run automation/load/endurance.js",
-    "load:reports": "npx ts-node automation/load/utils/generateLoadReports.ts",
-    "reports:master": "npx ts-node automation/shared/utils/generateMasterDashboard.ts",
-    "api:test": "mkdir -p automation/api/reports && npx mocha -r ts-node/register automation/api/tests/api.test.ts --reporter json > automation/api/reports/results.json"
+    "load:reports": "TS_NODE_PROJECT=\"automation/tsconfig.automation.json\" npx ts-node automation/load/utils/generateLoadReports.ts",
+    "reports:master": "TS_NODE_PROJECT=\"automation/tsconfig.automation.json\" npx ts-node automation/shared/utils/generateMasterDashboard.ts",
+    "api:test": "mkdir -p automation/api/reports && TS_NODE_PROJECT=\"automation/tsconfig.automation.json\" npx mocha -r ts-node/register automation/api/tests/api.test.ts --reporter json > automation/api/reports/results.json"
   },
   "dependencies": {
     "@expo/metro-runtime": "~6.1.2",
