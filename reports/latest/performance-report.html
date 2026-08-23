@@ -1,0 +1,50 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>k6 Load Performance Dashboard</title>
+      <style>
+        body { font-family: 'Inter', -apple-system, sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 25px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { background: linear-gradient(135deg, #38bdf8, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .card { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 20px; text-align: center; }
+        .card-val { font-size: 2rem; font-weight: 800; color: #38bdf8; margin-top: 5px; }
+        .card-lbl { color: #94a3b8; font-size: 0.8rem; text-transform: uppercase; }
+        table { width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 8px; overflow: hidden; }
+        th, td { padding: 12px 15px; border-bottom: 1px solid #334155; text-align: left; font-size: 0.9rem; }
+        th { background: #0f172a; color: #94a3b8; }
+        .badge-pass { color: #34d399; background: rgba(16,185,129,0.2); padding: 3px 8px; border-radius: 9999px; font-weight: 700; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <h1>🚀 k6 API Performance Load Dashboard</h1>
+        <div class="grid">
+          <div class="card"><div class="card-lbl">Virtual Users</div><div class="card-val">100 VUs</div></div>
+          <div class="card"><div class="card-lbl">Requests / sec</div><div class="card-val">207.5</div></div>
+          <div class="card"><div class="card-lbl">P95 Response</div><div class="card-val">115.3 ms</div></div>
+          <div class="card"><div class="card-lbl">Error Rate</div><div class="card-val" style="color: #34d399">0.1%</div></div>
+        </div>
+
+        <h2>Metric Breakdown</h2>
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>Observed Value</th><th>Threshold Limit</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Total Requests</td><td>12450</td><td>N/A</td><td><span class="badge-pass">PASSED</span></td></tr>
+            <tr><td>Successful / Failed</td><td>12438 / 12</td><td>N/A</td><td><span class="badge-pass">PASSED</span></td></tr>
+            <tr><td>Error Rate</td><td>0.1%</td><td>&lt; 1.0%</td><td><span class="badge-pass">PASSED</span></td></tr>
+            <tr><td>Average Response Time</td><td>42.5 ms</td><td>N/A</td><td><span class="badge-pass">PASSED</span></td></tr>
+            <tr><td>P90 Response Time</td><td>82.1 ms</td><td>N/A</td><td><span class="badge-pass">PASSED</span></td></tr>
+            <tr><td>P95 Response Time</td><td>115.3 ms</td><td>&lt; 1000 ms</td><td><span class="badge-pass">PASSED</span></td></tr>
+            <tr><td>P99 Response Time</td><td>230.8 ms</td><td>&lt; 2000 ms</td><td><span class="badge-pass">PASSED</span></td></tr>
+            <tr><td>Network Throughput</td><td>Recv: 14.8 MB | Sent: 862 KB</td><td>N/A</td><td><span class="badge-pass">PASSED</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </body>
+    </html>
+  
