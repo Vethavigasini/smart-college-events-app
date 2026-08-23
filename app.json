@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "scheme": "smartcollegeevents",
     "userInterfaceStyle": "light",
+
     "plugins": [
       "expo-router",
       [
@@ -21,17 +22,22 @@
         }
       ]
     ],
+
     "experiments": {
-      "typedRoutes": true
+      "typedRoutes": true,
+      "baseUrl": "/smart-college-events-app"
     },
+
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.smartcollege.events"
     },
+
     "android": {
       "package": "com.smartcollege.events",
       "versionCode": 1
     },
+
     "web": {
       "bundler": "metro",
       "output": "static"
