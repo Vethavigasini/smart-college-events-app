@@ -711,21 +711,21 @@
   <!-- Header -->
   <header>
     <div class="nav-wrap">
-      <a href="#" class="brand" onclick="showView('hero')">
+      <a href="javascript:void(0)" class="brand" onclick="showView('hero')">
         <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
         <div>Smart<span>Events</span></div>
       </a>
 
       <div class="nav-right">
         <div id="nav-logged-out" style="display: flex; align-items: center; gap: 16px;">
-          <a class="nav-link" onclick="showView('login')">Log In</a>
+          <a href="javascript:void(0)" class="nav-link" onclick="showView('login')">Log In</a>
           <button class="btn-gradient" onclick="showView('login')">Get Started</button>
         </div>
 
         <div id="nav-logged-in" style="display: none; align-items: center; gap: 16px;">
           <span style="font-size: 14px; font-weight: 700; color: var(--text-primary);" id="nav-user-email"></span>
           <button class="btn-gradient" onclick="showView('dashboard')">Dashboard</button>
-          <a class="nav-link" onclick="handleLogout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+          <a href="javascript:void(0)" class="nav-link" onclick="handleLogout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
         </div>
       </div>
     </div>
