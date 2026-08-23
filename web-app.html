@@ -22,16 +22,16 @@
     :root {
       --bg-primary: #0f172a;
       --bg-surface: #1e293b;
-      --bg-card: rgba(30, 41, 59, 0.8);
-      --bg-glass: rgba(15, 23, 42, 0.75);
-      --border-color: rgba(255, 255, 255, 0.1);
+      --bg-card: rgba(30, 41, 59, 0.85);
+      --bg-glass: rgba(15, 23, 42, 0.8);
+      --border-color: rgba(255, 255, 255, 0.12);
       --text-primary: #f8fafc;
       --text-secondary: #94a3b8;
       --text-muted: #64748b;
       --brand-primary: #6366f1;
       --brand-accent: #38bdf8;
       --gradient-aurora: linear-gradient(135deg, #6366f1 0%, #38bdf8 50%, #818cf8 100%);
-      --gradient-card: linear-gradient(180deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%);
+      --gradient-card: linear-gradient(180deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
       --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
       --radius-sm: 8px;
       --radius-md: 14px;
@@ -43,8 +43,8 @@
     [data-theme="light"] {
       --bg-primary: #f8fafc;
       --bg-surface: #ffffff;
-      --bg-card: rgba(255, 255, 255, 0.9);
-      --bg-glass: rgba(255, 255, 255, 0.85);
+      --bg-card: rgba(255, 255, 255, 0.95);
+      --bg-glass: rgba(255, 255, 255, 0.9);
       --border-color: #e2e8f0;
       --text-primary: #0f172a;
       --text-secondary: #475569;
@@ -74,9 +74,9 @@
       top: -200px;
       left: 50%;
       transform: translateX(-50%);
-      width: 800px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(56, 189, 248, 0.08) 50%, rgba(0, 0, 0, 0) 70%);
+      width: 900px;
+      height: 650px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.22) 0%, rgba(56, 189, 248, 0.1) 50%, rgba(0, 0, 0, 0) 70%);
       pointer-events: none;
       z-index: 0;
     }
@@ -99,6 +99,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
+      flex-wrap: wrap;
     }
 
     .brand {
@@ -113,8 +114,8 @@
     }
 
     .brand-icon {
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       border-radius: var(--radius-md);
       background: var(--gradient-aurora);
       display: flex;
@@ -135,6 +136,36 @@
       display: flex;
       align-items: center;
       gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .quick-demo-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-full);
+      padding: 4px;
+    }
+
+    .demo-pill {
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .demo-pill:hover {
+      color: var(--brand-accent);
     }
 
     .role-toggle {
@@ -183,6 +214,18 @@
     .theme-btn:hover {
       border-color: var(--brand-primary);
       transform: scale(1.05);
+    }
+
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      font-size: 13px;
+      font-weight: 700;
     }
 
     main {
@@ -234,7 +277,7 @@
     .hero-sub {
       color: var(--text-secondary);
       font-size: 16px;
-      max-width: 720px;
+      max-width: 760px;
     }
 
     .hero-stats {
@@ -502,7 +545,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(15, 23, 42, 0.8);
+      background: rgba(15, 23, 42, 0.85);
       backdrop-filter: blur(12px);
       display: none;
       align-items: center;
@@ -575,7 +618,7 @@
       flex-direction: column;
       align-items: center;
       gap: 16px;
-      padding: 20px;
+      padding: 24px;
       background: #ffffff;
       border-radius: var(--radius-md);
       margin: 10px 0;
@@ -623,13 +666,25 @@
       </a>
 
       <div class="nav-actions">
+        <div class="quick-demo-group">
+          <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); padding-left: 8px;">Demo:</span>
+          <button class="demo-pill" onclick="loginAsDemo('student')"><i class="fa-solid fa-user"></i> Student</button>
+          <button class="demo-pill" onclick="loginAsDemo('admin')"><i class="fa-solid fa-shield-halved"></i> Admin</button>
+          <button class="demo-pill" onclick="loginAsDemo('faculty')"><i class="fa-solid fa-school"></i> Faculty</button>
+        </div>
+
         <div class="role-toggle">
           <button class="role-btn active" id="btn-role-student" onclick="setRole('student')">
-            <i class="fa-solid fa-user-graduate"></i> Student
+            <i class="fa-solid fa-user-graduate"></i> Student Portal
           </button>
           <button class="role-btn" id="btn-role-admin" onclick="setRole('admin')">
-            <i class="fa-solid fa-shield-halved"></i> Admin
+            <i class="fa-solid fa-shield-halved"></i> Admin Center
           </button>
+        </div>
+
+        <div class="user-pill" id="user-session-pill">
+          <i class="fa-solid fa-user-circle" style="color: var(--brand-accent)"></i>
+          <span id="user-display-name">student@college.edu</span>
         </div>
 
         <button class="theme-btn" onclick="toggleTheme()" title="Toggle Dark/Light Theme">
@@ -641,14 +696,18 @@
 
   <main>
     <div class="hero-banner">
-      <div class="hero-badge"><i class="fa-solid fa-sparkles"></i> College Event Hub</div>
+      <div class="hero-badge"><i class="fa-solid fa-sparkles"></i> Live Campus Event Hub</div>
       <h1 class="hero-title" id="hero-title-text">Discover & Register for Campus Events</h1>
       <p class="hero-sub" id="hero-sub-text">Join upcoming hackathons, tech symposiums, cultural fests, and workshops. Earn digital certificates and instant QR entry passes.</p>
       
       <div class="hero-stats">
         <div class="stat-item">
-          <div class="stat-val">500+</div>
-          <div class="stat-lbl">Total Specifications</div>
+          <div class="stat-val" id="stat-total-events">5</div>
+          <div class="stat-lbl">Total Events</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val" id="stat-registrations">1.7k+</div>
+          <div class="stat-lbl">Total Registrations</div>
         </div>
         <div class="stat-item">
           <div class="stat-val">100%</div>
@@ -665,10 +724,13 @@
       <div class="search-row">
         <div class="search-input-wrap">
           <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" class="search-input" id="search-input" placeholder="Search events by title, department, or keyword..." oninput="renderEvents()" />
+          <input type="text" class="search-input" id="search-input" placeholder="Search events by title, venue, department, or keyword..." oninput="renderEvents()" />
         </div>
         <button class="action-btn" id="btn-create-event" style="display: none;" onclick="openCreateModal()">
-          <i class="fa-solid fa-plus"></i> Create Event
+          <i class="fa-solid fa-plus"></i> Publish Event
+        </button>
+        <button class="action-btn" id="btn-scan-attendance" style="display: none;" onclick="openAttendanceModal()">
+          <i class="fa-solid fa-qrcode"></i> Scan QR Attendance
         </button>
         <button class="action-btn" id="btn-my-tickets" onclick="openTicketsModal()">
           <i class="fa-solid fa-ticket"></i> My Passes (<span id="ticket-count">0</span>)
@@ -682,6 +744,7 @@
         <button class="cat-chip" onclick="setCategory('Sports', this)">Sports</button>
         <button class="cat-chip" onclick="setCategory('Workshops', this)">Workshops</button>
         <button class="cat-chip" onclick="setCategory('Hackathons', this)">Hackathons</button>
+        <button class="cat-chip" onclick="setCategory('Academic', this)">Academic</button>
       </div>
     </div>
 
@@ -751,11 +814,12 @@
             <option value="Sports">Sports</option>
             <option value="Workshops">Workshops</option>
             <option value="Hackathons">Hackathons</option>
+            <option value="Academic">Academic</option>
           </select>
         </div>
         <div class="form-group" style="margin-top: 14px;">
           <label class="form-label">Date & Time</label>
-          <input type="text" class="form-input" id="create-date" required placeholder="August 25, 2026 • 10:00 AM" />
+          <input type="text" class="form-input" id="create-date" required placeholder="August 28, 2026 • 10:00 AM" />
         </div>
         <div class="form-group" style="margin-top: 14px;">
           <label class="form-label">Venue</label>
@@ -772,14 +836,33 @@
     </div>
   </div>
 
+  <div class="modal-overlay" id="modal-attendance">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('modal-attendance')"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-title">QR Attendance Check-In</div>
+      <p style="font-size: 13px; color: var(--text-secondary);">Enter Student Roll Number or QR payload to verify attendance.</p>
+      
+      <form onsubmit="handleCheckInSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Roll Number / Ticket Payload</label>
+          <input type="text" class="form-input" id="attendance-input" required placeholder="e.g. REG2025-CS-101 or SMART_EVENT:..." />
+        </div>
+        <button type="submit" class="action-btn" style="width: 100%; margin-top: 20px; justify-content: center;">
+          <i class="fa-solid fa-clipboard-user"></i> Verify & Mark Present
+        </button>
+      </form>
+    </div>
+  </div>
+
   <div class="toast-container" id="toast-container"></div>
 
   <script>
     let currentRole = 'student';
     let currentCategory = 'All';
+    let currentUser = JSON.parse(localStorage.getItem('smart_events_user') || '{"name":"Student User","email":"student@college.edu","role":"student"}');
     let registeredTickets = JSON.parse(localStorage.getItem('smart_events_tickets') || '[]');
 
-    let eventsData = [
+    let eventsData = JSON.parse(localStorage.getItem('smart_events_list') || JSON.stringify([
       {
         id: 'evt_001',
         title: 'National AI & Cloud Hackathon 2026',
@@ -830,7 +913,7 @@
         capacity: 200,
         registered: 188
       }
-    ];
+    ]));
 
     function toggleTheme() {
       const body = document.body;
@@ -846,25 +929,46 @@
       }
     }
 
+    function loginAsDemo(role) {
+      if (role === 'student') {
+        currentUser = { name: 'Demo Student', email: 'student@college.edu', role: 'student' };
+        setRole('student');
+      } else if (role === 'admin') {
+        currentUser = { name: 'Demo Admin', email: 'admin@college.edu', role: 'admin' };
+        setRole('admin');
+      } else {
+        currentUser = { name: 'Faculty Member', email: 'faculty@college.edu', role: 'faculty' };
+        setRole('student');
+      }
+      localStorage.setItem('smart_events_user', JSON.stringify(currentUser));
+      updateUserDisplay();
+      showToast('Logged in as ' + currentUser.name + ' (' + role.toUpperCase() + ')');
+    }
+
+    function updateUserDisplay() {
+      document.getElementById('user-display-name').innerText = currentUser.email || 'student@college.edu';
+    }
+
     function setRole(role) {
       currentRole = role;
       document.getElementById('btn-role-student').classList.toggle('active', role === 'student');
       document.getElementById('btn-role-admin').classList.toggle('active', role === 'admin');
       
       const createBtn = document.getElementById('btn-create-event');
+      const scanBtn = document.getElementById('btn-scan-attendance');
       const heroTitle = document.getElementById('hero-title-text');
       const heroSub = document.getElementById('hero-sub-text');
 
       if (role === 'admin') {
         createBtn.style.display = 'inline-flex';
+        scanBtn.style.display = 'inline-flex';
         heroTitle.innerText = 'Admin Event & Attendance Control Center';
         heroSub.innerText = 'Publish new campus events, monitor real-time registration capacity, and scan QR passes for contactless venue check-ins.';
-        showToast('Switched to Admin Mode');
       } else {
         createBtn.style.display = 'none';
+        scanBtn.style.display = 'none';
         heroTitle.innerText = 'Discover & Register for Campus Events';
         heroSub.innerText = 'Join upcoming hackathons, tech symposiums, cultural fests, and workshops. Earn digital certificates and instant QR entry passes.';
-        showToast('Switched to Student Portal Mode');
       }
       renderEvents();
     }
@@ -889,6 +993,10 @@
       });
 
       document.getElementById('ticket-count').innerText = registeredTickets.length;
+      document.getElementById('stat-total-events').innerText = eventsData.length;
+
+      const totalRegs = eventsData.reduce((sum, e) => sum + e.registered, 0);
+      document.getElementById('stat-registrations').innerText = totalRegs > 1000 ? (totalRegs / 1000).toFixed(1) + 'k+' : totalRegs;
 
       if (filtered.length === 0) {
         grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 48px; color: var(--text-muted);">
@@ -954,6 +1062,10 @@
       document.getElementById('modal-create').classList.add('active');
     }
 
+    function openAttendanceModal() {
+      document.getElementById('modal-attendance').classList.add('active');
+    }
+
     function openTicketsModal() {
       if (registeredTickets.length === 0) {
         showToast('You have not registered for any events yet.');
@@ -977,6 +1089,8 @@
       if (!evt) return;
 
       evt.registered += 1;
+      localStorage.setItem('smart_events_list', JSON.stringify(eventsData));
+
       const ticket = {
         eventId: evt.id,
         eventTitle: evt.title,
@@ -992,7 +1106,7 @@
       closeModal('modal-register');
       renderEvents();
       displayQR(ticket, evt.title);
-      showToast('Successfully registered for ' + evt.title + '!');
+      showToast('Registered for ' + evt.title + '!');
     }
 
     function handleCreateEventSubmit(e) {
@@ -1015,9 +1129,18 @@
       };
 
       eventsData.unshift(newEvt);
+      localStorage.setItem('smart_events_list', JSON.stringify(eventsData));
+
       closeModal('modal-create');
       renderEvents();
       showToast('Published "' + title + '" live!');
+    }
+
+    function handleCheckInSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('attendance-input').value.trim();
+      closeModal('modal-attendance');
+      showToast('✅ Marked Present: Roll ' + (input || 'REG2025-CS-101'));
     }
 
     function viewQRForEvent(eventId) {
@@ -1035,8 +1158,8 @@
       qrBox.innerHTML = '';
       new QRCode(qrBox, {
         text: ticket.qrPayload,
-        width: 180,
-        height: 180,
+        width: 190,
+        height: 190,
         colorDark : "#0f172a",
         colorLight : "#ffffff",
         correctLevel : QRCode.CorrectLevel.H
@@ -1056,6 +1179,7 @@
       }, 3500);
     }
 
+    updateUserDisplay();
     renderEvents();
   </script>
 </body>
