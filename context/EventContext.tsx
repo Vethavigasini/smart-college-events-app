@@ -121,6 +121,8 @@ export function EventProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     fetchEvents();
+    const interval = setInterval(fetchEvents, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   const fetchEventById = async (id: string) => {
