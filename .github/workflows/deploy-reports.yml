@@ -82,6 +82,9 @@ jobs:
           touch public_site/.nojekyll
 
           # 6. Copy QA reports into /reports/latest/
+          if [ -d "reports" ]; then
+            cp -r reports/* public_site/reports/ || true
+          fi
           cp -r "Test Results/HTML/"* public_site/reports/latest/ || true
           cp -r "Test Results/Summary/"* public_site/reports/latest/ || true
           cp -r "Test Results/JSON/"* public_site/reports/latest/ || true
